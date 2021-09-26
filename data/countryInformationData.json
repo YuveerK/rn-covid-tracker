@@ -41,7 +41,6 @@
             "airportsPaved": "1"
         }
     },
-
     {
         "dialingCode": "+355",
         "iso2Code": "AL",
@@ -83,8 +82,6 @@
             "airportsPaved": "3"
         }
     },
-
-
     {
         "dialingCode": "+213",
         "iso2Code": "DZ",
@@ -128,7 +125,6 @@
             "airportsPaved": "1"
         }
     },
-    
     {
         "dialingCode": "+376",
         "iso2Code": "AD",
@@ -167,7 +163,6 @@
             "airportsPaved": "None"
         }
     },
-    
     {
         "dialingCode": "+244",
         "iso2Code": "AO",
@@ -208,7 +203,6 @@
             "airportsPaved": "1"
         }
     },
-    
     {
         "dialingCode": "++1-264",
         "iso2Code": "AI",
@@ -225,9 +219,7 @@
             "naturalHazards": "Flat and low-lying island of coral and limestone",
             "note": "The most northerly of the Leeward Islands in the Lesser Antilles"
         },
-        "neighbouringCountries": [
-            
-        ],
+        "neighbouringCountries": [],
         "history": "Colonized by English settlers from Saint Kitts in 1650 Anguilla was administered by Great Britain until the early 19th century when the island - against the wishes of the inhabitants - was incorporated into a single British dependency along with Saint Kitts and Nevis. Several attempts at separation failed. In 1971 two years after a revolt Anguilla was finally allowed to secede; this arrangement was formally recognized in 1980 with Anguilla becoming a separate British dependency.",
         "demographics": {
             "lifeExpectancy": "80.65 years",
@@ -244,6 +236,76 @@
             "waterways": "None  km",
             "heliports": "None",
             "airportsPaved": "1"
+        }
+    },
+    {
+        "dialingCode": "++1-268",
+        "iso2Code": "AG",
+        "iso3Code": "ATG",
+        "capital": "St. John's",
+        "mainLanguage": "English",
+        "currency": "Dollar (XCD)",
+        "geography": {
+            "continent": "North America",
+            "location": "Caribbean islands between the Caribbean Sea and North Atlantic Ocean east of Puerto Rico",
+            "land": "443 km2",
+            "terrain": "Mostly low-lying limestone and coral islands with some higher volcanic areas",
+            "climate": "Tropical maritime; little seasonal temperature variation",
+            "naturalHazards": "Mostly low-lying limestone and coral islands with some higher volcanic areas",
+            "note": "Antigua has a deeply indented shoreline with many natural harbors and beaches; Barbuda has a large western harbor"
+        },
+        "neighbouringCountries": [],
+        "history": "The Siboney were the first to inhabit the islands of Antigua and Barbuda in 2400 B.C. but Arawak Indians populated the islands when COLUMBUS landed on his second voyage in 1493. Early settlements by the Spanish and French were succeeded by the English who formed a colony in 1667. Slavery established to run the sugar plantations on Antigua was abolished in 1834. The islands became an independent state within the British Commonwealth of Nations in 1981.",
+        "demographics": {
+            "lifeExpectancy": "74.76 years",
+            "medianAge": "29.7 years",
+            "birthRate": "16.59 births/1,000 population",
+            "deathRate": "5.94 births/1,000 population",
+            "sexRatio": "0.77 male(s)/female",
+            "literacy": "85.8%"
+        },
+        "transportation": {
+            "roadways": "1165 km",
+            "railways": "None ",
+            "airports": "3",
+            "waterways": "None  km",
+            "heliports": "None",
+            "airportsPaved": "1"
+        }
+    },
+    {
+        "dialingCode": "+54",
+        "iso2Code": "AR",
+        "iso3Code": "ARG",
+        "capital": "Buenos Aires",
+        "mainLanguage": "Argentinian Spanish",
+        "currency": "Peso (ARS)",
+        "geography": {
+            "continent": "South America",
+            "location": "Southern South America bordering the South Atlantic Ocean between Chile and Uruguay",
+            "land": "2,766,890 km2",
+            "terrain": "Rich plains of the Pampas in northern half flat to rolling plateau of Patagonia in south rugged Andes along western border",
+            "climate": "Mostly temperate; arid in southeast; subantarctic in southwest",
+            "naturalHazards": "Rich plains of the Pampas in northern half flat to rolling plateau of Patagonia in south rugged Andes along western border",
+            "note": "Second-largest country in South America (after Brazil); strategic location relative to sea lanes between the South Atlantic and the South Pacific Oceans (Strait of Magellan Beagle Channel Drake Passage); diverse geophysical landscapes range from tropical climates in the north to tundra in the far south; Cerro Aconcagua is the Western Hemisphere's tallest mountain while Laguna del Carbon is the lowest point in the Western Hemisphere"
+        },
+        "neighbouringCountries": ["Bolivia", "Brazil", "Chile", "Paraguay", "Uruguay"],
+        "history": "In 1816 the United Provinces of the Rio Plata declared their independence from Spain. After Bolivia Paraguay and Uruguay went their separate ways the area that remained became Argentina. The country's population and culture were heavily shaped by immigrants from throughout Europe but most particularly Italy and Spain which provided the largest percentage of newcomers from 1860 to 1930. Up until about the mid-20th century much of Argentina's history was dominated by periods of internal political conflict between Federalists and Unitarians and between civilian and military factions. After World War II an era of Peronist populism and direct and indirect military interference in subsequent governments was followed by a military junta that took power in 1976. Democracy returned in 1983 after a failed bid to seize the Falkland (Malvinas) Islands by force and has persisted despite numerous challenges the most formidable of which was a severe economic crisis in 2001-02 that led to violent public protests and the resignation of several interim presidents.",
+        "demographics": {
+            "lifeExpectancy": "76.56 years",
+            "medianAge": "30.0 years",
+            "birthRate": "17.94 births/1,000 population",
+            "deathRate": "7.41 births/1,000 population",
+            "sexRatio": "0.7 male(s)/female",
+            "literacy": "97.2%"
+        },
+        "transportation": {
+            "roadways": "231374  km",
+            "railways": "31409  ",
+            "airports": "1150",
+            "waterways": "11000 km",
+            "heliports": "1",
+            "airportsPaved": "4"
         }
     },
 
@@ -275,7 +337,53 @@
 
 
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     {
         "dialingCode": "+27",
