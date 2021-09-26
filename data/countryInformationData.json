@@ -289,7 +289,13 @@
             "naturalHazards": "Rich plains of the Pampas in northern half flat to rolling plateau of Patagonia in south rugged Andes along western border",
             "note": "Second-largest country in South America (after Brazil); strategic location relative to sea lanes between the South Atlantic and the South Pacific Oceans (Strait of Magellan Beagle Channel Drake Passage); diverse geophysical landscapes range from tropical climates in the north to tundra in the far south; Cerro Aconcagua is the Western Hemisphere's tallest mountain while Laguna del Carbon is the lowest point in the Western Hemisphere"
         },
-        "neighbouringCountries": ["Bolivia", "Brazil", "Chile", "Paraguay", "Uruguay"],
+        "neighbouringCountries": [
+            "Bolivia",
+            "Brazil",
+            "Chile",
+            "Paraguay",
+            "Uruguay"
+        ],
         "history": "In 1816 the United Provinces of the Rio Plata declared their independence from Spain. After Bolivia Paraguay and Uruguay went their separate ways the area that remained became Argentina. The country's population and culture were heavily shaped by immigrants from throughout Europe but most particularly Italy and Spain which provided the largest percentage of newcomers from 1860 to 1930. Up until about the mid-20th century much of Argentina's history was dominated by periods of internal political conflict between Federalists and Unitarians and between civilian and military factions. After World War II an era of Peronist populism and direct and indirect military interference in subsequent governments was followed by a military junta that took power in 1976. Democracy returned in 1983 after a failed bid to seize the Falkland (Malvinas) Islands by force and has persisted despite numerous challenges the most formidable of which was a severe economic crisis in 2001-02 that led to violent public protests and the resignation of several interim presidents.",
         "demographics": {
             "lifeExpectancy": "76.56 years",
@@ -308,83 +314,48 @@
             "airportsPaved": "4"
         }
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+    {
+        "dialingCode": "+91",
+        "iso2Code": "IN",
+        "iso3Code": "IND",
+        "capital": "New Delhi",
+        "mainLanguage": "English",
+        "currency": "Rupee (INR)",
+        "geography": {
+            "continent": "Asia",
+            "location": "Southern Asia bordering the Arabian Sea and the Bay of Bengal between Burma and Pakistan",
+            "land": "3,287,590 km2",
+            "terrain": "Upland plain (Deccan Plateau) in south flat to rolling plain along the Ganges deserts in west Himalayas in north",
+            "climate": "Varies from tropical monsoon in south to temperate in north",
+            "naturalHazards": "Upland plain (Deccan Plateau) in south flat to rolling plain along the Ganges deserts in west Himalayas in north",
+            "note": "Dominates South Asian subcontinent; near important Indian Ocean trade routes; Kanchenjunga third tallest mountain in the world lies on the border with Nepal"
+        },
+        "neighbouringCountries": [
+            "Bangladesh",
+            "Bhutan",
+            "China",
+            "Myanmar",
+            "Nepal",
+            "Pakistan"
+        ],
+        "history": "Aryan tribes from the northwest infiltrated onto the Indian subcontinent about 1500 B.C.; their merger with the earlier Dravidian inhabitants created the classical Indian culture. The Maurya Empire of the 4th and 3rd centuries B.C. - which reached its zenith under ASHOKA - united much of South Asia. The Golden Age ushered in by the Gupta dynasty (4th to 6th centuries A.D.) saw a flowering of Indian science art and culture. Arab incursions starting in the 8th century and Turkic in the 12th were followed by those of European traders beginning in the late 15th century. By the 19th century Britain had assumed political control of virtually all Indian lands. Indian armed forces in the British army played a vital role in both World Wars. Nonviolent resistance to British colonialism led by Mohandas GANDHI and Jawaharlal NEHRU brought independence in 1947. The subcontinent was divided into the secular state of India and the smaller Muslim state of Pakistan. A third war between the two countries in 1971 resulted in East Pakistan becoming the separate nation of Bangladesh. India's nuclear weapons testing in 1998 caused Pakistan to conduct its own tests that same year. Despite impressive gains in economic investment and output India faces pressing problems such as significant overpopulation environmental degradation extensive poverty and widespread corruption.",
+        "demographics": {
+            "lifeExpectancy": "69.89 years",
+            "medianAge": "25.3 years",
+            "birthRate": "21.76 births/1,000 population",
+            "deathRate": "6.23 births/1,000 population",
+            "sexRatio": "0.9 male(s)/female",
+            "literacy": "61.0%"
+        },
+        "transportation": {
+            "roadways": "3.3 million km",
+            "railways": "63327 km",
+            "airports": "345",
+            "waterways": "14500 km",
+            "heliports": "30",
+            "airportsPaved": "16"
+        }
+    },
     {
         "dialingCode": "+27",
         "iso2Code": "ZA",

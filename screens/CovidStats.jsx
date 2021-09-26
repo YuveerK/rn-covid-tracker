@@ -15,6 +15,36 @@ import { FontAwesome5 } from "@expo/vector-icons";
 const CovidStats = ({ route, navigation }) => {
   const { itemId, otherParam, capital } = route.params;
   const [covidData, setCovidData] = useState([]);
+  const [vaccineData, setVaccineData] = useState([]);
+  let [data, setData] = useState([]);
+  let [dataDate, setDataDate] = useState([]);
+
+  const buildChartData = (data) => {
+    let chartData = [];
+    let lastDataPoint;
+    for (let date in data.cases) {
+      if (lastDataPoint) {
+        let newDataPoint = data["cases"][date] - lastDataPoint;
+        chartData.push(newDataPoint);
+      }
+      lastDataPoint = data["cases"][date];
+    }
+    return chartData;
+  };
+
+  const buildChartDateData = (data) => {
+    let chartData = [];
+    let lastDataPoint;
+    for (let date in data.cases) {
+      if (lastDataPoint) {
+        let newDataPoint = date;
+        chartData.push(newDataPoint);
+      }
+      lastDataPoint = data["cases"][date];
+    }
+    return chartData;
+  };
+
   useEffect(() => {
     const test = async () => {
       await fetch(
@@ -22,12 +52,37 @@ const CovidStats = ({ route, navigation }) => {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           setCovidData(data);
+        });
+
+      const url2 = `https://disease.sh/v3/covid-19/historical/${itemId}?lastdays=30`;
+
+      await fetch(url2)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          let chartData = buildChartData(data.timeline);
+          let chartDateData = buildChartDateData(data.timeline);
+          setDataDate(chartDateData);
+          setData(chartData);
         });
     };
     test();
   }, []);
+
+  useEffect(() => {
+    const test = async () => {
+      await fetch(`https://disease.sh/v3/covid-19/vaccine/coverage/countries/${itemId}?lastdays=5&fullData=false
+    `)
+        .then((response) => response.json())
+        .then((data) => {
+          setVaccineData(data.timeline);
+        });
+    };
+    test();
+  }, []);
+
   return (
     <ScrollView style={styles.contentContainer}>
       <View style={styles.card}>
@@ -56,45 +111,52 @@ const CovidStats = ({ route, navigation }) => {
         <Text>{covidData.tests}</Text>
       </View>
 
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          height: 500,
+          padding: 15,
+        }}
+      >
         <Text>Bezier Line Chart</Text>
-        <LineChart
-          data={{
-            labels: ["January", "February", "March", "April", "May", "June"],
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                ],
+
+        {data?.length > 0 && (
+          <LineChart
+            data={{
+              datasets: [
+                {
+                  data: data,
+                },
+              ],
+            }}
+            width={Dimensions.get("window").width} // from react-native
+            height={500}
+            yAxisInterval={1} // optional, defaults to 1
+            chartConfig={{
+              backgroundGradientFrom: "#000000",
+              backgroundGradientFromOpacity: 9,
+              backgroundGradientTo: "#000000",
+              backgroundGradientToOpacity: 0.5,
+              color: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
+              strokeWidth: 0.9, // optional, default 3
+              barPercentage: 0.5,
+              useShadowColorFromDataset: false, // optional
+              propsForHorizontalLabels: {
+                fontSize: 7,
               },
-            ],
-          }}
-          width={Dimensions.get("window").width - 15} // from react-native
-          height={200}
-          yAxisLabel="$"
-          yAxisSuffix="k"
-          yAxisInterval={1} // optional, defaults to 1
-          chartConfig={{
-            backgroundGradientFrom: "#000000",
-            backgroundGradientFromOpacity: 9,
-            backgroundGradientTo: "#000000",
-            backgroundGradientToOpacity: 0.5,
-            color: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
-            strokeWidth: 0.9, // optional, default 3
-            barPercentage: 0.5,
-            useShadowColorFromDataset: false, // optional
-          }}
-          bezier
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
+              propsForHorizontalLabels: {
+                fontSize: 15,
+                transform: [{ rotate: "90deg" }],
+              },
+              decimalPlaces: 0,
+            }}
+            bezier
+            style={{
+              marginVertical: 8,
+            }}
+          />
+        )}
       </View>
     </ScrollView>
   );
