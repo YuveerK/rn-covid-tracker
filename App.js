@@ -4,8 +4,10 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { Ionicons } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 import Home from "./screens/Home";
 import CovidStats from "./screens/CovidStats";
@@ -14,6 +16,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CovidScreen from "./screens/CovidScreen";
 import VaccineStatsDetails from "./screens/VaccineStatsDetails";
 import CasesGraphScreen from "./screens/CasesGraphScreen";
+import MapScreen from "./screens/MapScreen";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -37,6 +40,17 @@ export default function App() {
         <HomeStack.Screen
           name="VaccineDetailsScreen"
           component={VaccineStatsDetails}
+        />
+      </HomeStack.Navigator>
+    );
+  }
+
+  function MapStackScreen() {
+    return (
+      <HomeStack.Navigator>
+        <HomeStack.Screen
+          name="Covid 19 Cases: Heatmap"
+          component={MapScreen}
         />
       </HomeStack.Navigator>
     );
@@ -68,6 +82,17 @@ export default function App() {
           options={{
             tabBarIcon: ({ color }) => (
               <Fontisto name="injection-syringe" size={24} color="black" />
+            ),
+            tabBarActiveTintColor: "#e91e63",
+          }}
+        />
+
+        <Tab.Screen
+          name="Covid Map"
+          component={MapStackScreen}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Feather name="map" size={24} color="black" />
             ),
             tabBarActiveTintColor: "#e91e63",
           }}
