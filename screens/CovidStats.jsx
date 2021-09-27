@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View, Dimensions } from "react-native";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
+
 
 import { Fontisto } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const CovidStats = ({ route, navigation }) => {
   const { itemId, otherParam, capital } = route.params;
   const [covidData, setCovidData] = useState([]);
@@ -84,17 +78,30 @@ const CovidStats = ({ route, navigation }) => {
   }, []);
 
   return (
-    <ScrollView style={styles.contentContainer}>
-      <View style={styles.card}>
+    <ScrollView
+      style={{
+        width: "100%",
+      }}
+    >
+      <TouchableOpacity style={styles.card}>
         <Fontisto name="test-tube" size={24} color="#9c9c9c" />
         <Text>Tests conducted as of Today</Text>
         <Text>{covidData.tests}</Text>
-      </View>
-      <View style={styles.card}>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => {
+          /* 1. Navigate to the Details route with params */
+          navigation.navigate("CasesGraph", {
+            data: data
+          });
+        }}
+      >
         <AntDesign name="adduser" size={24} color="#ffb24d" />
         <Text>Covid-19 Cases Today</Text>
         <Text>{covidData.todayCases}</Text>
-      </View>
+      </TouchableOpacity>
       <View style={styles.card}>
         <FontAwesome5 name="heartbeat" size={24} color="red" />
         <Text>Covid-19 Deaths Today</Text>
@@ -111,53 +118,7 @@ const CovidStats = ({ route, navigation }) => {
         <Text>{covidData.tests}</Text>
       </View>
 
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          height: 500,
-          padding: 15,
-        }}
-      >
-        <Text>Bezier Line Chart</Text>
-
-        {data?.length > 0 && (
-          <LineChart
-            data={{
-              datasets: [
-                {
-                  data: data,
-                },
-              ],
-            }}
-            width={Dimensions.get("window").width} // from react-native
-            height={500}
-            yAxisInterval={1} // optional, defaults to 1
-            chartConfig={{
-              backgroundGradientFrom: "#000000",
-              backgroundGradientFromOpacity: 9,
-              backgroundGradientTo: "#000000",
-              backgroundGradientToOpacity: 0.5,
-              color: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
-              strokeWidth: 0.9, // optional, default 3
-              barPercentage: 0.5,
-              useShadowColorFromDataset: false, // optional
-              propsForHorizontalLabels: {
-                fontSize: 7,
-              },
-              propsForHorizontalLabels: {
-                fontSize: 15,
-                transform: [{ rotate: "90deg" }],
-              },
-              decimalPlaces: 0,
-            }}
-            bezier
-            style={{
-              marginVertical: 8,
-            }}
-          />
-        )}
-      </View>
+      
     </ScrollView>
   );
 };
@@ -165,13 +126,8 @@ const CovidStats = ({ route, navigation }) => {
 export default CovidStats;
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    width: "100%",
-
-    marginBottom: 15,
-  },
   card: {
-    width: "100%",
+    width: "95%",
     height: 150,
     backgroundColor: "white",
     padding: 15,

@@ -13,6 +13,7 @@ import VaccineStats from "./screens/VaccineStats";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CovidScreen from "./screens/CovidScreen";
 import VaccineStatsDetails from "./screens/VaccineStatsDetails";
+import CasesGraphScreen from "./screens/CasesGraphScreen";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -24,7 +25,7 @@ export default function App() {
       <HomeStack.Navigator>
         <HomeStack.Screen name="HomeScreen" component={Home} />
         <HomeStack.Screen name="Covid" component={CovidStats} />
-        <HomeStack.Screen name="Vaccine" component={VaccineStats} />
+        <HomeStack.Screen name="CasesGraph" component={CasesGraphScreen} />
       </HomeStack.Navigator>
     );
   }
@@ -33,7 +34,10 @@ export default function App() {
     return (
       <HomeStack.Navigator>
         <HomeStack.Screen name="VaccineScreen" component={VaccineStats} />
-        <HomeStack.Screen name="VaccineDetailsScreen" component={VaccineStatsDetails} />
+        <HomeStack.Screen
+          name="VaccineDetailsScreen"
+          component={VaccineStatsDetails}
+        />
       </HomeStack.Navigator>
     );
   }
