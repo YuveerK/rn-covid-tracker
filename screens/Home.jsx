@@ -11,6 +11,7 @@ import { Picker } from "@react-native-picker/picker";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import FeedContent from "../components/Home/FeedContent";
+import WorldWideFeed from "../components/Home/WorldWideFeed";
 const Home = ({ navigation }) => {
   const [selectedCountry, setSelectedCountry] = useState("World Wide");
   const [countryList, setCountryList] = useState([]);
@@ -60,7 +61,9 @@ const Home = ({ navigation }) => {
   };
 
   return (
-    <View style={{ padding: 15 }}>
+    <View
+      style={{ padding: 15, marginTop: 50, backgroundColor: "white", flex: 1 }}
+    >
       <Picker
         selectedValue={selectedCountry}
         onValueChange={(itemValue, index) => onCountryChange(itemValue, index)}
@@ -68,7 +71,8 @@ const Home = ({ navigation }) => {
         style={{
           width: "100%",
           height: 50,
-          backgroundColor: "#d6d6d6",
+          backgroundColor: "#eee",
+          borderRadius: 20,
         }}
       >
         <Picker.Item label="World Wide" value="World Wide" />
@@ -81,7 +85,7 @@ const Home = ({ navigation }) => {
         ))}
       </Picker>
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             width: "100%",
@@ -103,10 +107,14 @@ const Home = ({ navigation }) => {
             />
           )}
 
-          <FeedContent
-            selectedCountry={selectedCountry}
-            navigation={navigation}
-          />
+          {selectedCountry !== "World Wide" ? (
+            <FeedContent
+              selectedCountry={selectedCountry}
+              navigation={navigation}
+            />
+          ) : (
+            <WorldWideFeed />
+          )}
         </View>
       </ScrollView>
     </View>

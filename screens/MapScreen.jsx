@@ -16,6 +16,7 @@ const MapScreen = () => {
     latitudeDelta: LATITUDE_DELTA,
     longitudeDelta: LONGITUDE_DELTA,
   });
+  const [usData, setUsData] = useState([]);
 
   useEffect(() => {
     const getCoords = async () => {
@@ -34,17 +35,36 @@ const MapScreen = () => {
     getCoords();
   }, []);
 
-  coordinates.map((cord, index) => console.log(cord.longitude));
+  useEffect(() => {
+    const getCoords = async () => {
+      await fetch("https://disease.sh/v3/covid-19/jhucsse")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          let countryLists = data.map((country) => ({
+            latitude: Number(country.coordinates.latitude),
+            longitude: Number(country.coordinates.longitude),
+            weight: Math.sqrt(country.stats.confirmed) * 100,
+            cases: country.stats.confirmed,
+          }));
+          setUsData(countryLists);
+        });
+    };
+    getCoords();
+  }, []);
+
+  const newData = usData.concat(coordinates);
+  console.log(usData);
   return (
     <View style={styles.container}>
       <MapView
         style={{ alignSelf: "stretch", height: "100%" }}
         region={mapRegion}
       >
-        {coordinates?.length > 0 && (
+        {usData?.length > 0 && (
           <Heatmap
-            points={coordinates}
-            radius={40}
+            points={usData}
+            radius={35}
             opacity={1}
             gradient={{
               colors: ["blue", "green", "yellow", "red"],
@@ -54,7 +74,7 @@ const MapScreen = () => {
           />
         )}
 
-        {coordinates?.length > 0 &&
+        {/* {coordinates?.length > 0 &&
           coordinates.map((cord, index) => (
             <Marker
               key={index}
@@ -65,7 +85,7 @@ const MapScreen = () => {
               title={"Covid-19 Cases"}
               description={`${cord.cases}`.toString()}
             />
-          ))}
+          ))} */}
       </MapView>
 
       <View

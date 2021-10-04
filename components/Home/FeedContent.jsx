@@ -16,6 +16,7 @@ const FeedContent = ({ selectedCountry, navigation }) => {
           }
         })
         .map((country, index) => (
+          
           <View
             key={index}
             style={{

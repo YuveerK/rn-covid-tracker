@@ -8,6 +8,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 import Home from "./screens/Home";
 import CovidStats from "./screens/CovidStats";
@@ -17,6 +18,7 @@ import CovidScreen from "./screens/CovidScreen";
 import VaccineStatsDetails from "./screens/VaccineStatsDetails";
 import CasesGraphScreen from "./screens/CasesGraphScreen";
 import MapScreen from "./screens/MapScreen";
+import Education from "./screens/Education";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -26,7 +28,13 @@ export default function App() {
   function HomeStackScreen() {
     return (
       <HomeStack.Navigator>
-        <HomeStack.Screen name="HomeScreen" component={Home} />
+        <HomeStack.Screen
+          name="HomeScreen"
+          component={Home}
+          options={{
+            headerShown: false,
+          }}
+        />
         <HomeStack.Screen name="Covid" component={CovidStats} />
         <HomeStack.Screen name="CasesGraph" component={CasesGraphScreen} />
       </HomeStack.Navigator>
@@ -52,6 +60,14 @@ export default function App() {
           name="Covid 19 Cases: Heatmap"
           component={MapScreen}
         />
+      </HomeStack.Navigator>
+    );
+  }
+
+  function EducationStackScreen() {
+    return (
+      <HomeStack.Navigator>
+        <HomeStack.Screen name="Education" component={Education} />
       </HomeStack.Navigator>
     );
   }
@@ -97,7 +113,16 @@ export default function App() {
             tabBarActiveTintColor: "#e91e63",
           }}
         />
-        <Tab.Screen name="Covid Statistics" component={CovidScreen} />
+        <Tab.Screen
+          name="Information"
+          component={EducationStackScreen}
+          options={{
+            tabBarIcon: () => (
+              <SimpleLineIcons name="graduation" size={24} color="black" />
+            ),
+            tabBarActiveTintColor: "#e91e63",
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
