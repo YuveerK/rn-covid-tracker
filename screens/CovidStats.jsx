@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View, Dimensions } from "react-native";
 
-
 import { Fontisto } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import NumberFormat from "react-number-format";
+
 const CovidStats = ({ route, navigation }) => {
   const { itemId, otherParam, capital } = route.params;
   const [covidData, setCovidData] = useState([]);
@@ -78,70 +79,104 @@ const CovidStats = ({ route, navigation }) => {
   }, []);
 
   return (
-    <ScrollView
-      style={{
-        width: "100%",
-      }}
-    >
+    <View style={styles.cardContainer}>
       <TouchableOpacity style={styles.card}>
         <Fontisto name="test-tube" size={24} color="#9c9c9c" />
-        <Text>Tests conducted as of Today</Text>
-        <Text>{covidData.tests}</Text>
+        <Text style={styles.cardHeading}>Tests conducted as of Today</Text>
+        <NumberFormat
+          value={covidData.tests}
+          displayType={"text"}
+          thousandSeparator={true}
+          renderText={(formattedValue) => (
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              {formattedValue}
+            </Text>
+          )} // <--- Don't forget this!
+        />
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.card}
         onPress={() => {
-          /* 1. Navigate to the Details route with params */
           navigation.navigate("CasesGraph", {
-            data: data
+            data: data,
           });
         }}
       >
         <AntDesign name="adduser" size={24} color="#ffb24d" />
-        <Text>Covid-19 Cases Today</Text>
-        <Text>{covidData.todayCases}</Text>
+        <Text style={styles.cardHeading}>Covid-19 Cases Today</Text>
+        <NumberFormat
+          value={covidData.todayCases}
+          displayType={"text"}
+          thousandSeparator={true}
+          renderText={(formattedValue) => (
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              {formattedValue}
+            </Text>
+          )} // <--- Don't forget this!
+        />
       </TouchableOpacity>
+
       <View style={styles.card}>
         <FontAwesome5 name="heartbeat" size={24} color="red" />
-        <Text>Covid-19 Deaths Today</Text>
-        <Text>{covidData.todayDeaths}</Text>
-      </View>
-      <View style={styles.card}>
-        <FontAwesome5 name="praying-hands" size={24} color="green" />
-        <Text>Covid-19 Recoveries Today</Text>
-        <Text>{covidData.todayRecovered}</Text>
-      </View>
-      <View style={styles.card}>
-        <Fontisto name="injection-syringe" size={24} color="blue" />
-        <Text>Covid-19 Vaccines as of Today</Text>
-        <Text>{covidData.tests}</Text>
+        <Text style={styles.cardHeading}>Covid-19 Deaths Today</Text>
+        <NumberFormat
+          value={covidData.todayDeaths}
+          displayType={"text"}
+          thousandSeparator={true}
+          renderText={(formattedValue) => (
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              {formattedValue}
+            </Text>
+          )} // <--- Don't forget this!
+        />
       </View>
 
-      
-    </ScrollView>
+      <View style={styles.card}>
+        <FontAwesome5 name="praying-hands" size={24} color="green" />
+        <Text style={styles.cardHeading}>Covid-19 Recoveries Today</Text>
+        <NumberFormat
+          value={covidData.todayRecovered}
+          displayType={"text"}
+          thousandSeparator={true}
+          renderText={(formattedValue) => (
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              {formattedValue}
+            </Text>
+          )} // <--- Don't forget this!
+        />
+      </View>
+
+      <View style={styles.card}>
+        <Fontisto name="injection-syringe" size={24} color="blue" />
+        <Text style={styles.cardHeading}>Covid-19 Vaccines as of Today</Text>
+        <Text>{covidData.tests}</Text>
+      </View>
+    </View>
   );
 };
 
 export default CovidStats;
 
 const styles = StyleSheet.create({
+  cardContainer: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    backgroundColor: "red",
+    justifyContent: "center",
+  },
   card: {
-    width: "95%",
+    width: 150,
     height: 150,
+    margin: 20,
     backgroundColor: "white",
-    padding: 15,
+    padding: 10,
+    justifyContent: "space-around",
     alignItems: "center",
-    justifyContent: "space-evenly",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.0,
-
-    elevation: 1,
-    marginVertical: 15,
+    borderRadius: 20,
+  },
+  cardHeading: {
+    textAlign: "center",
   },
 });

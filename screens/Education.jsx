@@ -116,6 +116,7 @@ export default Education;
 const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
+    backgroundColor: "white",
   },
   contentContainer: {
     padding: 20,
@@ -134,6 +135,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 20,
+    resizeMode: "contain",
   },
   listItemRight: {
     flex: 1,
