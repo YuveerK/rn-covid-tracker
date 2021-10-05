@@ -59,8 +59,7 @@ const VaccineStats = ({ navigation }) => {
               <View
                 style={{
                   width: 50,
-                  borderWidth: 1,
-                  borderColor: "lightgrey",
+
                   height: 100,
                 }}
               ></View>
@@ -203,13 +202,14 @@ const styles = StyleSheet.create({
   tableHeaders: {
     flexDirection: "row",
     alignItems: "center",
+    borderBottomColor: "lightgrey",
+    borderBottomWidth: 1,
   },
   tableHeaderHeading: {
     width: 150,
     height: 100,
     padding: 20,
-    borderWidth: 1,
-    borderColor: "lightgrey",
+
     alignItems: "center",
     justifyContent: "center",
   },
@@ -220,15 +220,12 @@ const styles = StyleSheet.create({
   },
   rowContent: {
     width: 150,
-    borderWidth: 1,
-    borderColor: "lightgrey",
+
     alignItems: "center",
     justifyContent: "center",
     padding: 5,
   },
   icon: {
-    borderWidth: 1,
-    borderColor: "lightgrey",
     width: 50,
     justifyContent: "center",
     alignItems: "center",
