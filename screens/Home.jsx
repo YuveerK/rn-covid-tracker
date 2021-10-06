@@ -12,6 +12,7 @@ import { Picker } from "@react-native-picker/picker";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import FeedContent from "../components/Home/FeedContent";
 import WorldWideFeed from "../components/Home/WorldWideFeed";
+import CountryFeed from "../components/Home/CountryFeed";
 const Home = ({ navigation }) => {
   const [selectedCountry, setSelectedCountry] = useState("World Wide");
   const [countryList, setCountryList] = useState([]);
@@ -108,10 +109,11 @@ const Home = ({ navigation }) => {
           )}
 
           {selectedCountry !== "World Wide" ? (
-            <FeedContent
-              selectedCountry={selectedCountry}
-              navigation={navigation}
-            />
+            // <FeedContent
+            //   selectedCountry={selectedCountry}
+            //   navigation={navigation}
+            // />
+            <CountryFeed selectedCountry={selectedCountry}/>
           ) : (
             <WorldWideFeed />
           )}

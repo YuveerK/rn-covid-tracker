@@ -221,7 +221,6 @@ const styles = StyleSheet.create({
   rowContent: {
     width: 150,
 
-    alignItems: "center",
     justifyContent: "center",
     padding: 5,
   },

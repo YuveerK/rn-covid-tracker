@@ -9,12 +9,10 @@ import {
   StackedBarChart,
 } from "react-native-chart-kit";
 const Graph = ({ dataFeed }) => {
-  console.log(dataFeed);
   return (
     <View
       style={{
         alignItems: "center",
-        height: Dimensions.get("window").height,
         padding: 15,
       }}
     >
@@ -23,21 +21,26 @@ const Graph = ({ dataFeed }) => {
       {dataFeed?.length > 0 && (
         <LineChart
           data={{
+            labels: [
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+              20,
+            ],
+
             datasets: [
               {
                 data: dataFeed,
               },
             ],
           }}
-          width={Dimensions.get("window").width - 50} // from react-native
-          height={500}
+          verticalLabelRotation={90} //Degree to rotate
+          width={Dimensions.get("window").width - 40} // from react-native
+          height={250}
           yAxisInterval={1} // optional, defaults to 1
           chartConfig={{
-            backgroundGradientFrom: "#6eb9ff",
-            backgroundGradientFromOpacity: 9,
-            backgroundGradientTo: "#000000",
-            backgroundGradientToOpacity: 0.5,
-            color: (opacity = 0.5) => `rgba(255, 255, 255, ${opacity})`,
+            backgroundColor: "#1cc910",
+            backgroundGradientFrom: "#eff3ff",
+            backgroundGradientTo: "#efefef",
+            color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
             strokeWidth: 0.9, // optional, default 3
             barPercentage: 0.5,
             useShadowColorFromDataset: false, // optional
@@ -45,26 +48,27 @@ const Graph = ({ dataFeed }) => {
               fontSize: 7,
             },
             propsForHorizontalLabels: {
-              fontSize: 15,
+              fontSize: 9,
               transform: [{ rotate: "90deg" }],
+            },
+            propsForVerticalLabels: {
+              fontSize: 9,
+            },
+            propsForDots: {
+              r: "2",
+              strokeWidth: "1",
+              stroke: "rgba(255, 255, 255, 0.1)",
             },
             decimalPlaces: 0,
           }}
-          withHorizontalLabels={false}
           bezier
           style={{
             marginVertical: 8,
             borderRadius: 50,
           }}
-          hideLegend={true}
           style={{
-            width: "100%",
-            height: "100%",
-            paddingRight: 0,
-            borderRadius: 50,
-            paddingBottom: 0,
+            borderRadius: 10,
             alignItems: "center",
-            paddingTop: 20,
           }}
           withInnerLines={false}
         />

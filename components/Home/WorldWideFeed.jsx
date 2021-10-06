@@ -7,13 +7,23 @@ import {
   Text,
   TextInput,
   View,
+  Dimensions,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import NumberFormat from "react-number-format";
 import ProgressCircle from "react-native-progress-circle";
-
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart,
+} from "react-native-chart-kit";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import globalTable from "./GlobalTable";
+import GlobalTable from "./GlobalTable";
 const WorldWideFeed = () => {
   const [globalStats, setGlobalStats] = useState([]);
   const [globalGraph, setGlobalGraph] = useState([]);
@@ -37,11 +47,10 @@ const WorldWideFeed = () => {
   //get country stats
   useEffect(() => {
     const getCountries = async () => {
-      await fetch("https://disease.sh/v3/covid-19/countries")
+      await fetch("https://disease.sh/v3/covid-19/countries?sort=cases")
         .then((response) => response.json())
         .then((data) => {
-          const theData = sortedData(data);
-          setCountries(theData);
+          setCountries(data);
         });
     };
     getCountries();
@@ -87,6 +96,12 @@ const WorldWideFeed = () => {
     return chartData;
   };
 
+  const genRandomColor = () => {
+    let color = "";
+    color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+    return color;
+  };
+
   const sortedData = (data) => {
     const theSortedData = [...data];
 
@@ -108,7 +123,6 @@ const WorldWideFeed = () => {
     ((globalStats.deaths / globalStats.cases) * 100).toFixed(2)
   );
 
-  console.log(globalStats);
   //============================================================================================================================================
   return (
     <View style={styles.container}>
@@ -190,200 +204,7 @@ const WorldWideFeed = () => {
         </View>
       </View>
 
-      <View style={styles.tableContainer}>
-        <View style={styles.searchContainer}>
-          <View>
-            <AntDesign name="search1" size={24} color="black" />
-          </View>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeText}
-            value={text}
-          />
-        </View>
-        <ScrollView horizontal={true}>
-          <ScrollView nestedScrollEnabled={true}>
-            <View style={styles.tableHeader}>
-              <View style={styles.tableHeaderData}>
-                <Text>Country</Text>
-              </View>
-              <View style={styles.tableHeaderData}>
-                <Text>Cases</Text>
-              </View>
-              <View style={styles.tableHeaderData}>
-                <Text>Today Cases</Text>
-              </View>
-              <View style={styles.tableHeaderData}>
-                <Text>Deaths</Text>
-              </View>
-              <View style={styles.tableHeaderData}>
-                <Text>Today Deaths</Text>
-              </View>
-              <View style={styles.tableHeaderData}>
-                <Text>Recovered</Text>
-              </View>
-              <View style={styles.tableHeaderData}>
-                <Text>Today Recovered</Text>
-              </View>
-              <View style={styles.tableHeaderData}>
-                <Text>Active</Text>
-              </View>
-              <View style={styles.tableHeaderData}>
-                <Text>Critical</Text>
-              </View>
-
-              <View style={styles.tableHeaderData}>
-                <Text>Population</Text>
-              </View>
-            </View>
-
-            {countries?.length === 0 ? (
-              <ActivityIndicator
-                size="large"
-                color="#00ff00"
-                animating={true}
-              />
-            ) : (
-              countries
-                .filter((country) => {
-                  if (text === "") {
-                    return country;
-                  } else if (
-                    country.country?.toLowerCase().includes(text?.toLowerCase())
-                  ) {
-                    return country;
-                  }
-                })
-                .map((country, index) => (
-                  <View style={styles.tableRow} key={index}>
-                    <View style={styles.tableRowData}>
-                      <Image
-                        source={{
-                          uri: `${country.countryInfo.flag}`,
-                        }}
-                        style={styles.countryFlag}
-                      />
-                      <Text>
-                        {index + 1}. {country.country}
-                      </Text>
-                    </View>
-
-                    <View style={styles.tableRowData}>
-                      <NumberFormat
-                        value={country.cases}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        renderText={(formattedValue) => (
-                          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                            {formattedValue}
-                          </Text>
-                        )} // <--- Don't forget this!
-                      />
-                    </View>
-                    <View style={styles.tableRowData}>
-                      <NumberFormat
-                        value={country.todayCases}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        renderText={(formattedValue) => (
-                          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                            {formattedValue}
-                          </Text>
-                        )} // <--- Don't forget this!
-                      />
-                    </View>
-                    <View style={styles.tableRowData}>
-                      <NumberFormat
-                        value={country.deaths}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        renderText={(formattedValue) => (
-                          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                            {formattedValue}
-                          </Text>
-                        )} // <--- Don't forget this!
-                      />
-                    </View>
-                    <View style={styles.tableRowData}>
-                      <NumberFormat
-                        value={country.todayDeaths}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        renderText={(formattedValue) => (
-                          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                            {formattedValue}
-                          </Text>
-                        )} // <--- Don't forget this!
-                      />
-                    </View>
-                    <View style={styles.tableRowData}>
-                      <NumberFormat
-                        value={country.recovered}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        renderText={(formattedValue) => (
-                          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                            {formattedValue}
-                          </Text>
-                        )} // <--- Don't forget this!
-                      />
-                    </View>
-                    <View style={styles.tableRowData}>
-                      <NumberFormat
-                        value={country.todayRecovered}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        renderText={(formattedValue) => (
-                          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                            {formattedValue}
-                          </Text>
-                        )} // <--- Don't forget this!
-                      />
-                    </View>
-                    <View style={styles.tableRowData}>
-                      <NumberFormat
-                        value={country.active}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        renderText={(formattedValue) => (
-                          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                            {formattedValue}
-                          </Text>
-                        )} // <--- Don't forget this!
-                      />
-                    </View>
-                    <View style={styles.tableRowData}>
-                      <NumberFormat
-                        value={country.critical}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        renderText={(formattedValue) => (
-                          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                            {formattedValue}
-                          </Text>
-                        )} // <--- Don't forget this!
-                      />
-                    </View>
-                    <View style={styles.tableRowData}>
-                      <NumberFormat
-                        value={country.population}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        renderText={(formattedValue) => (
-                          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                            {formattedValue}
-                          </Text>
-                        )} // <--- Don't forget this!
-                      />
-                    </View>
-                  </View>
-                ))
-            )}
-          </ScrollView>
-        </ScrollView>
-      </View>
-
-      {/* <Graph dataFeed={globalGraph} /> */}
+      <GlobalTable countries={countries} />
 
       <View style={styles.continentStatsContainer}>
         <View style={styles.heading}>
@@ -404,6 +225,35 @@ const WorldWideFeed = () => {
                 </Text>
               )} // <--- Don't forget this!
             />
+            <View
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                marginTop: 20,
+              }}
+            >
+              <ProgressCircle
+                percent={Number(
+                  ((continent.cases / continent.population) * 100).toFixed(2)
+                )}
+                radius={50}
+                borderWidth={3}
+                color={genRandomColor()}
+                shadowColor="#ebebeb"
+                bgColor="#fff"
+              >
+                <Text style={{ fontSize: 18, textAlign: "center" }}>
+                  {Number(
+                    ((continent.cases / continent.population) * 100).toFixed(2)
+                  )}
+                  % infected
+                </Text>
+              </ProgressCircle>
+            </View>
           </View>
         ))}
       </View>
@@ -444,6 +294,8 @@ const WorldWideFeed = () => {
           </Text>
         </ProgressCircle>
       </View>
+
+      
     </View>
   );
 };
@@ -465,6 +317,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    paddingVertical: 15,
   },
   input: {
     width: "80%",
@@ -516,7 +369,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: "40%",
-    margin: 15,
+    margin: 10,
     borderRadius: 10,
     padding: 10,
     borderWidth: 1,
@@ -551,5 +404,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 20,
     borderRadius: 20,
+    justifyContent: "center",
   },
 });
