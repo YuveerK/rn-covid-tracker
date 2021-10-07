@@ -76,8 +76,9 @@ const CountryFeed = ({ selectedCountry }) => {
           </ProgressCircle>
           {tested > 100 && (
             <Text>
-              There are {" "} <FormatNumber number={country.tests - country.population} /> {" "}
-              more people than the total population who have been tested indicating
+              There are{" "}
+              <FormatNumber number={country.tests - country.population} /> more
+              people than the total population who have been tested indicating
               that tourists and travellers have been tested on their travels
             </Text>
           )}
