@@ -86,7 +86,7 @@ const Home = ({ navigation }) => {
         ))}
       </Picker>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
         <View
           style={{
             width: "100%",
@@ -113,9 +113,9 @@ const Home = ({ navigation }) => {
             //   selectedCountry={selectedCountry}
             //   navigation={navigation}
             // />
-            <CountryFeed selectedCountry={selectedCountry}/>
+            <CountryFeed selectedCountry={selectedCountry} />
           ) : (
-            <WorldWideFeed />
+            <WorldWideFeed navigation={navigation} />
           )}
         </View>
       </ScrollView>

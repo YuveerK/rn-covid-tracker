@@ -8,6 +8,7 @@ import {
   TextInput,
   View,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import NumberFormat from "react-number-format";
@@ -24,7 +25,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import globalTable from "./GlobalTable";
 import GlobalTable from "./GlobalTable";
-const WorldWideFeed = () => {
+const WorldWideFeed = ({ navigation }) => {
   const [globalStats, setGlobalStats] = useState([]);
   const [globalGraph, setGlobalGraph] = useState([]);
   const [countries, setCountries] = useState([]);
@@ -206,6 +207,26 @@ const WorldWideFeed = () => {
 
       <GlobalTable countries={countries} />
 
+      <TouchableOpacity
+        style={{
+          width: "100%",
+          justifyContent: "center",
+          backgroundColor: "#64f83f",
+          alignItems: "center",
+          padding: 20,
+          marginTop: 20,
+          borderRadius: 20,
+        }}
+        onPress={() => {
+          /* 1. Navigate to the Details route with params */
+          navigation.navigate("Test", {
+            countryInfo: countries
+          });
+        }}
+      >
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>View Full Data</Text>
+      </TouchableOpacity>
+
       <View style={styles.continentStatsContainer}>
         <View style={styles.heading}>
           <Text style={styles.globalHeading}>Continent Stats</Text>
@@ -294,8 +315,6 @@ const WorldWideFeed = () => {
           </Text>
         </ProgressCircle>
       </View>
-
-      
     </View>
   );
 };

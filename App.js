@@ -19,6 +19,7 @@ import VaccineStatsDetails from "./screens/VaccineStatsDetails";
 import CasesGraphScreen from "./screens/CasesGraphScreen";
 import MapScreen from "./screens/MapScreen";
 import Education from "./screens/Education";
+import Test from "./screens/Test";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -37,6 +38,7 @@ export default function App() {
         />
         <HomeStack.Screen name="Covid" component={CovidStats} />
         <HomeStack.Screen name="CasesGraph" component={CasesGraphScreen} />
+        <HomeStack.Screen name="Test" component={Test} />
       </HomeStack.Navigator>
     );
   }
@@ -44,11 +46,21 @@ export default function App() {
   function VaccineStackScreen() {
     return (
       <HomeStack.Navigator>
-        <HomeStack.Screen name="VaccineScreen" component={VaccineStats} />
+        <HomeStack.Screen
+          name=" Vaccine Candidates in Development"
+          component={VaccineStats}
+        />
         <HomeStack.Screen
           name="VaccineDetailsScreen"
           component={VaccineStatsDetails}
         />
+      </HomeStack.Navigator>
+    );
+  }
+  function TestStackScreen() {
+    return (
+      <HomeStack.Navigator>
+        <HomeStack.Screen name="Test" component={Test} />
       </HomeStack.Navigator>
     );
   }
@@ -116,6 +128,17 @@ export default function App() {
         <Tab.Screen
           name="Information"
           component={EducationStackScreen}
+          options={{
+            tabBarIcon: () => (
+              <SimpleLineIcons name="graduation" size={24} color="black" />
+            ),
+            tabBarActiveTintColor: "#e91e63",
+          }}
+        />
+
+        <Tab.Screen
+          name="Test Screen"
+          component={Test}
           options={{
             tabBarIcon: () => (
               <SimpleLineIcons name="graduation" size={24} color="black" />
