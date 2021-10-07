@@ -12,20 +12,13 @@ const Graph = ({ dataFeed }) => {
   return (
     <View
       style={{
-        alignItems: "center",
         padding: 15,
       }}
     >
-      <Text>Covid-19 Cases for the past 30 days</Text>
-
       {dataFeed?.length > 0 && (
         <LineChart
+          onDataPointClick={({ index }) => console.log(dataFeed[index])}
           data={{
-            labels: [
-              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-              20,
-            ],
-
             datasets: [
               {
                 data: dataFeed,
@@ -55,7 +48,7 @@ const Graph = ({ dataFeed }) => {
               fontSize: 9,
             },
             propsForDots: {
-              r: "2",
+              r: "1",
               strokeWidth: "1",
               stroke: "rgba(255, 255, 255, 0.1)",
             },

@@ -31,7 +31,6 @@ const WorldWideFeed = ({ navigation }) => {
   const [countries, setCountries] = useState([]);
   const [continents, setContinents] = useState([]);
   const [text, onChangeText] = useState("");
-
   //================================================================= Use Effects ==========================================================
   //get all stats world wide
   useEffect(() => {
@@ -123,6 +122,8 @@ const WorldWideFeed = ({ navigation }) => {
   let deathPercentage = Number(
     ((globalStats.deaths / globalStats.cases) * 100).toFixed(2)
   );
+
+  let color = genRandomColor();
 
   //============================================================================================================================================
   return (
@@ -220,7 +221,7 @@ const WorldWideFeed = ({ navigation }) => {
         onPress={() => {
           /* 1. Navigate to the Details route with params */
           navigation.navigate("Test", {
-            countryInfo: countries
+            countryInfo: countries,
           });
         }}
       >
@@ -234,7 +235,7 @@ const WorldWideFeed = ({ navigation }) => {
         {continents.map((continent, index) => (
           <View style={styles.card} key={index}>
             <View style={styles.headingContainer}>
-              <Text style={styles.cardHeading}>{continent.continent}</Text>
+              <Text style={{ color: color }}>{continent.continent}</Text>
             </View>
             <NumberFormat
               value={continent.cases}

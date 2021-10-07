@@ -38,12 +38,12 @@ export const buildRecoveredData = (data) => {
 export const buildVaccineData = (data) => {
   let chartData = [];
   let lastDataPoint;
-  for (let date in data.cases) {
+  for (let date in data.timeline) {
     if (lastDataPoint) {
-      let newDataPoint = data["cases"][date] - lastDataPoint;
+      let newDataPoint = data["timeline"][date];
       chartData.push(newDataPoint);
     }
-    lastDataPoint = data["cases"][date];
+    lastDataPoint = data["timeline"][date];
   }
   return chartData;
 };

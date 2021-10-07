@@ -135,17 +135,6 @@ export default function App() {
             tabBarActiveTintColor: "#e91e63",
           }}
         />
-
-        <Tab.Screen
-          name="Test Screen"
-          component={Test}
-          options={{
-            tabBarIcon: () => (
-              <SimpleLineIcons name="graduation" size={24} color="black" />
-            ),
-            tabBarActiveTintColor: "#e91e63",
-          }}
-        />
       </Tab.Navigator>
     </NavigationContainer>
   );
