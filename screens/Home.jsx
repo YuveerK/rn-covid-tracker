@@ -6,6 +6,7 @@ import {
   Text,
   View,
   Button,
+  Dimensions,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
@@ -13,7 +14,10 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import FeedContent from "../components/Home/FeedContent";
 import WorldWideFeed from "../components/Home/WorldWideFeed";
 import CountryFeed from "../components/Home/CountryFeed";
+import { StatusBar } from "expo-status-bar";
 const Home = ({ navigation }) => {
+  const windowWidth = Dimensions.get("window").width;
+
   const [selectedCountry, setSelectedCountry] = useState("World Wide");
   const [countryList, setCountryList] = useState([]);
   const [countryFlag, setCountryFlag] = useState(
@@ -63,29 +67,12 @@ const Home = ({ navigation }) => {
 
   return (
     <View
-      style={{ padding: 15, marginTop: 50, backgroundColor: "white", flex: 1 }}
+      style={{
+        backgroundColor: "#161C23",
+        flex: 1,
+      }}
     >
-      <Picker
-        selectedValue={selectedCountry}
-        onValueChange={(itemValue, index) => onCountryChange(itemValue, index)}
-        mode="dropdown"
-        style={{
-          width: "100%",
-          height: 50,
-          backgroundColor: "#eee",
-          borderRadius: 20,
-        }}
-      >
-        <Picker.Item label="World Wide" value="World Wide" />
-        {countryList.map((country, index) => (
-          <Picker.Item
-            label={country.country}
-            value={country.iso ? country.iso : country.country}
-            key={index}
-          />
-        ))}
-      </Picker>
-
+      <StatusBar backgroundColor="black" style="light" />
       <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
         <View
           style={{
@@ -94,29 +81,7 @@ const Home = ({ navigation }) => {
             alignItems: "center",
           }}
         >
-          {countryFlag && (
-            <Image
-              source={{
-                uri: `${countryFlag}`,
-              }}
-              style={{
-                width: 200,
-                height: 100,
-                resizeMode: "contain",
-                marginTop: 15,
-              }}
-            />
-          )}
-
-          {selectedCountry !== "World Wide" ? (
-            // <FeedContent
-            //   selectedCountry={selectedCountry}
-            //   navigation={navigation}
-            // />
-            <CountryFeed selectedCountry={selectedCountry} />
-          ) : (
-            <WorldWideFeed navigation={navigation} />
-          )}
+          <WorldWideFeed navigation={navigation} />
         </View>
       </ScrollView>
     </View>

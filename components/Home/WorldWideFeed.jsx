@@ -123,90 +123,310 @@ const WorldWideFeed = ({ navigation }) => {
     ((globalStats.deaths / globalStats.cases) * 100).toFixed(2)
   );
 
-  let color = genRandomColor();
+  let continentCases = Number(
+    ((continents.cases / continents.population) * 100).toFixed(2)
+  );
+  let continentdeaths = Number(
+    ((continents.deaths / continents.cases) * 100).toFixed(2)
+  );
+  let continentRecoveries = Number(
+    ((continents.recovered / continents.cases) * 100).toFixed(2)
+  );
+  let continentTests = Number(
+    ((continents.tests / continents.population) * 100).toFixed(2)
+  );
+  let continentCritical = Number(
+    ((continents.crtical / continents.cases) * 100).toFixed(2)
+  );
 
+  let color = genRandomColor();
+  console.log(continents);
   //============================================================================================================================================
   return (
     <View style={styles.container}>
-      <View style={styles.statsContainer}>
-        <View style={styles.card}>
-          <View style={styles.headingContainer}>
-            <Text style={styles.cardHeading}>Total Cases</Text>
-            <AntDesign name="adduser" size={24} color="#ffb24d" />
-          </View>
-          <NumberFormat
-            value={globalStats.cases}
-            displayType={"text"}
-            thousandSeparator={true}
-            renderText={(formattedValue) => (
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                {formattedValue}
-              </Text>
-            )} // <--- Don't forget this!
-          />
-        </View>
-
-        <View style={styles.card}>
-          <View style={styles.headingContainer}>
-            <Text style={styles.cardHeading}>Recovered</Text>
-            <FontAwesome5 name="praying-hands" size={24} color="green" />
-          </View>
-          <NumberFormat
-            value={globalStats.recovered}
-            displayType={"text"}
-            thousandSeparator={true}
-            renderText={(formattedValue) => (
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                {formattedValue}
-              </Text>
-            )} // <--- Don't forget this!
-          />
-        </View>
-
-        <View style={styles.card}>
-          <View style={styles.headingContainer}>
-            <Text style={styles.cardHeading}>Active Cases</Text>
-            <MaterialCommunityIcons
-              name="chart-line-variant"
-              size={24}
-              color="orange"
+      <Image
+        source={require("../../assets/home-banner.jpg")}
+        style={{ width: "100%", height: 250, resizeMode: "cover" }}
+      />
+      <View style={styles.theContainer}>
+        <Text style={styles.headingRoot}> Global </Text>
+        <View style={styles.statsContainer}>
+          <View style={styles.card}>
+            <View style={styles.headingContainer}>
+              <Text style={styles.cardHeading}>Total Cases</Text>
+              <AntDesign name="adduser" size={24} color="#ffb24d" />
+            </View>
+            <NumberFormat
+              value={globalStats.cases}
+              displayType={"text"}
+              thousandSeparator={true}
+              renderText={(formattedValue) => (
+                <Text style={{ fontSize: 20, color: "white" }}>
+                  {formattedValue}
+                </Text>
+              )} // <--- Don't forget this!
             />
           </View>
-          <NumberFormat
-            value={globalStats.active}
-            displayType={"text"}
-            thousandSeparator={true}
-            renderText={(formattedValue) => (
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                {formattedValue}
-              </Text>
-            )} // <--- Don't forget this!
-          />
-        </View>
 
-        <View style={styles.card}>
-          <View style={styles.headingContainer}>
-            <Text style={styles.cardHeading}>Deaths</Text>
-            <MaterialCommunityIcons
-              name="chart-line-variant"
-              size={24}
-              color="orange"
+          <View style={styles.card}>
+            <View style={styles.headingContainer}>
+              <Text style={styles.cardHeading}>Recovered</Text>
+              <FontAwesome5 name="praying-hands" size={18} color="green" />
+            </View>
+            <NumberFormat
+              value={globalStats.recovered}
+              displayType={"text"}
+              thousandSeparator={true}
+              renderText={(formattedValue) => (
+                <Text style={{ fontSize: 20, color: "white" }}>
+                  {formattedValue}
+                </Text>
+              )} // <--- Don't forget this!
             />
           </View>
-          <NumberFormat
-            value={globalStats.active}
-            displayType={"text"}
-            thousandSeparator={true}
-            renderText={(formattedValue) => (
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                {formattedValue}
-              </Text>
-            )} // <--- Don't forget this!
-          />
+
+          <View style={styles.card}>
+            <View style={styles.headingContainer}>
+              <Text style={styles.cardHeading}>Active Cases</Text>
+              <MaterialCommunityIcons
+                name="chart-line-variant"
+                size={24}
+                color="skyblue"
+              />
+            </View>
+            <NumberFormat
+              value={globalStats.active}
+              displayType={"text"}
+              thousandSeparator={true}
+              renderText={(formattedValue) => (
+                <Text style={{ fontSize: 20, color: "white" }}>
+                  {formattedValue}
+                </Text>
+              )} // <--- Don't forget this!
+            />
+          </View>
+
+          <View style={styles.card}>
+            <View style={styles.headingContainer}>
+              <Text style={styles.cardHeading}>Deaths</Text>
+              <FontAwesome5 name="heartbeat" size={18} color="red" />
+            </View>
+            <NumberFormat
+              value={globalStats.active}
+              displayType={"text"}
+              thousandSeparator={true}
+              renderText={(formattedValue) => (
+                <Text style={{ fontSize: 20, color: "white" }}>
+                  {formattedValue}
+                </Text>
+              )} // <--- Don't forget this!
+            />
+          </View>
         </View>
       </View>
 
-      <GlobalTable countries={countries} />
+      <View style={styles.theContainer}>
+        <View style={styles.continentStatsContainer}>
+          <View style={styles.heading}>
+            <Text style={styles.globalHeading}>Continent Stats</Text>
+          </View>
+          {continents.map((continent, index) => (
+            <View
+              style={[
+                styles.card,
+                {
+                  backgroundColor: "#161C23",
+                  width: "100%",
+                },
+              ]}
+              key={index}
+            >
+              <View style={styles.headingContainer}>
+                <Text style={{ color: "lightgrey" }}>
+                  {continent.continent}
+                </Text>
+              </View>
+
+              <View style={styles.casesContainer}>
+                <View style={styles.field}>
+                  <View style={styles.continentCard}>
+                    <Text style={styles.casesHeadingTextRoot}>Cases</Text>
+                    <NumberFormat
+                      value={continent.cases}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      renderText={(formattedValue) => (
+                        <Text style={{ fontSize: 20, color: "white" }}>
+                          {formattedValue}
+                        </Text>
+                      )} // <--- Don't forget this!
+                    />
+                    <View style={styles.circle}>
+                      <ProgressCircle
+                        percent={Number(
+                          (continent.cases / continent.population) * 100
+                        ).toFixed(2)}
+                        radius={40}
+                        borderWidth={2}
+                        color="#3399FF"
+                        shadowColor="#ebebeb"
+                        bgColor="#fff"
+                      >
+                        <Text style={{ fontSize: 20, textAlign: "center" }}>
+                          {Number(
+                            (continent.cases / continent.population) * 100
+                          ).toFixed(2)}
+                          %
+                        </Text>
+                      </ProgressCircle>
+                    </View>
+                  </View>
+
+                  <View style={styles.continentCard}>
+                    <Text style={styles.casesHeadingTextRoot}>Deaths</Text>
+                    <NumberFormat
+                      value={continent.deaths}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      renderText={(formattedValue) => (
+                        <Text style={{ fontSize: 20, color: "white" }}>
+                          {formattedValue}
+                        </Text>
+                      )} // <--- Don't forget this!
+                    />
+
+                    <View style={styles.circle}>
+                      <ProgressCircle
+                        percent={Number(
+                          (continent.deaths / continent.cases) * 100
+                        ).toFixed(2)}
+                        radius={40}
+                        borderWidth={2}
+                        color="#3399FF"
+                        shadowColor="#ebebeb"
+                        bgColor="#fff"
+                      >
+                        <Text style={{ fontSize: 20, textAlign: "center" }}>
+                          {Number(
+                            (continent.deaths / continent.cases) * 100
+                          ).toFixed(2)}
+                          %
+                        </Text>
+                      </ProgressCircle>
+                    </View>
+                  </View>
+
+                  <View style={styles.continentCard}>
+                    <Text style={styles.casesHeadingTextRoot}>Recoveries</Text>
+                    <NumberFormat
+                      value={continent.recovered}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      renderText={(formattedValue) => (
+                        <Text style={{ fontSize: 20, color: "white" }}>
+                          {formattedValue}
+                        </Text>
+                      )} // <--- Don't forget this!
+                    />
+
+                    <View style={styles.circle}>
+                      <ProgressCircle
+                        percent={Number(
+                          (continent.recovered / continent.cases) * 100
+                        ).toFixed(2)}
+                        radius={40}
+                        borderWidth={2}
+                        color="#3399FF"
+                        shadowColor="#ebebeb"
+                        bgColor="#fff"
+                      >
+                        <Text style={{ fontSize: 20, textAlign: "center" }}>
+                          {Number(
+                            (continent.recovered / continent.cases) * 100
+                          ).toFixed(2)}
+                          %
+                        </Text>
+                      </ProgressCircle>
+                    </View>
+                  </View>
+
+                  <View style={styles.continentCard}>
+                    <Text style={styles.casesHeadingTextRoot}>Recoveries</Text>
+                    <NumberFormat
+                      value={continent.tests}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      renderText={(formattedValue) => (
+                        <Text style={{ fontSize: 20, color: "white" }}>
+                          {formattedValue}
+                        </Text>
+                      )} // <--- Don't forget this!
+                    />
+
+                    <View style={styles.circle}>
+                      <ProgressCircle
+                        percent={Number(
+                          (continent.critical / continent.cases) * 100
+                        ).toFixed(2)}
+                        radius={40}
+                        borderWidth={2}
+                        color="#3399FF"
+                        shadowColor="#ebebeb"
+                        bgColor="#fff"
+                      >
+                        <Text style={{ fontSize: 20, textAlign: "center" }}>
+                          {Number(
+                            (continent.critical / continent.cases) * 100
+                          ).toFixed(2)}
+                          %
+                        </Text>
+                      </ProgressCircle>
+                    </View>
+                  </View>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  width: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  marginTop: 20,
+                }}
+              >
+                <ProgressCircle
+                  percent={Number(
+                    ((continent.cases / continent.population) * 100).toFixed(2)
+                  )}
+                  radius={50}
+                  borderWidth={4}
+                  color="#FF4E72"
+                  shadowColor="lightgrey"
+                  bgColor="#000000"
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      textAlign: "center",
+                      color: "white",
+                    }}
+                  >
+                    {Number(
+                      ((continent.cases / continent.population) * 100).toFixed(
+                        2
+                      )
+                    )}
+                    % infected
+                  </Text>
+                </ProgressCircle>
+              </View>
+            </View>
+          ))}
+        </View>
+      </View>
 
       <TouchableOpacity
         style={{
@@ -227,95 +447,6 @@ const WorldWideFeed = ({ navigation }) => {
       >
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>View Full Data</Text>
       </TouchableOpacity>
-
-      <View style={styles.continentStatsContainer}>
-        <View style={styles.heading}>
-          <Text style={styles.globalHeading}>Continent Stats</Text>
-        </View>
-        {continents.map((continent, index) => (
-          <View style={styles.card} key={index}>
-            <View style={styles.headingContainer}>
-              <Text style={{ color: color }}>{continent.continent}</Text>
-            </View>
-            <NumberFormat
-              value={continent.cases}
-              displayType={"text"}
-              thousandSeparator={true}
-              renderText={(formattedValue) => (
-                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                  {formattedValue}
-                </Text>
-              )} // <--- Don't forget this!
-            />
-            <View
-              style={{
-                width: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                marginTop: 20,
-              }}
-            >
-              <ProgressCircle
-                percent={Number(
-                  ((continent.cases / continent.population) * 100).toFixed(2)
-                )}
-                radius={50}
-                borderWidth={3}
-                color={genRandomColor()}
-                shadowColor="#ebebeb"
-                bgColor="#fff"
-              >
-                <Text style={{ fontSize: 18, textAlign: "center" }}>
-                  {Number(
-                    ((continent.cases / continent.population) * 100).toFixed(2)
-                  )}
-                  % infected
-                </Text>
-              </ProgressCircle>
-            </View>
-          </View>
-        ))}
-      </View>
-      <View
-        style={{
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 60,
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-        }}
-      >
-        <ProgressCircle
-          percent={casesPercentage}
-          radius={60}
-          borderWidth={10}
-          color="#3399FF"
-          shadowColor="#ebebeb"
-          bgColor="#fff"
-        >
-          <Text style={{ fontSize: 18, textAlign: "center" }}>
-            {casesPercentage}% of the word recovered
-          </Text>
-        </ProgressCircle>
-
-        <ProgressCircle
-          percent={deathPercentage}
-          radius={60}
-          borderWidth={10}
-          color="#3399FF"
-          shadowColor="#ebebeb"
-          bgColor="#fff"
-        >
-          <Text style={{ fontSize: 18, textAlign: "center" }}>
-            {deathPercentage}% of the word died
-          </Text>
-        </ProgressCircle>
-      </View>
     </View>
   );
 };
@@ -323,66 +454,40 @@ const WorldWideFeed = ({ navigation }) => {
 export default WorldWideFeed;
 
 const styles = StyleSheet.create({
-  tableContainer: {
-    width: "100%",
-    height: 500,
-    padding: 15,
-    backgroundColor: "#eee",
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  searchContainer: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 15,
-  },
-  input: {
-    width: "80%",
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
+  continentCard: {
+    width: "50%",
+    backgroundColor: "black",
     padding: 10,
-    borderRadius: 10,
-    backgroundColor: "white",
+    margin: 10,
   },
-  countryFlag: {
-    width: 50,
-    height: 50,
-    resizeMode: "contain",
-  },
-  tableHeader: {
-    flexDirection: "row",
-    borderBottomColor: "black",
-    borderBottomWidth: 2,
-  },
-  tableHeaderData: {
-    width: 120,
-    padding: 15,
 
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
+  casesHeadingTextRoot: {
+    color: "white",
   },
-  tableRow: {
+  field: {
+    width: "100%",
     flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    marginVertical: 8,
+    padding: 20,
   },
-  tableRowData: {
-    width: 120,
-    padding: 10,
-    justifyContent: "center",
+  casesContainer: {},
+  theContainer: {
+    width: "100%",
     alignItems: "center",
-    borderBottomColor: "lightgrey",
-    borderBottomWidth: 1,
+    justifyContent: "center",
+  },
+  headingRoot: {
+    color: "white",
+    fontSize: 20,
   },
   container: {
     width: "100%",
     flex: 1,
   },
   statsContainer: {
-    width: "100%",
+    width: "90%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
@@ -393,19 +498,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: "lightgrey",
-    backgroundColor: "white",
+    backgroundColor: "black",
+    justifyContent: "space-around",
+    elevation: 8,
   },
 
   heading: {
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#161C23",
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 5,
     alignItems: "center",
   },
   globalHeading: {
     fontSize: 29,
+    color: "white",
   },
 
   headingContainer: {
@@ -419,11 +526,10 @@ const styles = StyleSheet.create({
   continentStatsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    width: "100%",
-    backgroundColor: "#eee",
+    width: "90%",
+    backgroundColor: "black",
     marginTop: 20,
     padding: 20,
-    borderRadius: 20,
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
 });

@@ -49,6 +49,12 @@ export default function App() {
         <HomeStack.Screen
           name=" Vaccine Candidates in Development"
           component={VaccineStats}
+          options={{
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTintColor: "white",
+          }}
         />
         <HomeStack.Screen
           name="VaccineDetailsScreen"
@@ -89,6 +95,8 @@ export default function App() {
         screenOptions={{
           tabBarStyle: {
             paddingBottom: 5,
+            backgroundColor: "black",
+            borderTopWidth: 0,
           },
           headerShown: false,
         }}
@@ -98,7 +106,7 @@ export default function App() {
           component={HomeStackScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <Ionicons name="home-outline" size={24} color="black" />
+              <Ionicons name="home-outline" size={24} color="white" />
             ),
             tabBarActiveTintColor: "#e91e63",
           }}
@@ -109,7 +117,7 @@ export default function App() {
           component={VaccineStackScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <Fontisto name="injection-syringe" size={24} color="black" />
+              <Fontisto name="injection-syringe" size={24} color="white" />
             ),
             tabBarActiveTintColor: "#e91e63",
           }}
@@ -120,7 +128,7 @@ export default function App() {
           component={MapStackScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <Feather name="map" size={24} color="black" />
+              <Feather name="map" size={24} color="white" />
             ),
             tabBarActiveTintColor: "#e91e63",
           }}
@@ -130,7 +138,7 @@ export default function App() {
           component={EducationStackScreen}
           options={{
             tabBarIcon: () => (
-              <SimpleLineIcons name="graduation" size={24} color="black" />
+              <SimpleLineIcons name="graduation" size={24} color="white" />
             ),
             tabBarActiveTintColor: "#e91e63",
           }}

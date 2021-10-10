@@ -22,6 +22,15 @@ const CountryFeed = ({ selectedCountry }) => {
 
   useEffect(() => {
     const getCountry = async () => {
+      try {
+        const url3 = `https://disease.sh/v3/covid-19/vaccine/coverage/countries/${selectedCountry}?lastdays=1&fullData=true`;
+        await fetch(url3)
+          .then((response) => response.json())
+          .then((data) => {
+            setVaccineData(data.timeline[0]);
+          });
+      } catch (error) {}
+
       await fetch(
         `https://disease.sh/v3/covid-19/countries/${selectedCountry}?strict=true`
       )
@@ -60,15 +69,6 @@ const CountryFeed = ({ selectedCountry }) => {
       } catch (error) {
         setVaccineGraph([]);
       }
-
-      try {
-        const url3 = `https://disease.sh/v3/covid-19/vaccine/coverage/countries/${selectedCountry}?lastdays=1&fullData=true`;
-        await fetch(url3)
-          .then((response) => response.json())
-          .then((data) => {
-            setVaccineData(data.timeline[0]);
-          });
-      } catch (error) {}
     };
     getCountry();
   }, [selectedCountry]);
@@ -87,10 +87,10 @@ const CountryFeed = ({ selectedCountry }) => {
       </View>
       <View style={styles.countryCardContainer}>
         {country && tested <= 100 ? (
-          <View style={styles.card}>
+          <View style={[styles.card, { backgroundColor: "#b0c5ff" }]}>
             <View style={styles.headingContainer}>
               <Text>Tests</Text>
-              <Fontisto name="test-tube" size={18} color="#9c9c9c" />
+              <Fontisto name="test-tube" size={18} color="#658eff" />
             </View>
             <FormatNumber number={country.tests} />
             {country.population > 0 && (
@@ -100,9 +100,9 @@ const CountryFeed = ({ selectedCountry }) => {
                 )}
                 radius={50}
                 borderWidth={3}
-                color={genRandomColor()}
+                color="#658eff"
                 shadowColor="#ebebeb"
-                bgColor="#fff"
+                bgColor="#b0c5ff"
               >
                 <Text style={{ fontSize: 19, textAlign: "center" }}>
                   {tested}% Tested
@@ -130,7 +130,7 @@ const CountryFeed = ({ selectedCountry }) => {
               margin: 10,
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: "white",
+              backgroundColor: "#b0c5ff",
             }}
           >
             <View
@@ -142,7 +142,7 @@ const CountryFeed = ({ selectedCountry }) => {
               }}
             >
               <Text>Tests</Text>
-              <Fontisto name="test-tube" size={18} color="#9c9c9c" />
+              <Fontisto name="test-tube" size={18} color="#658eff" />
             </View>
             <FormatNumber number={country.tests} />
             {country.population > 0 && (
@@ -153,9 +153,9 @@ const CountryFeed = ({ selectedCountry }) => {
                   )}
                   radius={50}
                   borderWidth={3}
-                  color={genRandomColor()}
+                  color="#658eff"
                   shadowColor="#ebebeb"
-                  bgColor="#fff"
+                  bgColor="#b0c5ff"
                 >
                   <Text style={{ fontSize: 19, textAlign: "center" }}>
                     {tested}% Tested
@@ -176,10 +176,10 @@ const CountryFeed = ({ selectedCountry }) => {
         )}
 
         {country && (
-          <View style={styles.card}>
+          <View style={[styles.card, { backgroundColor: "orange" }]}>
             <View style={styles.headingContainer}>
               <Text>Cases</Text>
-              <AntDesign name="adduser" size={24} color="#ffb24d" />
+              <AntDesign name="adduser" size={24} color="white" />
             </View>
             <FormatNumber number={country.cases} />
             {country.population > 0 && (
@@ -189,9 +189,9 @@ const CountryFeed = ({ selectedCountry }) => {
                 )}
                 radius={50}
                 borderWidth={3}
-                color={genRandomColor()}
+                color="#ff5e00"
                 shadowColor="#ebebeb"
-                bgColor="#fff"
+                bgColor="orange"
               >
                 <Text style={{ fontSize: 19, textAlign: "center" }}>
                   {Number(
@@ -205,7 +205,7 @@ const CountryFeed = ({ selectedCountry }) => {
         )}
 
         {country && (
-          <View style={styles.card}>
+          <View style={[styles.card, { backgroundColor: "#ff6464" }]}>
             <View style={styles.headingContainer}>
               <Text>Deaths</Text>
               <FontAwesome5 name="heartbeat" size={24} color="red" />
@@ -218,9 +218,9 @@ const CountryFeed = ({ selectedCountry }) => {
                 )}
                 radius={50}
                 borderWidth={3}
-                color={genRandomColor()}
+                color="red"
                 shadowColor="#ebebeb"
-                bgColor="#fff"
+                bgColor="#ff6464"
               >
                 <Text style={{ fontSize: 19, textAlign: "center" }}>
                   {Number(((country.deaths / country.cases) * 100).toFixed(2))}%
@@ -232,7 +232,7 @@ const CountryFeed = ({ selectedCountry }) => {
         )}
 
         {country && (
-          <View style={styles.card}>
+          <View style={[styles.card, { backgroundColor: "lightgreen" }]}>
             <View style={styles.headingContainer}>
               <Text>Recovered</Text>
               <FontAwesome5 name="praying-hands" size={18} color="green" />
@@ -245,9 +245,9 @@ const CountryFeed = ({ selectedCountry }) => {
                 )}
                 radius={50}
                 borderWidth={3}
-                color={genRandomColor()}
+                color="#0d9b00"
                 shadowColor="#ebebeb"
-                bgColor="#fff"
+                bgColor="lightgreen"
               >
                 <Text style={{ fontSize: 15, textAlign: "center" }}>
                   {Number(
@@ -260,30 +260,86 @@ const CountryFeed = ({ selectedCountry }) => {
           </View>
         )}
 
-        <View style={styles.card}>
-          <View style={styles.headingContainer}>
-            <Text>Vaccinated</Text>
-            <Fontisto name="injection-syringe" size={24} color="lightgreen" />
+        {vaccinated <= 100 ? (
+          <View style={[styles.card, { backgroundColor: "#e3b8ff" }]}>
+            <View style={styles.headingContainer}>
+              <Text>Vaccinated</Text>
+              <Fontisto name="injection-syringe" size={24} color="purple" />
+            </View>
+            <FormatNumber number={vaccineData.total} />
+            {country.population > 0 && (
+              <ProgressCircle
+                percent={vaccinated}
+                radius={50}
+                borderWidth={3}
+                color="purple"
+                shadowColor="#ebebeb"
+                bgColor="#e3b8ff"
+              >
+                <Text style={{ fontSize: 15, textAlign: "center" }}>
+                  {vaccinated > 100 ? "100 >" : `${vaccinated}% vaccinated`}
+                </Text>
+              </ProgressCircle>
+            )}
           </View>
-          <FormatNumber number={vaccineData.total} />
-          {country.population > 0 && (
-            <ProgressCircle
-              percent={vaccinated}
-              radius={50}
-              borderWidth={3}
-              color={genRandomColor()}
-              shadowColor="#ebebeb"
-              bgColor="#fff"
+        ) : (
+          <View
+            style={{
+              width: "100%",
+              padding: 20,
+              borderWidth: 1,
+              borderColor: "lightgrey",
+              borderRadius: 20,
+              margin: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#e3b8ff",
+            }}
+          >
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
-              <Text style={{ fontSize: 15, textAlign: "center" }}>
-                {vaccinated > 100 ? "100 >" : `${vaccinated}% vaccinated`}
+              <Text>Vaccinated</Text>
+              <Fontisto name="injection-syringe" size={24} color="purple" />
+            </View>
+            <FormatNumber number={vaccineData.total} />
+            {country.population > 0 && (
+              <View style={{ marginVertical: 10 }}>
+                <ProgressCircle
+                  percent={Number(
+                    ((vaccineData.total / country.population) * 100).toFixed(2)
+                  )}
+                  radius={50}
+                  borderWidth={3}
+                  color="purple"
+                  shadowColor="#ebebeb"
+                  bgColor="#e3b8ff"
+                >
+                  <Text style={{ fontSize: 15, textAlign: "center" }}>
+                    {vaccinated}% Vaccinated
+                  </Text>
+                </ProgressCircle>
+              </View>
+            )}
+            {vaccinated > 100 && (
+              <Text>
+                There are{" "}
+                <FormatNumber number={vaccineData.total - country.population} />{" "}
+                more people than the total population who have been tested
+                indicating that tourists and travellers have been tested on
+                their travels
               </Text>
-            </ProgressCircle>
-          )}
-        </View>
+            )}
+          </View>
+        )}
       </View>
 
-      {casesGraph?.length > 0 ? (
+      {/* {casesGraph?.length > 0 ? (
         <View style={styles.graphContainer}>
           <View style={styles.graphHeading}>
             <Text style={styles.graphHeadingContent}>Cases</Text>
@@ -314,7 +370,7 @@ const CountryFeed = ({ selectedCountry }) => {
         </View>
       ) : (
         <Text>There is no data for the graph containing vaccines</Text>
-      )}
+      )} */}
     </View>
   );
 };
