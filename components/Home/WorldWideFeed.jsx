@@ -1,30 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import NumberFormat from "react-number-format";
 import ProgressCircle from "react-native-progress-circle";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import globalTable from "./GlobalTable";
-import GlobalTable from "./GlobalTable";
+
 const WorldWideFeed = ({ navigation }) => {
   const [globalStats, setGlobalStats] = useState([]);
   const [globalGraph, setGlobalGraph] = useState([]);
@@ -144,8 +125,8 @@ const WorldWideFeed = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/home-banner.jpg")}
-        style={{ width: "100%", height: 250, resizeMode: "cover" }}
+        source={require("../../assets/home-banner.png")}
+        style={{ width: "100%", height: 200, resizeMode: "cover" }}
       />
       <View style={styles.theContainer}>
         <View style={styles.statsContainer}>
@@ -159,7 +140,7 @@ const WorldWideFeed = ({ navigation }) => {
               displayType={"text"}
               thousandSeparator={true}
               renderText={(formattedValue) => (
-                <Text style={{ fontSize: 20, color: "white" }}>
+                <Text style={{ fontSize: 20, color: "black" }}>
                   {formattedValue}
                 </Text>
               )} // <--- Don't forget this!
@@ -176,7 +157,7 @@ const WorldWideFeed = ({ navigation }) => {
               displayType={"text"}
               thousandSeparator={true}
               renderText={(formattedValue) => (
-                <Text style={{ fontSize: 20, color: "white" }}>
+                <Text style={{ fontSize: 20, color: "black" }}>
                   {formattedValue}
                 </Text>
               )} // <--- Don't forget this!
@@ -185,7 +166,7 @@ const WorldWideFeed = ({ navigation }) => {
 
           <View style={styles.card}>
             <View style={styles.headingContainer}>
-              <Text style={styles.cardHeading}>Active Cases</Text>
+              <Text style={styles.cardHeading}>Active</Text>
               <MaterialCommunityIcons
                 name="chart-line-variant"
                 size={24}
@@ -197,7 +178,7 @@ const WorldWideFeed = ({ navigation }) => {
               displayType={"text"}
               thousandSeparator={true}
               renderText={(formattedValue) => (
-                <Text style={{ fontSize: 20, color: "white" }}>
+                <Text style={{ fontSize: 20, color: "black" }}>
                   {formattedValue}
                 </Text>
               )} // <--- Don't forget this!
@@ -214,7 +195,7 @@ const WorldWideFeed = ({ navigation }) => {
               displayType={"text"}
               thousandSeparator={true}
               renderText={(formattedValue) => (
-                <Text style={{ fontSize: 20, color: "white" }}>
+                <Text style={{ fontSize: 20, color: "black" }}>
                   {formattedValue}
                 </Text>
               )} // <--- Don't forget this!
@@ -222,26 +203,6 @@ const WorldWideFeed = ({ navigation }) => {
           </View>
         </View>
       </View>
-
-      <TouchableOpacity
-        style={{
-          width: "100%",
-          justifyContent: "center",
-          backgroundColor: "#7e95af",
-          alignItems: "center",
-          padding: 20,
-          marginTop: 20,
-          borderRadius: 20,
-        }}
-        onPress={() => {
-          /* 1. Navigate to the Details route with params */
-          navigation.navigate("Select a Country");
-        }}
-      >
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-          Select a Country
-        </Text>
-      </TouchableOpacity>
 
       <View style={styles.theContainer}>
         <View style={styles.statsContainer}>
@@ -266,7 +227,7 @@ const WorldWideFeed = ({ navigation }) => {
                       <Text
                         style={{
                           fontSize: 20,
-                          color: "white",
+                          color: "black",
                           marginBottom: 15,
                         }}
                       >
@@ -281,16 +242,16 @@ const WorldWideFeed = ({ navigation }) => {
                         (continent.cases / continent.population) * 100
                       )}
                       radius={40}
-                      borderWidth={2}
+                      borderWidth={4}
                       color="#ff9900"
                       shadowColor="lightgrey"
-                      bgColor="#000000"
+                      bgColor="#F0F8FF"
                     >
                       <Text
                         style={{
                           fontSize: 18,
                           textAlign: "center",
-                          color: "white",
+                          color: "black",
                         }}
                       >
                         {Number(
@@ -316,7 +277,7 @@ const WorldWideFeed = ({ navigation }) => {
                       <Text
                         style={{
                           fontSize: 20,
-                          color: "white",
+                          color: "black",
                           marginBottom: 15,
                         }}
                       >
@@ -331,16 +292,16 @@ const WorldWideFeed = ({ navigation }) => {
                         (continent.deaths / continent.cases) * 100
                       )}
                       radius={40}
-                      borderWidth={2}
+                      borderWidth={4}
                       color="#ff0000"
                       shadowColor="lightgrey"
-                      bgColor="#000000"
+                      bgColor="#F0F8FF"
                     >
                       <Text
                         style={{
                           fontSize: 18,
                           textAlign: "center",
-                          color: "white",
+                          color: "black",
                         }}
                       >
                         {Number(
@@ -372,7 +333,7 @@ const WorldWideFeed = ({ navigation }) => {
                       <Text
                         style={{
                           fontSize: 20,
-                          color: "white",
+                          color: "black",
                           marginBottom: 15,
                         }}
                       >
@@ -387,16 +348,16 @@ const WorldWideFeed = ({ navigation }) => {
                         (continent.recovered / continent.cases) * 100
                       )}
                       radius={40}
-                      borderWidth={2}
+                      borderWidth={4}
                       color="#00ff15"
                       shadowColor="lightgrey"
-                      bgColor="#000000"
+                      bgColor="#F0F8FF"
                     >
                       <Text
                         style={{
                           fontSize: 18,
                           textAlign: "center",
-                          color: "white",
+                          color: "black",
                         }}
                       >
                         {Number(
@@ -422,7 +383,7 @@ const WorldWideFeed = ({ navigation }) => {
                       <Text
                         style={{
                           fontSize: 20,
-                          color: "white",
+                          color: "black",
                           marginBottom: 15,
                         }}
                       >
@@ -437,16 +398,16 @@ const WorldWideFeed = ({ navigation }) => {
                         (continent.active / continent.cases) * 100
                       )}
                       radius={40}
-                      borderWidth={2}
+                      borderWidth={4}
                       color="#FF4E72"
                       shadowColor="lightgrey"
-                      bgColor="#000000"
+                      bgColor="#F0F8FF"
                     >
                       <Text
                         style={{
                           fontSize: 18,
                           textAlign: "center",
-                          color: "white",
+                          color: "black",
                         }}
                       >
                         {Number(
@@ -462,6 +423,26 @@ const WorldWideFeed = ({ navigation }) => {
           ))}
         </View>
       </View>
+
+      <TouchableOpacity
+        style={{
+          width: "100%",
+          justifyContent: "center",
+          backgroundColor: "#7e95af",
+          alignItems: "center",
+          padding: 20,
+          marginTop: 20,
+          borderRadius: 20,
+        }}
+        onPress={() => {
+          /* 1. Navigate to the Details route with params */
+          navigation.navigate("Select a Country");
+        }}
+      >
+        <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
+          Select a Country
+        </Text>
+      </TouchableOpacity>
 
       <TouchableOpacity
         style={{
@@ -498,9 +479,10 @@ const styles = StyleSheet.create({
   },
   left: {
     width: "45%",
-    backgroundColor: "#161C23",
+    backgroundColor: "#F0F8FF",
     padding: 15,
     borderRadius: 20,
+    elevation: 5,
   },
   leftHeading: {
     justifyContent: "space-between",
@@ -526,7 +508,7 @@ const styles = StyleSheet.create({
   },
 
   casesHeadingTextRoot: {
-    color: "white",
+    color: "black",
   },
   field: {
     width: "100%",
@@ -560,10 +542,9 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     padding: 10,
-    borderWidth: 1,
-    backgroundColor: "black",
+    backgroundColor: "aliceblue",
     justifyContent: "space-around",
-    elevation: 8,
+    elevation: 5,
   },
 
   heading: {
@@ -584,9 +565,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   cardHeading: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
+    color: "black",
+    fontSize: 15,
   },
   continentStatsContainer: {
     flexDirection: "row",
