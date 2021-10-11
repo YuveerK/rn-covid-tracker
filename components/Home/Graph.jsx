@@ -8,7 +8,7 @@ import {
   ContributionGraph,
   StackedBarChart,
 } from "react-native-chart-kit";
-const Graph = ({ dataFeed }) => {
+const Graph = ({ dataFeed, color }) => {
   return (
     <View
       style={{
@@ -26,15 +26,15 @@ const Graph = ({ dataFeed }) => {
             ],
           }}
           verticalLabelRotation={90} //Degree to rotate
-          width={Dimensions.get("window").width - 40} // from react-native
+          width={Dimensions.get("window").width - 60} // from react-native
           height={250}
           yAxisInterval={1} // optional, defaults to 1
           chartConfig={{
-            backgroundColor: "#1cc910",
-            backgroundGradientFrom: "#eff3ff",
-            backgroundGradientTo: "#efefef",
-            color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
-            strokeWidth: 0.9, // optional, default 3
+            backgroundColor: "#ff0000",
+            backgroundGradientFrom: "#ffffff",
+            backgroundGradientTo: "#ffffff",
+            color: (opacity = 999) => `${color ? color : "black"}`,
+            strokeWidth: 1.5, // optional, default 3
             barPercentage: 0.5,
             useShadowColorFromDataset: false, // optional
             propsForHorizontalLabels: {
@@ -60,8 +60,8 @@ const Graph = ({ dataFeed }) => {
             borderRadius: 50,
           }}
           style={{
-            borderRadius: 10,
             alignItems: "center",
+            borderRadius: 20,
           }}
           withInnerLines={false}
         />

@@ -110,7 +110,7 @@ const Test = ({ route }) => {
                       style={{ width: 50, height: 30 }}
                     />
                   </View>
-                  <Text style={{ textAlign: "center" }}>
+                  <Text style={{ textAlign: "center", color: "white" }}>
                     {index + 1}. {item.country}
                   </Text>
                 </View>
@@ -125,7 +125,7 @@ const Test = ({ route }) => {
                   <FormatNumber number={item.casesPerOneMillion} size={15} />
                 </View>
                 <View style={styles.tableRowData}>
-                  <Text>{item.continent}</Text>
+                  <Text style={{ color: "white" }}>{item.continent}</Text>
                 </View>
                 <View style={styles.tableRowData}>
                   <FormatNumber number={item.critical} size={15} />
@@ -218,8 +218,13 @@ const styles = StyleSheet.create({
   tableHeaderData: {
     width: 100,
     padding: 10,
-    backgroundColor: "lightgreen",
+    backgroundColor: "black",
     justifyContent: "center",
+    borderRightWidth: 1,
+    borderRightColor: "grey",
+  },
+  tableHeaderDataText: {
+    color: "white",
   },
   tableRow: {
     flexDirection: "row",
@@ -232,6 +237,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRightColor: "lightgrey",
     borderRightWidth: 1,
+    backgroundColor: "#161C23",
   },
   tableRowDataRecovered: {
     width: 100,

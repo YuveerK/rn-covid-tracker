@@ -20,6 +20,8 @@ import CasesGraphScreen from "./screens/CasesGraphScreen";
 import MapScreen from "./screens/MapScreen";
 import Education from "./screens/Education";
 import Test from "./screens/Test";
+import SelectACountry from "./screens/SelectACountry";
+import ViewSelectedCountry from "./screens/ViewSelectedCountry";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -38,7 +40,21 @@ export default function App() {
         />
         <HomeStack.Screen name="Covid" component={CovidStats} />
         <HomeStack.Screen name="CasesGraph" component={CasesGraphScreen} />
-        <HomeStack.Screen name="Test" component={Test} />
+        <HomeStack.Screen name="Select a Country" component={SelectACountry} />
+        <HomeStack.Screen
+          name="View Selected Country"
+          component={ViewSelectedCountry}
+        />
+        <HomeStack.Screen
+          name="Test"
+          component={Test}
+          options={{
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTintColor: "white",
+          }}
+        />
       </HomeStack.Navigator>
     );
   }
