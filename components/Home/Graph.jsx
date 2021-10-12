@@ -19,37 +19,37 @@ const Graph = ({ dataFeed, color }) => {
         <LineChart
           onDataPointClick={({ index }) => console.log(dataFeed[index])}
           data={{
+            labels: ["March 2020"],
             datasets: [
               {
                 data: dataFeed,
               },
             ],
           }}
-          verticalLabelRotation={90} //Degree to rotate
           width={Dimensions.get("window").width - 60} // from react-native
           height={250}
           yAxisInterval={1} // optional, defaults to 1
           chartConfig={{
-            backgroundColor: "#ff0000",
+            backgroundColor: "#e26a00",
             backgroundGradientFrom: "#ffffff",
             backgroundGradientTo: "#ffffff",
-            color: (opacity = 999) => `${color ? color : "black"}`,
-            strokeWidth: 1.5, // optional, default 3
+            color: (opacity = 1) => `${color ? color : "black"}`,
+            strokeWidth: 1, // optional, default 3
             barPercentage: 0.5,
             useShadowColorFromDataset: false, // optional
             propsForHorizontalLabels: {
               fontSize: 7,
             },
             propsForHorizontalLabels: {
-              fontSize: 9,
+              fontSize: 13,
               transform: [{ rotate: "90deg" }],
             },
             propsForVerticalLabels: {
               fontSize: 9,
             },
             propsForDots: {
-              r: "1",
-              strokeWidth: "1",
+              r: "0",
+              strokeWidth: "0",
               stroke: "rgba(255, 255, 255, 0.1)",
             },
             decimalPlaces: 0,

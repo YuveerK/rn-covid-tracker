@@ -111,7 +111,7 @@ export default function App() {
         screenOptions={{
           tabBarStyle: {
             paddingBottom: 5,
-            backgroundColor: "black",
+            backgroundColor: "white",
             borderTopWidth: 0,
           },
           headerShown: false,
@@ -122,9 +122,9 @@ export default function App() {
           component={HomeStackScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <Ionicons name="home-outline" size={24} color="white" />
+              <Ionicons name="home-outline" size={24} color="black" />
             ),
-            tabBarActiveTintColor: "#e91e63",
+            tabBarActiveTintColor: "#798BFF",
           }}
         />
 
@@ -133,9 +133,9 @@ export default function App() {
           component={VaccineStackScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <Fontisto name="injection-syringe" size={24} color="white" />
+              <Fontisto name="injection-syringe" size={24} color="black" />
             ),
-            tabBarActiveTintColor: "#e91e63",
+            tabBarActiveTintColor: "#798BFF",
           }}
         />
 
@@ -144,9 +144,9 @@ export default function App() {
           component={MapStackScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <Feather name="map" size={24} color="white" />
+              <Feather name="map" size={24} color="black" />
             ),
-            tabBarActiveTintColor: "#e91e63",
+            tabBarActiveTintColor: "#798BFF",
           }}
         />
         <Tab.Screen
@@ -154,9 +154,9 @@ export default function App() {
           component={EducationStackScreen}
           options={{
             tabBarIcon: () => (
-              <SimpleLineIcons name="graduation" size={24} color="white" />
+              <SimpleLineIcons name="graduation" size={24} color="black" />
             ),
-            tabBarActiveTintColor: "#e91e63",
+            tabBarActiveTintColor: "#798BFF",
           }}
         />
       </Tab.Navigator>
