@@ -2,11 +2,17 @@ import React from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import FormatNumber from "./FormatNumber";
 import Graph from "./Graph";
-const CasesOverTime = ({ globalStats, graphData, graphData2 }) => {
+const CasesOverTime = ({
+  heading,
+  subheading,
+  subheading2,
+  color,
+  graphData,
+}) => {
   return (
     <View style={styles.card}>
       <Text style={styles.cardHeading1}>
-        Cases Over Time - <Text style={styles.cardHeading2}>Worldwide</Text>
+        {heading} - <Text style={styles.cardHeading2}>{subheading}</Text>
       </Text>
 
       <Text
@@ -15,8 +21,7 @@ const CasesOverTime = ({ globalStats, graphData, graphData2 }) => {
           { marginTop: 5, letterSpacing: 0 },
         ]}
       >
-        The chart below shows daily case trends since the beginning of the
-        pandemic.
+        {subheading2}
       </Text>
 
       <View
@@ -27,6 +32,7 @@ const CasesOverTime = ({ globalStats, graphData, graphData2 }) => {
           marginTop: 10,
           alignItems: "center",
           justifyContent: "center",
+          height: 300,
         }}
       >
         {graphData?.length === 0 && (
@@ -35,7 +41,7 @@ const CasesOverTime = ({ globalStats, graphData, graphData2 }) => {
             <Text>Loading...</Text>
           </View>
         )}
-        <Graph dataFeed={graphData} color="#798BFF" />
+        <Graph dataFeed={graphData} color={color} />
       </View>
     </View>
   );
@@ -50,6 +56,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "lightgrey",
     borderRadius: 10,
+    marginVertical: 20,
   },
   cardText: {
     color: "#576484",

@@ -38,10 +38,10 @@ const SelectACountry = ({ navigation }) => {
   };
   return (
     <View>
-      <Image
+      {/* <Image
         source={require("../assets/world.png")}
         style={{ width: "100%", height: 200, resizeMode: "cover" }}
-      />
+      /> */}
       {/* <View style={styles.tableHeader}>
         <View
           style={{
@@ -88,6 +88,7 @@ const SelectACountry = ({ navigation }) => {
       {countryList?.length > 0 && (
         <FlatList
           data={countryList}
+          enableEmptySections={true}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <TouchableWithoutFeedback

@@ -14,11 +14,19 @@ import {
 import FormatNumber from "../components/Home/FormatNumber";
 import Graph from "../components/Home/Graph";
 import CasesOverTime from "../components/Home/CasesOverTime";
+import MapView, { Marker } from "react-native-maps";
+import { Circle } from "react-native-maps";
+import ProgressCircle from "../components/Home/ProgressCircleComponent";
+import { Fontisto } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { ProgressChart } from "react-native-chart-kit";
 
 const ViewSelectedCountry = ({ route }) => {
   const [casesGraph, setCasesGraph] = useState([]);
   const [deathGraph, setDeathGraph] = useState([]);
   const countryData = route.params.countryData;
+  const countryInfo = route.params.countryData.countryInfo;
   const [isLoading, setIsLoading] = useState(true);
   const windowWidth = Dimensions.get("window").width;
 
@@ -31,11 +39,21 @@ const ViewSelectedCountry = ({ route }) => {
   let recovered = (countryData.recovered / total) * 100;
   let deaths = (countryData.deaths / total) * 100;
   let active = (countryData.active / total) * 100;
+  const LATITUDE_DELTA = 0.05; //Increase or decrease the zoom level dynamically
+  const LONGITUDE_DELTA = LATITUDE_DELTA * 100;
+
+  const data = {
+    labels: ["Swim", "Bike", "Run"], // optional
+    data: [
+      countryData.recovered / countryData.active,
+      countryData.deaths / countryData.active,
+    ],
+  };
 
   useEffect(() => {
     const getGraphData = async () => {
       try {
-        const url2 = `https://disease.sh/v3/covid-19/historical/${countryData.countryInfo.iso3}?lastdays=all`;
+        const url2 = `https://disease.sh/v3/covid-19/historical/${countryData.countryInfo.iso3}?lastdays=90`;
         await fetch(url2)
           .then((response) => response.json())
           .then((data) => {
@@ -72,117 +90,215 @@ const ViewSelectedCountry = ({ route }) => {
     return chartData;
   };
 
-  console.log(deathGraph);
+  console.log(countryInfo);
   return (
-    <View style={styles.mainContainer}>
+    <View style={[styles.mainContainer, { padding: 0 }]}>
       <ScrollView>
-        <Text style={[styles.heading1, { marginBottom: 15 }]}>
+        <Text style={[styles.heading1, { marginBottom: 15, padding: 10 }]}>
           {countryData.country} - Coronavirus Cases
         </Text>
-
-        <View style={styles.generalContainer}>
-          <Text style={styles.heading2}>Total Confirmed Cases</Text>
-
-          <FormatNumber number={countryData.cases} color="#364A63" size={30} />
+        <View style={styles.container}>
+          {countryInfo && (
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: countryInfo.lat,
+                longitude: countryInfo.long,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA,
+              }}
+            >
+              {/* <Marker
+                coordinate={{
+                  latitude: countryInfo.lat,
+                  longitude: countryInfo.long,
+                }}
+                title={countryData.country}
+                description={countryData.cases.toString()}
+              /> */}
+            </MapView>
+          )}
         </View>
+        <View style={styles.mainContainer}>
+          <View style={styles.generalContainer}>
+            <Text style={styles.heading2}>Total Confirmed Cases</Text>
 
-        <View style={styles.row}>
-          <View>
-            <Text style={styles.subHeading}>Recovered</Text>
+            <FormatNumber
+              number={countryData.cases}
+              color="#364A63"
+              size={30}
+            />
+          </View>
+          <View style={styles.row}>
+            <View>
+              <Text style={styles.subHeading}>Recovered</Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <FormatNumber
+                  number={countryData.recovered}
+                  color="#1EE0AC"
+                  size={30}
+                  fontweight="300"
+                />
+                <Text style={[styles.generalText, { marginLeft: 10 }]}>
+                  {Number(
+                    (countryData.recovered / countryData.cases) * 100
+                  ).toFixed(1)}
+                  %
+                </Text>
+              </View>
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <ProgressCircle
+                  percent={30}
+                  color="#1EE0AC"
+                  percent={Number(
+                    (countryData.recovered / countryData.cases) * 100
+                  ).toFixed(1)}
+                  text={Number(
+                    (countryData.recovered / countryData.cases) * 100
+                  ).toFixed(1)}
+                  icon={
+                    <FontAwesome5
+                      name="praying-hands"
+                      size={18}
+                      color="#1EE0AC"
+                    />
+                  }
+                />
+              </View>
+            </View>
+
+            <View>
+              <Text style={styles.subHeading}>Deaths</Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <FormatNumber
+                  number={countryData.recovered}
+                  color="#E85347"
+                  size={30}
+                  fontweight="300"
+                />
+                <Text style={[styles.generalText, { marginLeft: 10 }]}>
+                  {Number(
+                    (countryData.deaths / countryData.cases) * 100
+                  ).toFixed(1)}
+                </Text>
+              </View>
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <ProgressCircle
+                  percent={Number(
+                    (countryData.deaths / countryData.cases) * 100
+                  ).toFixed(1)}
+                  color="red"
+                  text={Number(
+                    (countryData.deaths / countryData.cases) * 100
+                  ).toFixed(1)}
+                  icon={
+                    <FontAwesome5 name="heartbeat" size={24} color="#E85347" />
+                  }
+                />
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.row}>
+            <ProgressChart
+              data={data}
+              width={400}
+              height={220}
+              strokeWidth={16}
+              radius={32}
+              chartConfig={{
+                backgroundColor: "#e26a00",
+                backgroundGradientFrom: "#fb8c00",
+                backgroundGradientTo: "#ffa726",
+                decimalPlaces: 2, // optional, defaults to 2dp
+                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                style: {
+                  borderRadius: 16,
+                },
+                propsForDots: {
+                  r: "6",
+                  strokeWidth: "2",
+                  stroke: "#ffa726",
+                },
+              }}
+              hideLegend={false}
+            />
+          </View>
+
+          <View style={styles.generalContainer}>
+            <Text style={styles.heading2}>Currently Active Cases</Text>
+            <FormatNumber
+              number={countryData.active}
+              color="#364A63"
+              size={30}
+              fontweight="300"
+            />
+          </View>
+
+          <View style={styles.generalContainer}>
+            <Text style={styles.subHeading}>In Mild or Serious Condition</Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <FormatNumber
-                number={countryData.recovered}
-                color="#1EE0AC"
+                number={countryData.active - countryData.critical}
+                color="#816BFF"
                 size={30}
                 fontweight="300"
               />
               <Text style={[styles.generalText, { marginLeft: 10 }]}>
-                {Number(
-                  (countryData.recovered / countryData.cases) * 100
+                {(
+                  ((countryData.active - countryData.critical) /
+                    countryData.active) *
+                  100
                 ).toFixed(1)}
                 %
               </Text>
             </View>
           </View>
 
-          <View>
-            <Text style={styles.subHeading}>Deaths</Text>
+          <View style={[styles.generalContainer, { marginVertical: 5 }]}>
+            <Text style={styles.subHeading}>Serious or Critical</Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <FormatNumber
-                number={countryData.recovered}
-                color="#E85347"
+                number={countryData.critical}
+                color="#F4BD0E"
                 size={30}
                 fontweight="300"
               />
               <Text style={[styles.generalText, { marginLeft: 10 }]}>
-                {Number((countryData.deaths / countryData.cases) * 100).toFixed(
-                  1
-                )}
+                {((countryData.critical / countryData.active) * 100).toFixed(1)}
                 %
               </Text>
             </View>
           </View>
-        </View>
 
-        <View style={styles.generalContainer}>
-          <Text style={styles.heading2}>Currently Active Cases</Text>
-          <FormatNumber
-            number={countryData.active}
-            color="#364A63"
-            size={30}
-            fontweight="300"
-          />
-        </View>
-
-        <View style={styles.generalContainer}>
-          <Text style={styles.subHeading}>In Mild or Serious Condition</Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <FormatNumber
-              number={countryData.active - countryData.critical}
-              color="#816BFF"
-              size={30}
-              fontweight="300"
-            />
-            <Text style={[styles.generalText, { marginLeft: 10 }]}>
-              {(
-                ((countryData.active - countryData.critical) /
-                  countryData.active) *
-                100
-              ).toFixed(1)}
-              %
-            </Text>
+          <View style={styles.graphContainer}>
+            {casesGraph === null ? (
+              <Text> No Data </Text>
+            ) : (
+              <CasesOverTime
+                heading="Cases Over Time"
+                subheading={countryData.country}
+                graphData={casesGraph}
+                subheading2="The graph below shows a timelines of cases for the past 3 months (90 days)"
+                color="orange"
+              />
+            )}
           </View>
-        </View>
 
-        <View style={[styles.generalContainer, { marginVertical: 5 }]}>
-          <Text style={styles.subHeading}>Serious or Critical</Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <FormatNumber
-              number={countryData.critical}
-              color="#F4BD0E"
-              size={30}
-              fontweight="300"
-            />
-            <Text style={[styles.generalText, { marginLeft: 10 }]}>
-              {((countryData.critical / countryData.active) * 100).toFixed(1)}%
-            </Text>
+          <View style={styles.graphContainer}>
+            {deathGraph === null ? (
+              <Text> No Data </Text>
+            ) : (
+              <CasesOverTime
+                heading="Deaths Over Time"
+                subheading={countryData.country}
+                graphData={deathGraph}
+                subheading2="The graph below shows a timelines of deaths for the past 3 months (90 days)"
+                color="#E85347"
+              />
+            )}
           </View>
-        </View>
-
-        <View style={styles.graphContainer}>
-          {casesGraph === null ? (
-            <Text> No Data </Text>
-          ) : (
-            <CasesOverTime graphData={casesGraph} />
-          )}
-        </View>
-
-        <View style={styles.graphContainer}>
-          {deathGraph === null ? (
-            <Text> No Data </Text>
-          ) : (
-            <CasesOverTime graphData={deathGraph} />
-          )}
         </View>
       </ScrollView>
     </View>
@@ -226,5 +342,9 @@ const styles = StyleSheet.create({
   generalText: {
     color: "grey",
     fontSize: 18,
+  },
+  map: {
+    width: Dimensions.get("window").width,
+    height: 300,
   },
 });
