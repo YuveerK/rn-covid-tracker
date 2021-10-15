@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import NumberFormat from "react-number-format";
 
-const FormatNumber = ({ number, size, color }) => {
+const FormatNumber = ({ number, size, color, fontweight }) => {
   return (
     <NumberFormat
       value={number}
@@ -12,7 +12,7 @@ const FormatNumber = ({ number, size, color }) => {
         <Text
           style={{
             fontSize: size ? size : 20,
-            fontWeight: "bold",
+            fontWeight: fontweight ? fontweight : "bold",
             color: color ? color : "white",
           }}
         >

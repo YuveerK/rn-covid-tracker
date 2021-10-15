@@ -23,9 +23,11 @@ const WorldWideFeed = ({ navigation }) => {
   const [globalGraph, setGlobalGraph] = useState([]);
   const [globalGraph2, setGlobalGraph2] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [sa, setSa] = useState([]);
   const [continents, setContinents] = useState([]);
   const [text, onChangeText] = useState("");
   //================================================================= Use Effects ==========================================================
+
   //get all stats world wide
   useEffect(() => {
     const getStats = async () => {
@@ -117,15 +119,15 @@ const WorldWideFeed = ({ navigation }) => {
       <View
         style={{
           width: "100%",
-          height: 200,
-          paddingTop: 20,
+          height: 100,
+          marginTop: StatusBar.currentHeight,
         }}
       >
         <Image
           source={require("../../assets/home.png")}
           style={{
             width: "100%",
-            height: 200,
+            height: 100,
             resizeMode: "contain",
             paddingTop: 20,
           }}
@@ -143,7 +145,7 @@ const WorldWideFeed = ({ navigation }) => {
 
         <WorldWideCard globalStats={globalStats} />
 
-        <SouthAfricaCard globalStats={globalStats} />
+        <SouthAfricaCard globalStats={sa} />
 
         <TopTenCountryCard
           globalStats={globalStats}

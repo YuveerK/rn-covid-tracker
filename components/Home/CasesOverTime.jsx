@@ -3,10 +3,6 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import FormatNumber from "./FormatNumber";
 import Graph from "./Graph";
 const CasesOverTime = ({ globalStats, graphData, graphData2 }) => {
-  let total = globalStats.cases + globalStats.recovered + globalStats.deaths;
-  let cases = (globalStats.cases / total) * 100;
-  let recovered = (globalStats.recovered / total) * 100;
-  let deaths = (globalStats.deaths / total) * 100;
   return (
     <View style={styles.card}>
       <Text style={styles.cardHeading1}>

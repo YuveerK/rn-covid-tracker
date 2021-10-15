@@ -62,6 +62,7 @@ const Graph = ({ dataFeed, color }) => {
           style={{
             alignItems: "center",
             borderRadius: 20,
+            marginTop: 50,
           }}
           withInnerLines={false}
         />

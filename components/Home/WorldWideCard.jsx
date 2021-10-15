@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   cardText: {
-    color: "#576484",
+    color: "#9497a0",
   },
   cardHeading1: {
     fontWeight: "bold",

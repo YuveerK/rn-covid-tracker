@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   ActivityIndicator,
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,12 +13,14 @@ import {
 } from "../components/Home/buildGraphs";
 import FormatNumber from "../components/Home/FormatNumber";
 import Graph from "../components/Home/Graph";
+import CasesOverTime from "../components/Home/CasesOverTime";
 
 const ViewSelectedCountry = ({ route }) => {
   const [casesGraph, setCasesGraph] = useState([]);
   const [deathGraph, setDeathGraph] = useState([]);
   const countryData = route.params.countryData;
   const [isLoading, setIsLoading] = useState(true);
+  const windowWidth = Dimensions.get("window").width;
 
   let total =
     countryData.cases +
@@ -32,7 +35,7 @@ const ViewSelectedCountry = ({ route }) => {
   useEffect(() => {
     const getGraphData = async () => {
       try {
-        const url2 = `https://disease.sh/v3/covid-19/historical/${countryData.countryInfo.iso3}?lastdays=120`;
+        const url2 = `https://disease.sh/v3/covid-19/historical/${countryData.countryInfo.iso3}?lastdays=all`;
         await fetch(url2)
           .then((response) => response.json())
           .then((data) => {
@@ -53,173 +56,133 @@ const ViewSelectedCountry = ({ route }) => {
     getGraphData();
   }, []);
 
+  const buildChartData = (data) => {
+    let chartData = [];
+    let lastDataPoint;
+    for (let date in data.cases) {
+      if (lastDataPoint) {
+        let newDataPoint = {
+          x: date,
+          y: data["cases"][date] - lastDataPoint,
+        };
+        chartData.push(newDataPoint);
+      }
+      lastDataPoint = data["cases"][date];
+    }
+    return chartData;
+  };
+
   console.log(deathGraph);
   return (
     <View style={styles.mainContainer}>
       <ScrollView>
-        <View style={styles.cardContainer}>
-          <View style={styles.card}>
-            <Text style={styles.cardHeading}>
-              {countryData.country} Statistics
-            </Text>
+        <Text style={[styles.heading1, { marginBottom: 15 }]}>
+          {countryData.country} - Coronavirus Cases
+        </Text>
 
-            <View style={styles.totalCases}>
-              <FormatNumber number={countryData.cases} color="black" />
-              <Text style={styles.normalText}> Total Cases</Text>
+        <View style={styles.generalContainer}>
+          <Text style={styles.heading2}>Total Confirmed Cases</Text>
+
+          <FormatNumber number={countryData.cases} color="#364A63" size={30} />
+        </View>
+
+        <View style={styles.row}>
+          <View>
+            <Text style={styles.subHeading}>Recovered</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <FormatNumber
+                number={countryData.recovered}
+                color="#1EE0AC"
+                size={30}
+                fontweight="300"
+              />
+              <Text style={[styles.generalText, { marginLeft: 10 }]}>
+                {Number(
+                  (countryData.recovered / countryData.cases) * 100
+                ).toFixed(1)}
+                %
+              </Text>
             </View>
+          </View>
 
-            <View style={styles.bar}>
-              <View
-                style={{
-                  width: `${cases}%`,
-                  height: "100%",
-                  backgroundColor: "orange",
-                  borderTopLeftRadius: 10,
-                  borderBottomLeftRadius: 10,
-                }}
-              ></View>
-              <View
-                style={{
-                  width: `${recovered}%`,
-                  height: "100%",
-                  backgroundColor: "green",
-                }}
-              ></View>
-              <View
-                style={{
-                  width: `${active}%`,
-                  height: "100%",
-                  backgroundColor: "#06ffde",
-                }}
-              ></View>
-              <View
-                style={{
-                  width: `${deaths}%`,
-                  height: "100%",
-                  backgroundColor: "red",
-                  borderBottomRightRadius: 10,
-                  borderTopRightRadius: 10,
-                }}
-              ></View>
-            </View>
-
-            <View style={styles.row}>
-              <View style={styles.rowLeft}>
-                <View
-                  style={{
-                    width: 10,
-                    height: 10,
-                    backgroundColor: "orange",
-                    borderRadius: 5,
-                    marginRight: 15,
-                  }}
-                ></View>
-                <Text>Cases</Text>
-              </View>
-
-              <View style={styles.rowRight}>
-                <FormatNumber number={countryData.cases} color="black" />
-              </View>
-            </View>
-
-            <View style={styles.row}>
-              <View style={styles.rowLeft}>
-                <View
-                  style={{
-                    width: 10,
-                    height: 10,
-                    backgroundColor: "green",
-                    borderRadius: 5,
-                    marginRight: 15,
-                  }}
-                ></View>
-                <Text>Recoveries</Text>
-              </View>
-
-              <View style={styles.rowRight}>
-                <FormatNumber number={countryData.recovered} color="black" />
-              </View>
-            </View>
-
-            <View style={styles.row}>
-              <View style={styles.rowLeft}>
-                <View
-                  style={{
-                    width: 10,
-                    height: 10,
-                    backgroundColor: "red",
-                    borderRadius: 5,
-                    marginRight: 15,
-                  }}
-                ></View>
-                <Text>Deaths</Text>
-              </View>
-
-              <View style={styles.rowRight}>
-                <FormatNumber number={countryData.deaths} color="black" />
-              </View>
-            </View>
-
-            <View style={styles.row}>
-              <View style={styles.rowLeft}>
-                <View
-                  style={{
-                    width: 10,
-                    height: 10,
-                    backgroundColor: "#06ffde",
-                    borderRadius: 5,
-                    marginRight: 15,
-                  }}
-                ></View>
-                <Text>Active Cases</Text>
-              </View>
-
-              <View style={styles.rowRight}>
-                <FormatNumber number={countryData.active} color="black" />
-              </View>
+          <View>
+            <Text style={styles.subHeading}>Deaths</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <FormatNumber
+                number={countryData.recovered}
+                color="#E85347"
+                size={30}
+                fontweight="300"
+              />
+              <Text style={[styles.generalText, { marginLeft: 10 }]}>
+                {Number((countryData.deaths / countryData.cases) * 100).toFixed(
+                  1
+                )}
+                %
+              </Text>
             </View>
           </View>
         </View>
-        <View style={styles.graphContainer}>
-          {casesGraph?.length !== 0 && casesGraph !== null && (
-            <View style={styles.graphHeadingContainer}>
-              <Text style={styles.graphHeading}> Deaths - Past 30 Days </Text>
-            </View>
-          )}
-          {deathGraph?.length === 0 && (
-            <View>
-              <ActivityIndicator size="large" color="#00ff00" />
-              <Text>Loading...</Text>
-            </View>
-          )}
 
-          {deathGraph === null && (
-            <View>
-              <Text>No Data...</Text>
-            </View>
-          )}
-          <Graph dataFeed={deathGraph} color={"red"} />
+        <View style={styles.generalContainer}>
+          <Text style={styles.heading2}>Currently Active Cases</Text>
+          <FormatNumber
+            number={countryData.active}
+            color="#364A63"
+            size={30}
+            fontweight="300"
+          />
+        </View>
+
+        <View style={styles.generalContainer}>
+          <Text style={styles.subHeading}>In Mild or Serious Condition</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <FormatNumber
+              number={countryData.active - countryData.critical}
+              color="#816BFF"
+              size={30}
+              fontweight="300"
+            />
+            <Text style={[styles.generalText, { marginLeft: 10 }]}>
+              {(
+                ((countryData.active - countryData.critical) /
+                  countryData.active) *
+                100
+              ).toFixed(1)}
+              %
+            </Text>
+          </View>
+        </View>
+
+        <View style={[styles.generalContainer, { marginVertical: 5 }]}>
+          <Text style={styles.subHeading}>Serious or Critical</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <FormatNumber
+              number={countryData.critical}
+              color="#F4BD0E"
+              size={30}
+              fontweight="300"
+            />
+            <Text style={[styles.generalText, { marginLeft: 10 }]}>
+              {((countryData.critical / countryData.active) * 100).toFixed(1)}%
+            </Text>
+          </View>
         </View>
 
         <View style={styles.graphContainer}>
-          {casesGraph?.length !== 0 && casesGraph !== null && (
-            <View style={styles.graphHeadingContainer}>
-              <Text style={styles.graphHeading}> Cases - Past 30 Days </Text>
-            </View>
+          {casesGraph === null ? (
+            <Text> No Data </Text>
+          ) : (
+            <CasesOverTime graphData={casesGraph} />
           )}
-          {casesGraph?.length === 0 && (
-            <View>
-              <ActivityIndicator size="large" color="#00ff00" />
-              <Text>Loading...</Text>
-            </View>
-          )}
+        </View>
 
-          {casesGraph === null && (
-            <View>
-              <Text>No Data...</Text>
-            </View>
+        <View style={styles.graphContainer}>
+          {deathGraph === null ? (
+            <Text> No Data </Text>
+          ) : (
+            <CasesOverTime graphData={deathGraph} />
           )}
-          <Graph dataFeed={casesGraph} color={"orange"} />
         </View>
       </ScrollView>
     </View>
@@ -229,61 +192,39 @@ const ViewSelectedCountry = ({ route }) => {
 export default ViewSelectedCountry;
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    backgroundColor: "#0d131a",
-    flex: 1,
-  },
-  cardHeading: {
-    fontSize: 25,
-    color: "grey",
-    fontWeight: "bold",
-  },
-  cardContainer: {
-    backgroundColor: "white",
-    margin: 20,
-    padding: 20,
-    borderRadius: 20,
-    elevation: 5,
-  },
-  totalCases: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  bar: {
-    width: "100%",
-    height: 15,
-    flexDirection: "row",
-    marginVertical: 10,
-  },
-
-  row: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginVertical: 10,
-  },
-  rowLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
   graphContainer: {
-    marginHorizontal: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 20,
-    backgroundColor: "aliceblue",
-    padding: 10,
-    elevation: 5,
-    borderRadius: 20,
-  },
-  graphHeadingContainer: {
     width: "100%",
   },
-  graphHeading: {
+  mainContainer: {
+    flex: 1,
+    backgroundColor: "white",
+    padding: 10,
+  },
+  heading1: {
+    color: "#364A63",
     fontWeight: "bold",
     fontSize: 20,
+  },
+  heading2: {
+    color: "#364A63",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  generalContainer: {
+    marginVertical: 20,
+  },
+  row: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+  },
+  subHeading: {
+    color: "grey",
+    letterSpacing: 4,
+    textTransform: "uppercase",
+  },
+  generalText: {
+    color: "grey",
+    fontSize: 18,
   },
 });

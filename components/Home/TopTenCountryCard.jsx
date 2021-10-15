@@ -32,45 +32,51 @@ const TopTenCountryCard = ({ globalStats, countryStats, navigation }) => {
         </View>
       </View>
 
-      <ScrollView nestedScrollEnabled={true}>
-        {countryStats?.length === 0 && (
-          <View>
-            <ActivityIndicator size="large" color="#00ff00" />
-            <Text>Loading...</Text>
-          </View>
-        )}
-        {countryStats.slice(0, 10).map((country, index) => (
-          <View style={styles.cardRow} key={index}>
-            <View style={{ alignItems: "center" }}>
+      {countryStats?.length === 0 && (
+        <View>
+          <ActivityIndicator size="large" color="#00ff00" />
+          <Text>Loading...</Text>
+        </View>
+      )}
+      <View style={{ height: 400 }}>
+        <ScrollView nestedScrollEnabled={true}>
+          {countryStats.slice(0, 10).map((country, index) => (
+            <View style={styles.cardRow} key={index}>
+              <View style={{ alignItems: "center" }}>
+                <View>
+                  <Image
+                    source={{ uri: `${country.countryInfo.flag}` }}
+                    style={{
+                      width: 50,
+                      height: 50,
+                      resizeMode: "contain",
+                      borderRadius: 10,
+                    }}
+                  />
+                </View>
+                <View>
+                  <Text
+                    style={[
+                      styles.cardText,
+                      { color: "#6576FF", fontWeight: "bold" },
+                    ]}
+                  >
+                    {index + 1}. {country.country}
+                  </Text>
+                </View>
+              </View>
+
               <View>
-                <Image
-                  source={{ uri: `${country.countryInfo.flag}` }}
-                  style={{
-                    width: 50,
-                    height: 50,
-                    resizeMode: "contain",
-                    borderRadius: 10,
-                  }}
+                <FormatNumber
+                  number={country.cases}
+                  color="#364A63"
+                  size={15}
                 />
               </View>
-              <View>
-                <Text
-                  style={[
-                    styles.cardText,
-                    { color: "#6576FF", fontWeight: "bold" },
-                  ]}
-                >
-                  {index + 1}. {country.country}
-                </Text>
-              </View>
             </View>
-
-            <View>
-              <FormatNumber number={country.cases} color="#364A63" size={15} />
-            </View>
-          </View>
-        ))}
-      </ScrollView>
+          ))}
+        </ScrollView>
+      </View>
 
       <TouchableOpacity
         style={{
@@ -81,7 +87,7 @@ const TopTenCountryCard = ({ globalStats, countryStats, navigation }) => {
           padding: 10,
           borderColor: "#6576FF",
           borderWidth: 1,
-          marginTop: 20,
+          marginTop: 50,
           borderRadius: 20,
         }}
         onPress={() => {
@@ -126,7 +132,6 @@ export default TopTenCountryCard;
 const styles = StyleSheet.create({
   card: {
     width: "100%",
-    height: 400,
     padding: 20,
     borderWidth: 1,
     borderColor: "lightgrey",
