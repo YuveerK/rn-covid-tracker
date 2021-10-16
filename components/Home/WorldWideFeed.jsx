@@ -153,7 +153,14 @@ const WorldWideFeed = ({ navigation }) => {
           navigation={navigation}
         />
 
-        <CasesOverTime globalStats={globalStats} graphData={globalGraph} />
+        <CasesOverTime
+          globalStats={globalStats}
+          heading="Cases Over Time"
+          subheading="Worldwide"
+          color="orange"
+          subheading2="The graph below shows a timeline of cases since the pandemic began"
+          graphData={globalGraph}
+        />
       </View>
     </>
   );

@@ -8,12 +8,12 @@ const ProgressCircleComponent = ({
   shadowColor,
   bgColor,
   text,
-  icon
+  icon,
 }) => {
   return (
     <ProgressCircle
       percent={Number(percent)}
-      radius={50}
+      radius={45}
       borderWidth={2}
       color={color ? color : "black"}
       shadowColor="#999"

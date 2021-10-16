@@ -39,7 +39,7 @@ const ViewSelectedCountry = ({ route }) => {
   let recovered = (countryData.recovered / total) * 100;
   let deaths = (countryData.deaths / total) * 100;
   let active = (countryData.active / total) * 100;
-  const LATITUDE_DELTA = 0.05; //Increase or decrease the zoom level dynamically
+  const LATITUDE_DELTA = 0.3; //Increase or decrease the zoom level dynamically
   const LONGITUDE_DELTA = LATITUDE_DELTA * 100;
 
   const data = {
@@ -97,28 +97,27 @@ const ViewSelectedCountry = ({ route }) => {
         <Text style={[styles.heading1, { marginBottom: 15, padding: 10 }]}>
           {countryData.country} - Coronavirus Cases
         </Text>
-        <View style={styles.container}>
-          {countryInfo && (
-            <MapView
-              style={styles.map}
-              initialRegion={{
+        {countryInfo && (
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: countryInfo.lat,
+              longitude: countryInfo.long,
+              latitudeDelta: LATITUDE_DELTA,
+              longitudeDelta: LONGITUDE_DELTA,
+            }}
+            scrollEnabled={false}
+          >
+            <Marker
+              coordinate={{
                 latitude: countryInfo.lat,
                 longitude: countryInfo.long,
-                latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA,
               }}
-            >
-              {/* <Marker
-                coordinate={{
-                  latitude: countryInfo.lat,
-                  longitude: countryInfo.long,
-                }}
-                title={countryData.country}
-                description={countryData.cases.toString()}
-              /> */}
-            </MapView>
-          )}
-        </View>
+              title={countryData.country}
+              description={countryData.cases.toString()}
+            />
+          </MapView>
+        )}
         <View style={styles.mainContainer}>
           <View style={styles.generalContainer}>
             <Text style={styles.heading2}>Total Confirmed Cases</Text>
@@ -129,102 +128,75 @@ const ViewSelectedCountry = ({ route }) => {
               size={30}
             />
           </View>
-          <View style={styles.row}>
-            <View>
-              <Text style={styles.subHeading}>Recovered</Text>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <FormatNumber
-                  number={countryData.recovered}
-                  color="#1EE0AC"
-                  size={30}
-                  fontweight="300"
-                />
-                <Text style={[styles.generalText, { marginLeft: 10 }]}>
-                  {Number(
-                    (countryData.recovered / countryData.cases) * 100
-                  ).toFixed(1)}
-                  %
-                </Text>
+          <View style={styles.container}>
+            <View style={styles.row}>
+              <View>
+                <Text style={styles.subHeading}>Recovered</Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <FormatNumber
+                    number={countryData.recovered}
+                    color="#1EE0AC"
+                    size={30}
+                    fontweight="300"
+                  />
+                </View>
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <ProgressCircle
+                    color="#1EE0AC"
+                    percent={Number(
+                      (countryData.recovered / countryData.cases) * 100
+                    ).toFixed(1)}
+                    text={Number(
+                      (countryData.recovered / countryData.cases) * 100
+                    ).toFixed(1)}
+                    icon={
+                      <FontAwesome5
+                        name="praying-hands"
+                        size={18}
+                        color="#1EE0AC"
+                      />
+                    }
+                  />
+                </View>
               </View>
-              <View style={{ justifyContent: "center", alignItems: "center" }}>
-                <ProgressCircle
-                  percent={30}
-                  color="#1EE0AC"
-                  percent={Number(
-                    (countryData.recovered / countryData.cases) * 100
-                  ).toFixed(1)}
-                  text={Number(
-                    (countryData.recovered / countryData.cases) * 100
-                  ).toFixed(1)}
-                  icon={
-                    <FontAwesome5
-                      name="praying-hands"
-                      size={18}
-                      color="#1EE0AC"
-                    />
-                  }
-                />
-              </View>
-            </View>
 
-            <View>
-              <Text style={styles.subHeading}>Deaths</Text>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <FormatNumber
-                  number={countryData.recovered}
-                  color="#E85347"
-                  size={30}
-                  fontweight="300"
-                />
-                <Text style={[styles.generalText, { marginLeft: 10 }]}>
-                  {Number(
-                    (countryData.deaths / countryData.cases) * 100
-                  ).toFixed(1)}
-                </Text>
-              </View>
-              <View style={{ justifyContent: "center", alignItems: "center" }}>
-                <ProgressCircle
-                  percent={Number(
-                    (countryData.deaths / countryData.cases) * 100
-                  ).toFixed(1)}
-                  color="red"
-                  text={Number(
-                    (countryData.deaths / countryData.cases) * 100
-                  ).toFixed(1)}
-                  icon={
-                    <FontAwesome5 name="heartbeat" size={24} color="#E85347" />
-                  }
-                />
+              <View>
+                <Text style={styles.subHeading}>Deaths</Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <FormatNumber
+                    number={countryData.recovered}
+                    color="#E85347"
+                    size={30}
+                    fontweight="300"
+                  />
+                </View>
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <ProgressCircle
+                    percent={Number(
+                      (countryData.deaths / countryData.cases) * 100
+                    ).toFixed(1)}
+                    color="red"
+                    text={Number(
+                      (countryData.deaths / countryData.cases) * 100
+                    ).toFixed(1)}
+                    icon={
+                      <FontAwesome5
+                        name="heartbeat"
+                        size={24}
+                        color="#E85347"
+                      />
+                    }
+                  />
+                </View>
               </View>
             </View>
           </View>
 
-          <View style={styles.row}>
-            <ProgressChart
-              data={data}
-              width={400}
-              height={220}
-              strokeWidth={16}
-              radius={32}
-              chartConfig={{
-                backgroundColor: "#e26a00",
-                backgroundGradientFrom: "#fb8c00",
-                backgroundGradientTo: "#ffa726",
-                decimalPlaces: 2, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-                propsForDots: {
-                  r: "6",
-                  strokeWidth: "2",
-                  stroke: "#ffa726",
-                },
-              }}
-              hideLegend={false}
-            />
-          </View>
+          <View style={styles.row}></View>
 
           <View style={styles.generalContainer}>
             <Text style={styles.heading2}>Currently Active Cases</Text>
@@ -308,6 +280,12 @@ const ViewSelectedCountry = ({ route }) => {
 export default ViewSelectedCountry;
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "lightgrey",
+    borderRadius: 10,
+  },
   graphContainer: {
     width: "100%",
   },
