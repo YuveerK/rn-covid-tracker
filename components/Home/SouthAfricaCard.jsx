@@ -5,6 +5,7 @@ import FormatNumber from "./FormatNumber";
 const SouthAfricaCard = ({}) => {
   const [globalStats, setGlobalStats] = useState([]);
   const [globalStatsCountryInfo, setGlobalStatsCountryInfo] = useState([]);
+  const [globalVaccineData, setGlobalVaccineData] = useState([]);
   let image = "";
 
   //get country stats
@@ -24,12 +25,25 @@ const SouthAfricaCard = ({}) => {
     getCountries();
   }, []);
 
+  useEffect(() => {
+    const getGlobalVaccineData = async () => {
+      await fetch(
+        "https://disease.sh/v3/covid-19/vaccine/coverage/countries/za?lastdays=1&fullData=false"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setGlobalVaccineData(Object.values(data.timeline));
+        });
+    };
+    getGlobalVaccineData();
+  }, []);
+
   let total = globalStats.cases + globalStats.recovered + globalStats.deaths;
   let cases = (globalStats.cases / total) * 100;
   let recovered = (globalStats.recovered / total) * 100;
   let deaths = (globalStats.deaths / total) * 100;
   image = globalStatsCountryInfo.flag;
-  console.log(globalStats);
+
   return (
     <View style={styles.card}>
       <View style={styles.cardRow}>
@@ -50,17 +64,22 @@ const SouthAfricaCard = ({}) => {
       </View>
 
       <View style={styles.cardRow}>
-        <View>
+        <View style={{ marginVertical: 10 }}>
           <Text style={styles.cardHeading2}>Confirmed</Text>
           <FormatNumber number={globalStats.cases} color="#364A63" />
         </View>
-        <View>
+        <View style={{ marginVertical: 10 }}>
           <Text style={styles.cardHeading2}>Recovered</Text>
           <FormatNumber number={globalStats.recovered} color="#1EE0AC" />
         </View>
-        <View>
+        <View style={{ marginVertical: 10 }}>
           <Text style={styles.cardHeading2}>Deaths</Text>
           <FormatNumber number={globalStats.deaths} color="#E85347" />
+        </View>
+
+        <View style={{ marginVertical: 10 }}>
+          <Text style={styles.cardHeading2}>Vaccine Tests</Text>
+          <FormatNumber number={globalVaccineData[0]} color="#00ff15" />
         </View>
       </View>
 
@@ -181,6 +200,7 @@ const styles = StyleSheet.create({
   cardRow: {
     width: "100%",
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 10,

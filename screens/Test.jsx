@@ -116,55 +116,100 @@ const Test = ({ route }) => {
                 </View>
 
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.activePerOneMillion} size={15} />
+                  <FormatNumber
+                    number={item.activePerOneMillion}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.cases} size={15} />
+                  <FormatNumber number={item.cases} size={15} color="black" />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.casesPerOneMillion} size={15} />
+                  <FormatNumber
+                    number={item.casesPerOneMillion}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View style={styles.tableRowData}>
-                  <Text style={{ color: "white" }}>{item.continent}</Text>
+                  <Text style={{ color: "black" }}>{item.continent}</Text>
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.critical} size={15} />
+                  <FormatNumber
+                    number={item.critical}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.criticalPerOneMillion} size={15} />
+                  <FormatNumber
+                    number={item.criticalPerOneMillion}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.deaths} size={15} />
+                  <FormatNumber number={item.deaths} size={15} color="black" />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.deathsPerOneMillion} size={15} />
+                  <FormatNumber
+                    number={item.deathsPerOneMillion}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.oneCasePerPeople} size={15} />
+                  <FormatNumber
+                    number={item.oneCasePerPeople}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.oneDeathPerPeople} size={15} />
+                  <FormatNumber
+                    number={item.oneDeathPerPeople}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.oneTestPerPeople} size={15} />
+                  <FormatNumber
+                    number={item.oneTestPerPeople}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.population} size={15} />
+                  <FormatNumber
+                    number={item.population}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.recovered} size={15} />
+                  <FormatNumber
+                    number={item.recovered}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View style={styles.tableRowData}>
                   <FormatNumber
                     number={item.recoveredPerOneMillion}
                     size={15}
+                    color="black"
                   />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.tests} size={15} />
+                  <FormatNumber number={item.tests} size={15} color="black" />
                 </View>
                 <View style={styles.tableRowData}>
-                  <FormatNumber number={item.testsPerOneMillion} size={15} />
+                  <FormatNumber
+                    number={item.testsPerOneMillion}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View
                   style={
@@ -173,7 +218,11 @@ const Test = ({ route }) => {
                       : styles.tableRowData
                   }
                 >
-                  <FormatNumber number={item.todayCases} size={15} />
+                  <FormatNumber
+                    number={item.todayCases}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View
                   style={
@@ -182,7 +231,11 @@ const Test = ({ route }) => {
                       : styles.tableRowData
                   }
                 >
-                  <FormatNumber number={item.todayDeaths} size={15} />
+                  <FormatNumber
+                    number={item.todayDeaths}
+                    size={15}
+                    color="black"
+                  />
                 </View>
                 <View
                   style={
@@ -191,7 +244,11 @@ const Test = ({ route }) => {
                       : styles.tableRowData
                   }
                 >
-                  <FormatNumber number={item.todayRecovered} size={15} />
+                  <FormatNumber
+                    number={item.todayRecovered}
+                    size={15}
+                    color="black"
+                  />
                 </View>
               </View>
             )}
@@ -218,13 +275,15 @@ const styles = StyleSheet.create({
   tableHeaderData: {
     width: 100,
     padding: 10,
-    backgroundColor: "black",
+    backgroundColor: "white",
     justifyContent: "center",
     borderRightWidth: 1,
-    borderRightColor: "grey",
+    borderRightColor: "lightgrey",
+    borderBottomWidth: 1,
+    borderBottomColor: "grey",
   },
   tableHeaderDataText: {
-    color: "white",
+    color: "black",
   },
   tableRow: {
     flexDirection: "row",
@@ -237,7 +296,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRightColor: "lightgrey",
     borderRightWidth: 1,
-    backgroundColor: "#161C23",
+    backgroundColor: "white",
   },
   tableRowDataRecovered: {
     width: 100,

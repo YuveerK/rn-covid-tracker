@@ -25,8 +25,7 @@ const WorldWideFeed = ({ navigation }) => {
   const [countries, setCountries] = useState([]);
   const [sa, setSa] = useState([]);
   const [continents, setContinents] = useState([]);
-  const [text, onChangeText] = useState("");
-  //================================================================= Use Effects ==========================================================
+  const [globalVaccineData, setGlobalVaccineData] = useState([]);
 
   //get all stats world wide
   useEffect(() => {
@@ -38,6 +37,20 @@ const WorldWideFeed = ({ navigation }) => {
         });
     };
     getStats();
+  }, []);
+
+  //Get global Vaccine Stats
+  useEffect(() => {
+    const getGlobalVaccineData = async () => {
+      await fetch(
+        "https://disease.sh/v3/covid-19/vaccine/coverage?lastdays=1&fullData=true"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setGlobalVaccineData(data[0]);
+        });
+    };
+    getGlobalVaccineData();
   }, []);
 
   //get country stats
@@ -120,7 +133,7 @@ const WorldWideFeed = ({ navigation }) => {
         style={{
           width: "100%",
           height: 100,
-          marginTop: StatusBar.currentHeight,
+          marginTop: StatusBar.currentHeight + 10,
         }}
       >
         <Image
@@ -143,7 +156,10 @@ const WorldWideFeed = ({ navigation }) => {
           </Text>
         </View>
 
-        <WorldWideCard globalStats={globalStats} />
+        <WorldWideCard
+          globalStats={globalStats}
+          vaccineStats={globalVaccineData}
+        />
 
         <SouthAfricaCard globalStats={sa} />
 

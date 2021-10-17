@@ -2,11 +2,12 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FormatNumber from "./FormatNumber";
 
-const WorldWideCard = ({ globalStats }) => {
+const WorldWideCard = ({ globalStats, vaccineStats }) => {
   let total = globalStats.cases + globalStats.recovered + globalStats.deaths;
   let cases = (globalStats.cases / total) * 100;
   let recovered = (globalStats.recovered / total) * 100;
   let deaths = (globalStats.deaths / total) * 100;
+
   return (
     <View style={styles.card}>
       <Text style={styles.cardHeading1}>
@@ -117,6 +118,27 @@ const WorldWideCard = ({ globalStats }) => {
 
         <View>
           <FormatNumber number={globalStats.deaths} color="#364A63" size={15} />
+        </View>
+      </View>
+
+      <View style={styles.cardRow}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View
+            style={{
+              width: 10,
+              height: 10,
+              backgroundColor: "#00ff15",
+              marginRight: 15,
+              borderRadius: 2,
+            }}
+          ></View>
+          <View>
+            <Text style={styles.cardText}>Vaccine Tests</Text>
+          </View>
+        </View>
+
+        <View>
+          <FormatNumber number={vaccineStats.total} color="#364A63" size={15} />
         </View>
       </View>
 

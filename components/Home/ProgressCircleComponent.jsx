@@ -16,7 +16,7 @@ const ProgressCircleComponent = ({
       radius={45}
       borderWidth={2}
       color={color ? color : "black"}
-      shadowColor="#999"
+      shadowColor="#dadada"
       bgColor="#fff"
     >
       {icon}
