@@ -128,8 +128,8 @@ const SelectACountry = ({ navigation }) => {
                   <Image
                     source={{ uri: `${item.countryInfo.flag}` }}
                     style={{
-                      width: 30,
-                      height: 30,
+                      width: 50,
+                      height: 40,
                       resizeMode: "contain",
                       borderRadius: 9,
                     }}
@@ -171,7 +171,14 @@ const SelectACountry = ({ navigation }) => {
                   </View>
                 </View>
 
-                <View style={styles.rowData}>
+                <View
+                  style={[
+                    styles.rowData,
+                    {
+                      width: windowWidth / 5,
+                    },
+                  ]}
+                >
                   <View style={styles.countryName}>
                     <Entypo name="chevron-thin-right" size={24} color="black" />
                   </View>
@@ -207,7 +214,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "lightgrey",
     borderBottomWidth: 1,
     backgroundColor: "white",
-    padding: 10,
+    padding: 5,
   },
   rowContainer: {},
   countryName: {

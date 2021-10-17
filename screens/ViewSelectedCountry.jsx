@@ -584,6 +584,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    borderColor: "lightgrey",
+    borderWidth: 1,
+    borderRadius: 20,
   },
   container: {
     padding: 10,
