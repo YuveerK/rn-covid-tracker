@@ -38,8 +38,8 @@ const VaccineStats = ({ navigation }) => {
   const viewDetails = (index, vaccine) => {
     console.log(index);
     navigation.navigate("VaccineDetailsScreen", {
-      data: vaccine
-    })
+      data: vaccine,
+    });
   };
 
   console.log(candidates.candidate);
@@ -48,12 +48,11 @@ const VaccineStats = ({ navigation }) => {
       <View style={styles.table}>
         <View style={styles.tableHeader}>
           <View style={styles.tableHeaderData}>
-            <Text>Candidate</Text>
+            <Text style={{ fontWeight: "bold" }}>Candidate</Text>
           </View>
           <View style={styles.tableHeaderData}>
-            <Text>Sponsors</Text>
+            <Text style={{ fontWeight: "bold" }}>Sponsors</Text>
           </View>
-          <View style={styles.tableHeaderData}></View>
         </View>
 
         <FlatList
@@ -61,25 +60,23 @@ const VaccineStats = ({ navigation }) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <TouchableWithoutFeedback
-              style={styles.tableRow}
+              style={index % 2 === 0 ? styles.tableRow : styles.tableRow1}
               onPress={() => viewDetails(index, item)}
             >
               <View style={styles.tableRowData}>
                 <Text>{item.candidate}</Text>
-              </View>
-              <View style={styles.tableRowData}>
-                <Text>{item.sponsors}</Text>
               </View>
               <View
                 style={[
                   styles.tableRowData,
                   {
                     flexDirection: "row",
-                    justifyContent: "center",
+                    justifyContent: "space-between",
                     alignItems: "center",
                   },
                 ]}
               >
+                <Text style={{ width: 140 }}>{item.sponsors}</Text>
                 <Entypo name="chevron-thin-right" size={24} color="black" />
               </View>
             </TouchableWithoutFeedback>
@@ -105,24 +102,31 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    borderBottomColor: "lightgrey",
+    borderBottomColor: "grey",
     borderBottomWidth: 1,
   },
   tableHeaderData: {
-    width: Dimensions.get("window").width / 3,
-    borderRightColor: "lightgrey",
+    width: Dimensions.get("window").width / 2,
+    borderRightColor: "grey",
     borderRightWidth: 1,
     padding: 20,
   },
   tableRow: {
     width: "100%",
     flexDirection: "row",
-    borderBottomColor: "lightgrey",
+    borderBottomColor: "grey",
     borderBottomWidth: 1,
   },
+  tableRow1: {
+    width: "100%",
+    flexDirection: "row",
+    borderBottomColor: "grey",
+    borderBottomWidth: 1,
+    backgroundColor: "#dde1ff",
+  },
   tableRowData: {
-    width: Dimensions.get("window").width / 3,
-    borderRightColor: "lightgrey",
+    width: Dimensions.get("window").width / 2,
+    borderRightColor: "grey",
     borderRightWidth: 1,
     padding: 10,
     justifyContent: "center",
