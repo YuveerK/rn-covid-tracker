@@ -1,18 +1,28 @@
 import { getActionFromState } from "@react-navigation/core";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Dimensions,
+  FlatList,
+} from "react-native";
+import {
+  ScrollView,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 import vaccineData from "../data/vaccineData.json";
-import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 const VaccineStats = ({ navigation }) => {
   const [candidates, setCandidates] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
   const [isClickedIndex, setIsClickedIndex] = useState(null);
   const [text, onChangeText] = useState("");
-
+  let windowWidth = Dimensions.get("window").width;
   useEffect(() => {
     const loadData = () => {
       setCandidates(vaccineData.data);
@@ -25,105 +35,57 @@ const VaccineStats = ({ navigation }) => {
     setIsClickedIndex(index);
   };
 
+  const viewDetails = (index, vaccine) => {
+    console.log(index);
+    navigation.navigate("VaccineDetailsScreen", {
+      data: vaccine
+    })
+  };
+
+  console.log(candidates.candidate);
   return (
     <View style={styles.container}>
       <View style={styles.table}>
-        <ScrollView horizontal={true}>
-          <ScrollView>
-            <View style={styles.tableHeaders}>
+        <View style={styles.tableHeader}>
+          <View style={styles.tableHeaderData}>
+            <Text>Candidate</Text>
+          </View>
+          <View style={styles.tableHeaderData}>
+            <Text>Sponsors</Text>
+          </View>
+          <View style={styles.tableHeaderData}></View>
+        </View>
+
+        <FlatList
+          data={candidates}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => (
+            <TouchableWithoutFeedback
+              style={styles.tableRow}
+              onPress={() => viewDetails(index, item)}
+            >
+              <View style={styles.tableRowData}>
+                <Text>{item.candidate}</Text>
+              </View>
+              <View style={styles.tableRowData}>
+                <Text>{item.sponsors}</Text>
+              </View>
               <View
-                style={{
-                  width: 50,
-
-                  height: 100,
-                }}
-              ></View>
-              <View style={styles.tableHeaderHeading}>
-                <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                  Candidate
-                </Text>
+                style={[
+                  styles.tableRowData,
+                  {
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  },
+                ]}
+              >
+                <Entypo name="chevron-thin-right" size={24} color="black" />
               </View>
-              <View style={styles.tableHeaderHeading}>
-                <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                  Mechanism
-                </Text>
-              </View>
-              <View style={styles.tableHeaderHeading}>
-                <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                  Sponsor
-                </Text>
-              </View>
-              <View style={styles.tableHeaderHeading}>
-                <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                  Trial Phase
-                </Text>
-              </View>
-              <View style={styles.tableHeaderHeading}>
-                <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                  Institution
-                </Text>
-              </View>
-            </View>
-
-            {candidates?.length > 0 &&
-              candidates.map((vaccine, index) => (
-                <TouchableOpacity
-                  style={styles.tableRow}
-                  key={index}
-                  onPress={() => getInfo(index)}
-                >
-                  <View style={{ flexDirection: "row", width: "100%" }}>
-                    <View style={styles.icon}>
-                      {isClickedIndex === index && isClicked === true ? (
-                        <AntDesign name="closecircle" size={20} color="red" />
-                      ) : (
-                        <Ionicons
-                          name="ios-add-circle-sharp"
-                          size={24}
-                          color="green"
-                        />
-                      )}
-                    </View>
-                    <View style={styles.rowContent}>
-                      <Text>{vaccine.candidate}</Text>
-                    </View>
-                    <View style={styles.rowContent}>
-                      <Text>{vaccine.mechanism}</Text>
-                    </View>
-                    <View style={styles.rowContent}>
-                      <Text>{vaccine.sponsors}</Text>
-                    </View>
-                    <View style={styles.rowContent}>
-                      <Text>{vaccine.trialPhase}</Text>
-                    </View>
-                    <View style={styles.rowContent}>
-                      <Text>{vaccine.institutions}</Text>
-                    </View>
-                  </View>
-
-                  {candidates?.length > 0 &&
-                    isClickedIndex === index &&
-                    isClicked === true && (
-                      <View
-                        style={{
-                          borderLeftWidth: 2,
-                          borderLeftColor: "lightgrey",
-                          borderRightWidth: 2,
-                          borderRightColor: "lightgrey",
-                          padding: 15,
-                          width: 800,
-                        }}
-                      >
-                        <Text style={{ fontSize: 30, color: "purple" }}>
-                          Details
-                        </Text>
-                        <Text style={{ fontSize: 18 }}>{vaccine.details}</Text>
-                      </View>
-                    )}
-                </TouchableOpacity>
-              ))}
-          </ScrollView>
-        </ScrollView>
+            </TouchableWithoutFeedback>
+          )}
+        />
+        <View style={styles.tableRow}></View>
       </View>
     </View>
   );
@@ -133,54 +95,36 @@ export default VaccineStats;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#eee",
+    backgroundColor: "#ffffff",
     flex: 1,
-  },
-  searchContainer: {
-    height: 40,
-    width: 300,
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 1,
-    marginBottom: 15,
-  },
-  input: {
-    height: 40,
-    width: 340,
-    marginVertical: 12,
-    padding: 10,
   },
   table: {
     width: "100%",
-    backgroundColor: "white",
   },
-  tableHeaders: {
+  tableHeader: {
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     borderBottomColor: "lightgrey",
     borderBottomWidth: 1,
   },
-  tableHeaderHeading: {
-    width: 150,
-    height: 100,
-
-    justifyContent: "center",
+  tableHeaderData: {
+    width: Dimensions.get("window").width / 3,
+    borderRightColor: "lightgrey",
+    borderRightWidth: 1,
+    padding: 20,
   },
   tableRow: {
+    width: "100%",
+    flexDirection: "row",
     borderBottomColor: "lightgrey",
     borderBottomWidth: 1,
-    width: "100%",
   },
-  rowContent: {
-    width: 150,
-
-    justifyContent: "center",
-    padding: 5,
-  },
-  icon: {
-    width: 50,
-    justifyContent: "center",
-    alignItems: "center",
+  tableRowData: {
+    width: Dimensions.get("window").width / 3,
+    borderRightColor: "lightgrey",
+    borderRightWidth: 1,
     padding: 10,
+    justifyContent: "center",
   },
 });

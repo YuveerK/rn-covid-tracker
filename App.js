@@ -67,9 +67,9 @@ export default function App() {
           component={VaccineStats}
           options={{
             headerStyle: {
-              backgroundColor: "black",
+              backgroundColor: "white",
             },
-            headerTintColor: "white",
+            headerTintColor: "black",
           }}
         />
         <HomeStack.Screen

@@ -12,6 +12,7 @@ import {
 import {
   buildCasesData,
   buildDeathsData,
+  buildVaccineData,
 } from "../components/Home/buildGraphs";
 import FormatNumber from "../components/Home/FormatNumber";
 import CasesOverTime from "../components/Home/CasesOverTime";
@@ -21,6 +22,7 @@ import { Fontisto } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { PieChart, ProgressChart } from "react-native-chart-kit";
 
 const ViewSelectedCountry = ({ route }) => {
   const [casesGraph, setCasesGraph] = useState([]);
@@ -28,6 +30,7 @@ const ViewSelectedCountry = ({ route }) => {
   const [globalVaccineData, setGlobalVaccineData] = useState([]);
   const [weatherData, setWeatherData] = useState([]);
   const [weatherDescriptionData, setWeatherDescriptionData] = useState([]);
+  const [vaccineGraph, setVaccineGraph] = useState([]);
   const [weatherWindData, setWeatherWindData] = useState([]);
   const [weatherMainDescriptionData, setWeatherMainDescriptionData] = useState(
     []
@@ -83,6 +86,26 @@ const ViewSelectedCountry = ({ route }) => {
     getGraphData();
   }, []);
 
+  //Get Vaccine Graph Data
+  useEffect(() => {
+    const getGraphData = async () => {
+      try {
+        const url2 = `https://disease.sh/v3/covid-19/vaccine/coverage/countries/${countryInfo.iso3}?lastdays=30&fullData=false`;
+        await fetch(url2)
+          .then((response) => response.json())
+          .then((data) => {
+            let casesData = buildVaccineData(data);
+            setVaccineGraph(casesData);
+          });
+        setIsLoading(false);
+      } catch (error) {
+        setVaccineGraph(null);
+      }
+    };
+
+    getGraphData();
+  }, []);
+
   useEffect(() => {
     const getGlobalVaccineData = async () => {
       try {
@@ -119,23 +142,23 @@ const ViewSelectedCountry = ({ route }) => {
   const buildPics = (description) => {
     switch (description) {
       case "clear sky":
-        return require("../assets/clearsky.gif");
+        return require("../assets/clearsky.jpg");
       case "few clouds":
-        return require("../assets/fewclouds.gif");
+        return require("../assets/fewclouds.jpg");
       case "scattered clouds":
-        return require("../assets/scatteredclouds.gif");
+        return require("../assets/scatteredclouds.jpg");
       case "broken clounds":
-        return require("../assets/brokenclouds.gif");
+        return require("../assets/brokenclouds.jpg");
       case "shower rain":
-        return require("../assets/showerrain.gif");
+        return require("../assets/showerrain.jpg");
       case "rain":
-        return require("../assets/rain.gif");
+        return require("../assets/rain.jpg");
       case "thunderstorm":
-        return require("../assets/thunderstorm.gif");
+        return require("../assets/thunderstorm.jpg");
       case "snow":
-        return require("../assets/snow.gif");
+        return require("../assets/snow.jpg");
       case "mist":
-        return require("../assets/mist.gif");
+        return require("../assets/mist.jpeg");
 
       default:
         return;
@@ -150,10 +173,47 @@ const ViewSelectedCountry = ({ route }) => {
   let thecases = (countryData.cases / thetotal) * 100;
   let therecovered = (countryData.recovered / thetotal) * 100;
 
-  let rain = require("../assets/lightrain.gif");
   let image = buildPics(weatherDescriptionData.description);
 
-  console.log(weatherWindData);
+  const thedata = [
+    {
+      name: "Seoul",
+      population: 21500000,
+      color: "rgba(131, 167, 234, 1)",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15,
+    },
+    {
+      name: "Toronto",
+      population: 2800000,
+      color: "#F00",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15,
+    },
+    {
+      name: "Beijing",
+      population: 527612,
+      color: "red",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15,
+    },
+    {
+      name: "New York",
+      population: 8538000,
+      color: "#ffffff",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15,
+    },
+    {
+      name: "Moscow",
+      population: 11920000,
+      color: "rgb(0, 0, 255)",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15,
+    },
+  ];
+
+  console.log(vaccineGraph);
   return (
     <View style={[styles.mainContainer, { padding: 0 }]}>
       <ScrollView>
@@ -205,35 +265,86 @@ const ViewSelectedCountry = ({ route }) => {
                 <Text>Loading...</Text>
               </View>
             )}
-            <Text style={[styles.subHeading, { fontSize: 15 }]}>
-              Time in {countryData.country}:{" "}
-              <Text style={{ fontWeight: "bold" }}>{timeZone.time} </Text>
-            </Text>
+
+            {Object.keys(timeZone).length > 0 && timeZone.time && (
+              <Text
+                style={[
+                  styles.subHeading,
+                  { fontSize: 15, textAlign: "center" },
+                ]}
+              >
+                Time in {countryData.country}:{" "}
+                <Text style={{ fontWeight: "bold" }}>{timeZone.time} </Text>
+              </Text>
+            )}
 
             <View
               style={{
-                flexDirection: "row",
                 width: "100%",
+                flexDirection: "row",
                 alignItems: "center",
-                justifyContent: "space-between",
-                marginTop: 30,
+                justifyContent: "space-around",
+                flexWrap: "wrap",
+                marginTop: 20,
               }}
             >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                {Object.keys(weatherWindData).length > 0 && (
-                  <Text style={styles.subHeading}>
-                    Wind: {weatherWindData.deg}° at {weatherWindData.speed}{" "}
-                    knotts{" "}
-                  </Text>
-                )}
-              </View>
               {Object.keys(weatherWindData).length > 0 && (
-                <View>
+                <Text style={[styles.subHeading, { fontWeight: "bold" }]}>
+                  Wind: {weatherWindData.deg}° at {weatherWindData.speed} kts{" "}
+                </Text>
+              )}
+              {Object.keys(weatherWindData).length > 0 && (
+                <View
+                  style={{
+                    position: "relative",
+                    padding: 20,
+                    height: 80,
+                    width: 80,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 80,
+                      position: "absolute",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text>N</Text>
+                  </View>
+                  <View
+                    style={{
+                      height: 80,
+                      position: "absolute",
+                      right: 5,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text>E</Text>
+                  </View>
+                  <View
+                    style={{
+                      width: 80,
+                      position: "absolute",
+                      bottom: 0,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text>S</Text>
+                  </View>
+                  <View
+                    style={{
+                      height: 80,
+                      position: "absolute",
+                      left: 2,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text>W</Text>
+                  </View>
                   <AntDesign
                     name="arrowup"
                     size={40}
@@ -298,17 +409,74 @@ const ViewSelectedCountry = ({ route }) => {
                   style={{
                     width: `${therecovered}%`,
                     height: 10,
-                    backgroundColor: "green",
+                    backgroundColor: "#1EE0AC",
+                    borderTopLeftRadius: 5,
+                    borderBottomLeftRadius: 5,
                   }}
                 ></View>
                 <View
                   style={{
                     width: `${thecases}%`,
                     height: 10,
-                    backgroundColor: "red",
+                    backgroundColor: "#ff7300",
+                    borderTopRightRadius: 5,
+                    borderBottomRightRadius: 5,
                   }}
                 ></View>
               </View>
+              <View
+                style={[
+                  styles.row,
+                  {
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    marginTop: 20,
+                  },
+                ]}
+              >
+                <View
+                  style={{
+                    width: 10,
+                    height: 10,
+                    backgroundColor: "#1EE0AC",
+                    marginRight: 10,
+                  }}
+                ></View>
+                <Text>Recovered</Text>
+              </View>
+
+              <View
+                style={[
+                  styles.row,
+                  {
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    marginTop: 8,
+                    marginBottom: 12,
+                  },
+                ]}
+              >
+                <View
+                  style={{
+                    width: 10,
+                    height: 10,
+                    backgroundColor: "#ff7300",
+                    marginRight: 10,
+                  }}
+                ></View>
+                <Text>Cases</Text>
+              </View>
+
+              <Text>
+                The ratio of{" "}
+                <Text style={{ color: "#798BFF" }}>
+                  (Recovery {therecovered.toFixed()}%)
+                </Text>{" "}
+                &{" "}
+                <Text style={{ color: "#798BFF" }}>
+                  (Cases {thecases.toFixed()}%){" "}
+                </Text>
+              </Text>
             </View>
             <View style={styles.row}>
               <View style={{ margin: 20 }}>
@@ -543,7 +711,7 @@ const ViewSelectedCountry = ({ route }) => {
                 heading="Cases Over Time"
                 subheading={countryData.country}
                 graphData={casesGraph}
-                subheading2="The graph below shows a timelines of cases for the past 3 months (90 days)"
+                subheading2="The graph below shows a timeline of daily cases for the past 3 months (90 days)"
                 color="orange"
               />
             )}
@@ -557,8 +725,22 @@ const ViewSelectedCountry = ({ route }) => {
                 heading="Deaths Over Time"
                 subheading={countryData.country}
                 graphData={deathGraph}
-                subheading2="The graph below shows a timelines of deaths for the past 3 months (90 days)"
+                subheading2="The graph below shows a timeline of daily deaths for the past 3 months (90 days)"
                 color="#E85347"
+              />
+            )}
+          </View>
+
+          <View style={styles.graphContainer}>
+            {vaccineGraph === null ? (
+              <Text> No Data </Text>
+            ) : (
+              <CasesOverTime
+                heading="Vaccines Administered Over Time"
+                subheading={countryData.country}
+                graphData={vaccineGraph}
+                subheading2="The graph below shows a timeline of vaccines administered for the past 3 months (90 days)"
+                color="#37ff00"
               />
             )}
           </View>
