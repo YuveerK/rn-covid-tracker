@@ -102,32 +102,25 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    borderBottomColor: "grey",
-    borderBottomWidth: 1,
   },
   tableHeaderData: {
     width: Dimensions.get("window").width / 2,
-    borderRightColor: "grey",
-    borderRightWidth: 1,
-    padding: 20,
+    backgroundColor: "#6576FF",
+    padding: 10,
   },
   tableRow: {
     width: "100%",
     flexDirection: "row",
-    borderBottomColor: "grey",
-    borderBottomWidth: 1,
   },
   tableRow1: {
     width: "100%",
     flexDirection: "row",
-    borderBottomColor: "grey",
-    borderBottomWidth: 1,
-    backgroundColor: "#dde1ff",
+
+    backgroundColor: "aliceblue",
   },
   tableRowData: {
     width: Dimensions.get("window").width / 2,
-    borderRightColor: "grey",
-    borderRightWidth: 1,
+
     padding: 10,
     justifyContent: "center",
   },
