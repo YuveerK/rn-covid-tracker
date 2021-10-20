@@ -17,6 +17,8 @@ import WorldWideCard from "./WorldWideCard";
 import TopTenCountryCard from "./TopTenCountryCard";
 import CasesOverTime from "./CasesOverTime";
 import SouthAfricaCard from "./SouthAfricaCard";
+import ContinentCard from "./ContinentCard";
+import ContinentCard2 from "./ContinentCard2";
 
 const WorldWideFeed = ({ navigation }) => {
   const [globalStats, setGlobalStats] = useState([]);
@@ -56,7 +58,9 @@ const WorldWideFeed = ({ navigation }) => {
   //get country stats
   useEffect(() => {
     const getCountries = async () => {
-      await fetch("https://disease.sh/v3/covid-19/countries?sort=cases")
+      await fetch(
+        "https://disease.sh/v3/covid-19/countries?yesterday=true&sort=cases"
+      )
         .then((response) => response.json())
         .then((data) => {
           setCountries(data);
@@ -126,7 +130,6 @@ const WorldWideFeed = ({ navigation }) => {
   };
 
   const date = new Date();
-
   return (
     <>
       <View
@@ -169,14 +172,17 @@ const WorldWideFeed = ({ navigation }) => {
           navigation={navigation}
         />
 
-        <CasesOverTime
+        {countries?.length > 0 && (
+          <ContinentCard2 continentStats={continents} />
+        )}
+        {/* <CasesOverTime
           globalStats={globalStats}
           heading="Cases Over Time"
           subheading="Worldwide"
           color="orange"
           subheading2="The graph below shows a timeline of cases since the pandemic began"
           graphData={globalGraph}
-        />
+        /> */}
       </View>
     </>
   );
