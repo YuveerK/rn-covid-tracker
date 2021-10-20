@@ -213,13 +213,10 @@ const ViewSelectedCountry = ({ route }) => {
     },
   ];
 
-  console.log(vaccineGraph);
+  console.log(weatherData);
   return (
     <View style={[styles.mainContainer, { padding: 0 }]}>
       <ScrollView>
-        <Text style={[styles.heading1, { marginBottom: 15, padding: 10 }]}>
-          {countryData.country} - Coronavirus Cases
-        </Text>
         {countryInfo && (
           <MapView
             style={styles.map}

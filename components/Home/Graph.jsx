@@ -19,7 +19,6 @@ const Graph = ({ dataFeed, color }) => {
         <LineChart
           onDataPointClick={({ index }) => console.log(dataFeed[index])}
           data={{
-            labels: ["March 2020"],
             datasets: [
               {
                 data: dataFeed,
