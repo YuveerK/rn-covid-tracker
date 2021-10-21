@@ -128,7 +128,7 @@ export default function App() {
           }}
         />
 
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Vaccine"
           component={VaccineStackScreen}
           options={{
@@ -137,7 +137,7 @@ export default function App() {
             ),
             tabBarActiveTintColor: "#798BFF",
           }}
-        />
+        /> */}
 
         <Tab.Screen
           name="Covid Map"

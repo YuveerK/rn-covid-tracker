@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import FormatNumber from "./FormatNumber";
+import { Fontisto } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const ContinentCard2 = ({ continentStats }) => {
   const [globalStats, setGlobalStats] = useState([]);
@@ -21,12 +25,11 @@ const ContinentCard2 = ({ continentStats }) => {
     getGlobalVaccineData();
   }, []);
 
-  let total = globalStats.cases + globalStats.recovered + globalStats.deaths;
-  let cases = (globalStats.cases / total) * 100;
-  let recovered = (globalStats.recovered / total) * 100;
-  let deaths = (globalStats.deaths / total) * 100;
-  image = globalStatsCountryInfo.flag;
+  let total = continentStats.recovered + continentStats.cases;
+  let therecovered = (continentStats.recovered / total) * 100;
+  let thecases = (continentStats.casses / total) * 100;
 
+  console.log(total);
   return (
     <View style={styles.card}>
       <View style={styles.cardRow}>
@@ -36,86 +39,126 @@ const ContinentCard2 = ({ continentStats }) => {
         </Text>
       </View>
 
-      <Text>
-        The ratio of{" "}
-        <Text style={{ color: "#798BFF" }}>
-          (Recovery {recovered.toFixed()}%)
-        </Text>{" "}
-        &{" "}
-        <Text style={{ color: "#798BFF" }}>(Deaths {deaths.toFixed()}%) </Text>
-      </Text>
+      {continentStats.map((continent, index) => (
+        <View key={index}>
+          <View style={styles.card}>
+            <View style={styles.row}>
+              <Text style={styles.cardHeading1}>{continent.continent}</Text>
+              <Text style={[styles.cardHeading1, { fontSize: 15 }]}>
+                {continent.countries.length} countries
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.cardHeading1}>Poplation</Text>
+              <FormatNumber
+                number={continent.population}
+                color="#364A63"
+                size={15}
+              />
+            </View>
 
-      <View style={styles.cardRow}>
-        <View>
-          <Text style={[styles.cardHeading1, { color: "grey" }]}>
-            Last 24 Hrs
-          </Text>
-        </View>
-        <View>
-          <FormatNumber number={globalStats.todayCases} color="black" />
-        </View>
-      </View>
+            <View style={styles.row}>
+              <View style={styles.descriptionCard}>
+                <View style={styles.iconRow}>
+                  <Text style={styles.cardHeading1}>Cases </Text>
+                  <AntDesign name="addusergroup" size={24} color="#ff7300" />
+                </View>
+                <FormatNumber
+                  number={continent.cases}
+                  color="#364A63"
+                  size={15}
+                />
+                {continent.todayCases > 0 && (
+                  <Text>
+                    +
+                    <FormatNumber
+                      number={continent.todayCases}
+                      color="orange"
+                      size={15}
+                    />
+                  </Text>
+                )}
+              </View>
 
-      <View style={styles.cardRow}>
-        <View>
-          <Text style={[styles.cardHeading1, { color: "grey" }]}>Active</Text>
-        </View>
-        <View>
-          <FormatNumber number={globalStats.active} color="black" />
-        </View>
-      </View>
+              <View style={styles.descriptionCard}>
+                <View style={styles.iconRow}>
+                  <Text style={styles.cardHeading1}>Deaths </Text>
+                  <FontAwesome5 name="heartbeat" size={24} color="#E85347" />
+                </View>
+                <FormatNumber
+                  number={continent.deaths}
+                  color="#364A63"
+                  size={15}
+                />
+                {continent.todayDeaths > 0 && (
+                  <Text>
+                    +
+                    <FormatNumber
+                      number={continent.todayDeaths}
+                      color="#E85347"
+                      size={15}
+                    />
+                  </Text>
+                )}
+              </View>
+            </View>
 
-      <View
-        style={{
-          width: "100%",
-          borderWidth: 1,
-          borderColor: "lightgrey",
-          padding: 10,
-          borderRadius: 10,
-        }}
-      >
-        <View style={styles.cardRow}>
-          <View style={styles.labelColorContainer}>
-            <View
-              style={{
-                width: 10,
-                height: 10,
-                backgroundColor: "#816BFF",
-                borderRadius: 2,
-              }}
-            ></View>
-            <Text style={[styles.cardHeading2, { marginLeft: 10 }]}>
-              In Mild Condition
-            </Text>
+            <View style={styles.row}>
+              <View style={styles.descriptionCard}>
+                <View style={styles.iconRow}>
+                  <Text style={styles.cardHeading1}>Recovered </Text>
+                  <FontAwesome5
+                    name="praying-hands"
+                    size={18}
+                    color="#1EE0AC"
+                  />
+                </View>
+                <FormatNumber
+                  number={continent.recovered}
+                  color="#364A63"
+                  size={15}
+                />
+                {continent.todayRecovered > 0 && (
+                  <Text>
+                    +
+                    <FormatNumber
+                      number={continent.todayRecovered}
+                      color="#1EE0AC"
+                      size={15}
+                    />
+                  </Text>
+                )}
+              </View>
+
+              <View style={styles.descriptionCard}>
+                <View style={styles.iconRow}>
+                  <Text style={styles.cardHeading1}>Covid Tests </Text>
+                  <MaterialCommunityIcons
+                    name="needle"
+                    size={24}
+                    color="#00ff15"
+                  />
+                </View>
+                <FormatNumber
+                  number={continent.tests}
+                  color="#364A63"
+                  size={15}
+                />
+                {continent.todayTests > 0 && (
+                  <Text>
+                    +
+                    <FormatNumber
+                      number={continent.todayTests}
+                      color="#00ff15"
+                      size={15}
+                    />
+                  </Text>
+                )}
+              </View>
+            </View>
           </View>
-          <FormatNumber
-            number={globalStats.active - globalStats.critical}
-            color="#364A63"
-            size={15}
-          />
         </View>
-
-        <View style={styles.cardRow}>
-          <View style={styles.labelColorContainer}>
-            <View
-              style={{
-                width: 10,
-                height: 10,
-                backgroundColor: "#1EE0AC",
-                borderRadius: 2,
-              }}
-            ></View>
-            <Text style={[styles.cardHeading2, { marginLeft: 10 }]}>
-              In Critical Condition
-            </Text>
-          </View>
-          <FormatNumber
-            number={globalStats.critical}
-            color="#364A63"
-            size={15}
-          />
-        </View>
-      </View>
+      ))}
     </View>
   );
 };
@@ -123,9 +166,24 @@ const ContinentCard2 = ({ continentStats }) => {
 export default ContinentCard2;
 
 const styles = StyleSheet.create({
+  descriptionCard: {
+    width: Dimensions.get("window").width / 2 - 60,
+    borderWidth: 1,
+    borderColor: "lightgrey",
+    borderRadius: 10,
+    padding: 8,
+    backgroundColor: "#EFF1FF",
+  },
   labelColorContainer: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 10,
+    flexWrap: "wrap",
   },
   card: {
     width: "100%",
@@ -141,6 +199,7 @@ const styles = StyleSheet.create({
   cardHeading1: {
     fontWeight: "bold",
     fontSize: 18,
+    color: "#364A63",
   },
   cardHeading2: {
     color: "grey",
@@ -156,5 +215,11 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  iconRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 15,
   },
 });
