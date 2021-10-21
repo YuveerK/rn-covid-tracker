@@ -1,7 +1,15 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { Entypo } from "@expo/vector-icons";
 
-const Education = () => {
+const Education = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -104,7 +112,97 @@ const Education = () => {
               </View>
             </View>
           </View>
-          <View style={styles.listItem}></View>
+          <View style={styles.contentContainer}>
+            <Text style={styles.mainHeading}>
+              Important information about COVID-19
+            </Text>
+            <TouchableOpacity
+              style={styles.link}
+              activeOpacity={0.5}
+              onPress={() =>
+                navigation.navigate("Symptoms, diagnosis, reducing risk")
+              }
+            >
+              <Text style={styles.subHeading}>
+                Symptoms, diagnosis, reducing risk
+              </Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+              <Text style={styles.subHeading}>Frequently Asked Questions</Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.contentContainer}>
+            <Text style={styles.mainHeading}>Before Going to Hospital</Text>
+            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+              <Text style={styles.subHeading}>How to get tested</Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+              <Text style={[styles.subHeading, { maxWidth: "90%" }]}>
+                Self-isolation guideline while waiting for test results
+              </Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+              <Text style={[styles.subHeading, { maxWidth: "90%" }]}>
+                Admission request
+              </Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+              <Text style={[styles.subHeading, { maxWidth: "90%" }]}>
+                Admissions process during the COVID-19 pandemic
+              </Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.contentContainer}>
+            <Text style={styles.mainHeading}>
+              Preventing the spread of infection
+            </Text>
+            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+              <Text style={styles.subHeading}>
+                General infection prevention tips
+              </Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+              <Text style={[styles.subHeading, { maxWidth: "90%" }]}>
+                How to hand wash
+              </Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+              <Text style={[styles.subHeading, { maxWidth: "90%" }]}>
+                A guide to waterless hand-washing
+              </Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+              <Text style={[styles.subHeading, { maxWidth: "90%" }]}>
+                How to use alcohol handrub effectively
+              </Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+              <Text style={[styles.subHeading, { maxWidth: "90%" }]}>
+                Dos and don’ts of wearing a cloth mask
+              </Text>
+              <Entypo name="chevron-thin-right" size={15} color="black" />
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -144,5 +242,21 @@ const styles = StyleSheet.create({
   listItemRightHeading: {
     fontSize: 25,
     marginBottom: 5,
+  },
+  mainHeading: {
+    color: "red",
+    fontSize: 20,
+  },
+  subHeading: {
+    color: "#364A63",
+  },
+  link: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+    justifyContent: "space-between",
+    padding: 10,
+    backgroundColor: "#EFF1FF",
   },
 });
