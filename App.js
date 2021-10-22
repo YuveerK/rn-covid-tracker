@@ -24,6 +24,7 @@ import SelectACountry from "./screens/SelectACountry";
 import ViewSelectedCountry from "./screens/ViewSelectedCountry";
 import SymptomsDiagnosisReducingRisk from "./screens/SymptomsDiagnosisReducingRisk";
 import FAQ from "./screens/FAQ";
+import HowToGetTested from "./screens/HowToGetTested";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -109,6 +110,15 @@ export default function App() {
           component={SymptomsDiagnosisReducingRisk}
         />
         <HomeStack.Screen name="FAQs" component={FAQ} />
+        <HomeStack.Screen name="How to Get Tested" component={HowToGetTested} />
+        {/* <HomeStack.Screen name="FAQs" component={FAQ} />
+        <HomeStack.Screen name="FAQs" component={FAQ} />
+        <HomeStack.Screen name="FAQs" component={FAQ} />
+        <HomeStack.Screen name="FAQs" component={FAQ} />
+        <HomeStack.Screen name="FAQs" component={FAQ} />
+        <HomeStack.Screen name="FAQs" component={FAQ} />
+        <HomeStack.Screen name="FAQs" component={FAQ} />
+        <HomeStack.Screen name="FAQs" component={FAQ} /> */}
       </HomeStack.Navigator>
     );
   }

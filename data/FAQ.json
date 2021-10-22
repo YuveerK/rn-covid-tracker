@@ -1,11 +1,50 @@
 [
     {
-        "Q": "What is coronavirus (COVID-19)?",
-        "A": "Coronaviruses are a large family of viruses which may cause illness in animals or humans. In
-        humans, several coronaviruses are known to cause respiratory infections ranging from the
-        common cold to more severe diseases such as Middle East Respiratory Syndrome (MERS) and
-        Severe Acute Respiratory Syndrome (SARS). The most recently discovered coronavirus causes
-        coronavirus disease COVID-19."
-    }
+        "question": "What is coronavirus (COVID-19)?",
+        "answer": "A Coronaviruses are a large family of viruses which may cause illness in animals or humans. In humans, several coronaviruses are known to cause respiratory infections ranging from the common cold to more severe diseases such as Middle East Respiratory Syndrome (MERS) and Severe Acute Respiratory Syndrome (SARS). The most recently discovered coronavirus causes coronavirus disease COVID-19"
+    },
+    {
+        "question": "Does the coronavirus spread from person to person?",
+        "answer": "The virus can spread from one person to another, mainly through droplets of saliva or mucus carried through the air for up to 1 metre or so when an infected person coughs or sneezes. Viral particles may be breathed in, land on surfaces that people touch, or be transferred when shaking hands or sharing a drink with someone who has the virus."
+    },
+    {
+        "question": "What is the incubation period for the coronavirus?",
+        "answer": "An incubation period is the time between being infected by a virus and showing symptoms of the illness. Current information suggests that symptoms of COVID-19 usually appear on average after five days from infection. However, the incubation period may be as short as two days or as long as 14 days before the infected person shows symptoms."
+    },
+    {
+        "question": "How is this new coronavirus confirmed?",
+        "answer": "A specialised test must be done to confirm that a person has COVID-19. However, it is important to note that only persons who show symptoms or meet criteria as set out by the NICD will be tested. If you or a loved one have suspected symptoms, please contact your general practitioner first, who will liaise with the necessary authorities to assist with tests. In cases of severe respiratory distress, please go to your emergency unit. However, inform them of your arrival prior to entering the unit."
+    },
+    {
+        "question": "Can people who are asymptomatic spread coronavirus?",
+        "answer": "A person who is asymptomatic may be spreading the virus and could make others ill. How often this lasts if asymptomatic transmission is occurring is unclear. The risk of catching the virus from someone with no symptoms, is very low."
+    },
+    {
+        "question": "Can the coronavirus live on surfaces such as fabrics and carpets or hard surfaces?",
+        "answer": "How long the new coronavirus can live on a soft surface — and more importantly, how easy or hard it is to spread this way — isn’t clear yet. Available evidence suggests it can be transmitted less easily from soft surfaces than frequently-touched hard surfaces, such as a doorknob or the elevator button. According to WHO, coronaviruses may survive on surfaces for just a few hours or several days. However, many factors will influence this period, including the surface material and weather. This is the reason why taking personal hygiene steps such as frequently washing your hands with soap and water or an alcohol-based hand sanitiser, and wiping down often-touched surfaces with disinfectants or a household cleaning spray, are excellent infection prevention practices."
+    },
+    {
+        "question": "Can people who are asymptomatic spread coronavirus?",
+        "answer": "A person who is asymptomatic may be spreading the virus and could make others ill. How often this lasts if asymptomatic transmission is occurring is unclear. The risk of catching the virus from someone with no symptoms, is very low."
+    },
+    {
+        "question": "Can people who are asymptomatic spread coronavirus?",
+        "answer": "A person who is asymptomatic may be spreading the virus and could make others ill. How often this lasts if asymptomatic transmission is occurring is unclear. The risk of catching the virus from someone with no symptoms, is very low."
+    },
+    {
+        "question": "Can people who are asymptomatic spread coronavirus?",
+        "answer": "A person who is asymptomatic may be spreading the virus and could make others ill. How often this lasts if asymptomatic transmission is occurring is unclear. The risk of catching the virus from someone with no symptoms, is very low."
+    },
+    {
+        "question": "Can people who are asymptomatic spread coronavirus?",
+        "answer": "A person who is asymptomatic may be spreading the virus and could make others ill. How often this lasts if asymptomatic transmission is occurring is unclear. The risk of catching the virus from someone with no symptoms, is very low."
+    },
+    {
+        "question": "Can people who are asymptomatic spread coronavirus?",
+        "answer": "A person who is asymptomatic may be spreading the virus and could make others ill. How often this lasts if asymptomatic transmission is occurring is unclear. The risk of catching the virus from someone with no symptoms, is very low."
+    },
+    {
+        "question": "Can people who are asymptomatic spread coronavirus?",
+        "answer": "A person who is asymptomatic may be spreading the virus and could make others ill. How often this lasts if asymptomatic transmission is occurring is unclear. The risk of catching the virus from someone with no symptoms, is very low."
+    },
 ]
-

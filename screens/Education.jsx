@@ -141,7 +141,11 @@ const Education = ({ navigation }) => {
 
           <View style={styles.contentContainer}>
             <Text style={styles.mainHeading}>Before Going to Hospital</Text>
-            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+            <TouchableOpacity
+              style={styles.link}
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate("How to Get Tested")}
+            >
               <Text style={styles.subHeading}>How to get tested</Text>
               <Entypo name="chevron-thin-right" size={15} color="black" />
             </TouchableOpacity>
