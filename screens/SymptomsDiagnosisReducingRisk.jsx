@@ -187,73 +187,65 @@ const SymptomsDiagnosisReducingRisk = () => {
 
           <View style={styles.cardItem}>
             <Image
-              source={require("../assets/covid-symptoms/1_cover-cough.png")}
+              source={require("../assets/covid-symptoms/2_maintain-distance.png")}
               style={styles.cardLogo}
             />
             <Text style={styles.cardContentDescription}>
-              Cover your cough or sneeze with a flexed elbow or tissues. Throw
-              the tissues in a bin. Do not cover your cough or sneeze with your
-              hands or cough or sneeze in to open air.
+              Maintain a distance of at least 1 to 2 metres when interacting
+              with other persons.
             </Text>
           </View>
 
           <View style={styles.cardItem}>
             <Image
-              source={require("../assets/covid-symptoms/1_cover-cough.png")}
+              source={require("../assets/covid-symptoms/3_wash-hands.png")}
               style={styles.cardLogo}
             />
             <Text style={styles.cardContentDescription}>
-              Cover your cough or sneeze with a flexed elbow or tissues. Throw
-              the tissues in a bin. Do not cover your cough or sneeze with your
-              hands or cough or sneeze in to open air.
+              Wash your hands often with soap and warm water for at least 20
+              seconds. If soap and water are not available, use an alcohol-based
+              hand sanitiser.
             </Text>
           </View>
 
           <View style={styles.cardItem}>
             <Image
-              source={require("../assets/covid-symptoms/1_cover-cough.png")}
+              source={require("../assets/covid-symptoms/4_avoid-people.png")}
               style={styles.cardLogo}
             />
             <Text style={styles.cardContentDescription}>
-              Cover your cough or sneeze with a flexed elbow or tissues. Throw
-              the tissues in a bin. Do not cover your cough or sneeze with your
-              hands or cough or sneeze in to open air.
+              Avoid close contact with people who are sick.
             </Text>
           </View>
 
           <View style={styles.cardItem}>
             <Image
-              source={require("../assets/covid-symptoms/1_cover-cough.png")}
+              source={require("../assets/covid-symptoms/5_avoid-touching-eyes.png")}
               style={styles.cardLogo}
             />
             <Text style={styles.cardContentDescription}>
-              Cover your cough or sneeze with a flexed elbow or tissues. Throw
-              the tissues in a bin. Do not cover your cough or sneeze with your
-              hands or cough or sneeze in to open air.
+              Avoid touching your eyes, nose and mouth with your hands.
             </Text>
           </View>
 
           <View style={styles.cardItem}>
             <Image
-              source={require("../assets/covid-symptoms/1_cover-cough.png")}
+              source={require("../assets/covid-symptoms/6_stay-home.png")}
               style={styles.cardLogo}
             />
             <Text style={styles.cardContentDescription}>
-              Cover your cough or sneeze with a flexed elbow or tissues. Throw
-              the tissues in a bin. Do not cover your cough or sneeze with your
-              hands or cough or sneeze in to open air.
+              Stay home when you are sick and try to keep your distance from
+              others.
             </Text>
           </View>
 
           <View style={styles.cardItem}>
             <Image
-              source={require("../assets/covid-symptoms/1_cover-cough.png")}
+              source={require("../assets/covid-symptoms/7_wear-mask.png")}
               style={styles.cardLogo}
             />
             <Text style={styles.cardContentDescription}>
-              Cover your cough or sneeze with a flexed elbow or tissues. Throw
-              the tissues in a bin. Do not cover your cough or sneeze with your
-              hands or cough or sneeze in to open air.
+              Wear a face mask as per current legislation.
             </Text>
           </View>
         </View>
@@ -274,17 +266,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     backgroundColor: "#F2F3F4",
-    padding: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
     marginVertical: 10,
+    borderRadius: 20,
   },
   cardLogo: {
     width: 50,
     height: 50,
     resizeMode: "contain",
+    marginRight: 10,
   },
   cardContentDescription: {
     color: "#576484",
-    maxWidth: "90%",
+    maxWidth: "85%",
   },
   header: {
     width: "100%",
