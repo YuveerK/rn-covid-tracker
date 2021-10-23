@@ -25,6 +25,7 @@ import ViewSelectedCountry from "./screens/ViewSelectedCountry";
 import SymptomsDiagnosisReducingRisk from "./screens/SymptomsDiagnosisReducingRisk";
 import FAQ from "./screens/FAQ";
 import HowToGetTested from "./screens/HowToGetTested";
+import WaitingForTestResults from "./screens/WaitingForTestResults";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -111,8 +112,8 @@ export default function App() {
         />
         <HomeStack.Screen name="FAQs" component={FAQ} />
         <HomeStack.Screen name="How to Get Tested" component={HowToGetTested} />
+        <HomeStack.Screen name="Waiting For Test Results" component={WaitingForTestResults} />
         {/* <HomeStack.Screen name="FAQs" component={FAQ} />
-        <HomeStack.Screen name="FAQs" component={FAQ} />
         <HomeStack.Screen name="FAQs" component={FAQ} />
         <HomeStack.Screen name="FAQs" component={FAQ} />
         <HomeStack.Screen name="FAQs" component={FAQ} />

@@ -92,6 +92,124 @@ const HowToGetTested = () => {
               </Text>
             </View>
           </View>
+
+          <View style={styles.step}>
+            <View style={styles.number}>
+              <Text style={styles.actualNumber}>5</Text>
+            </View>
+            <View style={styles.stepsContent}>
+              <Text>Observe the necessary precautions:</Text>
+              <View style={styles.listItem}>
+                <Ionicons
+                  name="square-outline"
+                  size={15}
+                  color="red"
+                  style={{ marginTop: 2, marginRight: 10 }}
+                />
+                <Text style={styles.rootText}>
+                  <Text style={[styles.rootText, { fontWeight: "bold" }]}>
+                    Self-isolation
+                  </Text>{" "}
+                  – if you are indicated by your healthcare practitioner to do
+                  so
+                </Text>
+              </View>
+              <View style={styles.listItem}>
+                <Ionicons
+                  name="square-outline"
+                  size={15}
+                  color="red"
+                  style={{ marginTop: 2, marginRight: 10 }}
+                />
+                <Text style={styles.rootText}>
+                  <Text style={[styles.rootText, { fontWeight: "bold" }]}>
+                    Social distancing{" "}
+                  </Text>
+                  – keep at least 2 metres between yourself and other people,
+                  avoid direct contact
+                </Text>
+              </View>
+              <View style={styles.listItem}>
+                <Ionicons
+                  name="square-outline"
+                  size={15}
+                  color="red"
+                  style={{ marginTop: 2, marginRight: 10 }}
+                />
+                <Text style={[styles.rootText, { fontWeight: "bold" }]}>
+                  Observe hand hygiene
+                </Text>
+              </View>
+              <View style={styles.listItem}>
+                <Ionicons
+                  name="square-outline"
+                  size={15}
+                  color="red"
+                  style={{ marginTop: 2, marginRight: 10 }}
+                />
+                <Text style={styles.rootText}>
+                  <Text style={[styles.rootText, { fontWeight: "bold" }]}>
+                    Cover your cough and sneeze{" "}
+                  </Text>
+                  with your flexed elbow or tissue
+                </Text>
+              </View>
+              <View style={styles.listItem}>
+                <Ionicons
+                  name="square-outline"
+                  size={15}
+                  color="red"
+                  style={{ marginTop: 2, marginRight: 10 }}
+                />
+                <Text style={styles.rootText}>
+                  <Text style={[styles.rootText, { fontWeight: "bold" }]}>
+                    Avoid
+                  </Text>
+                  touching your eyes, nose and mouth with unwashed hands
+                </Text>
+              </View>
+              <View style={styles.listItem}>
+                <Ionicons
+                  name="square-outline"
+                  size={15}
+                  color="red"
+                  style={{ marginTop: 2, marginRight: 10 }}
+                />
+                <Text style={styles.rootText}>
+                  <Text style={[styles.rootText, { fontWeight: "bold" }]}>
+                    Clean and disinfect{" "}
+                  </Text>
+                  frequently touched objects and surfaces
+                </Text>
+              </View>
+              <View style={styles.listItem}>
+                <Ionicons
+                  name="square-outline"
+                  size={15}
+                  color="red"
+                  style={{ marginTop: 2, marginRight: 10 }}
+                />
+                <Text style={styles.rootText}>
+                  <Text style={[styles.rootText, { fontWeight: "bold" }]}>
+                    Wear a face
+                  </Text>
+                  mask as per current legislation
+                </Text>
+              </View>
+              <View style={styles.listItem}>
+                <Ionicons
+                  name="square-outline"
+                  size={15}
+                  color="red"
+                  style={{ marginTop: 2, marginRight: 10 }}
+                />
+                <Text style={styles.rootText}>
+                  More information about the above can be accessed at
+                  www.lifehealthcare.co.za
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -135,7 +253,7 @@ const styles = StyleSheet.create({
   listItem: {
     flexDirection: "row",
     marginVertical: 0,
-    padding: 10,
+    marginVertical: 5,
   },
   setpsItemsContainer: {
     paddingHorizontal: 30,
@@ -143,7 +261,6 @@ const styles = StyleSheet.create({
   step: {
     flexDirection: "row",
     width: "100%",
-    alignItems: "center",
     marginVertical: 10,
   },
   number: {
@@ -161,9 +278,10 @@ const styles = StyleSheet.create({
     color: "white",
   },
   stepsContent: {
-    maxWidth: "90%",
-    backgroundColor: "lightgrey",
-    padding: 5,
+    width: "90%",
+    backgroundColor: "#F2F3F4",
+    paddingVertical: 5,
+    paddingHorizontal: 20,
     borderRadius: 10,
   },
 });
