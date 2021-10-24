@@ -40,7 +40,6 @@ const MapScreen = () => {
       await fetch("https://disease.sh/v3/covid-19/jhucsse")
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           let countryLists = data.map((country) => ({
             latitude: Number(country.coordinates.latitude),
             longitude: Number(country.coordinates.longitude),
@@ -54,7 +53,6 @@ const MapScreen = () => {
   }, []);
 
   const newData = usData.concat(coordinates);
-  console.log(usData);
   return (
     <View style={styles.container}>
       <MapView

@@ -10,12 +10,11 @@ import {
 } from "react-native";
 import FormatNumber from "./FormatNumber";
 import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const TopTenCountryCard = ({ globalStats, countryStats, navigation }) => {
-  let total = globalStats.cases + globalStats.recovered + globalStats.deaths;
-  let cases = (globalStats.cases / total) * 100;
-  let recovered = (globalStats.recovered / total) * 100;
-  let deaths = (globalStats.deaths / total) * 100;
   return (
     <View style={styles.card}>
       <View style={[styles.cardRow, { backgroundColor: "white", padding: 0 }]}>
@@ -38,40 +37,99 @@ const TopTenCountryCard = ({ globalStats, countryStats, navigation }) => {
           <Text>Loading...</Text>
         </View>
       )}
-      <View style={{ height: 400 }}>
-        <ScrollView nestedScrollEnabled={true}>
-          {countryStats.slice(0, 10).map((country, index) => (
-            <View style={styles.cardRow} key={index}>
-              <View style={{ alignItems: "center" }}>
+      <View style={{ height: 200 }}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          {countryStats.slice(0, 20).map((country, index) => (
+            <View
+              key={index}
+              style={{
+                width: 190,
+                height: 170,
+                marginHorizontal: 10,
+                backgroundColor: "#F2F3F4",
+                borderRadius: 15,
+                alignItems: "center",
+                padding: 15,
+                position: "relative",
+                elevation: 5,
+              }}
+            >
+              <Image
+                source={{ uri: `${country.countryInfo.flag}` }}
+                style={{
+                  width: 50,
+                  height: 30,
+                  resizeMode: "cover",
+                  borderRadius: 5,
+                  marginBottom: 5,
+                }}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  left: 5,
+                  top: 5,
+                  fontWeight: "bold",
+                  width: 20,
+                  height: 20,
+                  backgroundColor: "lightgrey",
+                  borderRadius: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ fontWeight: "bold", fontSize: 10 }}>
+                  {index + 1}
+                </Text>
+              </View>
+              <Text style={{ marginBottom: 15 }}>{country.country}</Text>
+
+              <View style={styles.cardRow}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <AntDesign name="addusergroup" size={15} color="#ff7300" />
+
+                  <View>
+                    <Text style={styles.cardText}></Text>
+                  </View>
+                </View>
+
                 <View>
-                  <Image
-                    source={{ uri: `${country.countryInfo.flag}` }}
-                    style={{
-                      width: 50,
-                      height: 50,
-                      resizeMode: "contain",
-                      borderRadius: 10,
-                    }}
+                  <FormatNumber
+                    number={country.cases}
+                    color="#364A63"
+                    size={15}
                   />
                 </View>
+              </View>
+              <View style={styles.cardRow}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <FontAwesome5 name="heartbeat" size={15} color="#E85347" />
+                </View>
+
                 <View>
-                  <Text
-                    style={[
-                      styles.cardText,
-                      { color: "#6576FF", fontWeight: "bold" },
-                    ]}
-                  >
-                    {index + 1}. {country.country}
-                  </Text>
+                  <FormatNumber
+                    number={country.deaths}
+                    color="#364A63"
+                    size={15}
+                  />
                 </View>
               </View>
+              <View style={styles.cardRow}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <FontAwesome5
+                    name="praying-hands"
+                    size={14}
+                    color="#1EE0AC"
+                  />
+                </View>
 
-              <View>
-                <FormatNumber
-                  number={country.cases}
-                  color="#364A63"
-                  size={15}
-                />
+                <View>
+                  <FormatNumber
+                    number={country.recovered}
+                    color="#364A63"
+                    size={15}
+                  />
+                </View>
               </View>
             </View>
           ))}
@@ -158,9 +216,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginVertical: 10,
-    backgroundColor: "#EFF1FF",
-    padding: 10,
+    marginVertical: 3,
+    backgroundColor: "#F2F3F4",
     borderRadius: 10,
   },
 });

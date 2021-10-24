@@ -29,7 +29,6 @@ const ContinentCard2 = ({ continentStats }) => {
   let therecovered = (continentStats.recovered / total) * 100;
   let thecases = (continentStats.casses / total) * 100;
 
-  console.log(total);
   return (
     <View style={styles.card}>
       <View style={styles.cardRow}>
@@ -67,6 +66,7 @@ const ContinentCard2 = ({ continentStats }) => {
                   number={continent.cases}
                   color="#364A63"
                   size={15}
+                  fontweight="normal"
                 />
                 {continent.todayCases > 0 && (
                   <Text>
@@ -75,6 +75,7 @@ const ContinentCard2 = ({ continentStats }) => {
                       number={continent.todayCases}
                       color="orange"
                       size={15}
+                      fontweight="normal"
                     />
                   </Text>
                 )}
@@ -89,6 +90,7 @@ const ContinentCard2 = ({ continentStats }) => {
                   number={continent.deaths}
                   color="#364A63"
                   size={15}
+                  fontweight="normal"
                 />
                 {continent.todayDeaths > 0 && (
                   <Text>
@@ -97,6 +99,7 @@ const ContinentCard2 = ({ continentStats }) => {
                       number={continent.todayDeaths}
                       color="#E85347"
                       size={15}
+                      fontweight="normal"
                     />
                   </Text>
                 )}
@@ -117,6 +120,7 @@ const ContinentCard2 = ({ continentStats }) => {
                   number={continent.recovered}
                   color="#364A63"
                   size={15}
+                  fontweight="normal"
                 />
                 {continent.todayRecovered > 0 && (
                   <Text>
@@ -125,6 +129,7 @@ const ContinentCard2 = ({ continentStats }) => {
                       number={continent.todayRecovered}
                       color="#1EE0AC"
                       size={15}
+                      fontweight="normal"
                     />
                   </Text>
                 )}
@@ -143,6 +148,7 @@ const ContinentCard2 = ({ continentStats }) => {
                   number={continent.tests}
                   color="#364A63"
                   size={15}
+                  fontweight="normal"
                 />
                 {continent.todayTests > 0 && (
                   <Text>
@@ -151,6 +157,7 @@ const ContinentCard2 = ({ continentStats }) => {
                       number={continent.todayTests}
                       color="#00ff15"
                       size={15}
+                      fontweight="normal"
                     />
                   </Text>
                 )}
@@ -172,7 +179,7 @@ const styles = StyleSheet.create({
     borderColor: "lightgrey",
     borderRadius: 10,
     padding: 8,
-    backgroundColor: "#EFF1FF",
+    backgroundColor: "#F2F3F4",
   },
   labelColorContainer: {
     flexDirection: "row",

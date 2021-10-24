@@ -59,7 +59,7 @@ const WorldWideFeed = ({ navigation }) => {
   useEffect(() => {
     const getCountries = async () => {
       await fetch(
-        "https://disease.sh/v3/covid-19/countries?yesterday=true&sort=cases"
+        "https://disease.sh/v3/covid-19/countries?yesterday=false&sort=cases"
       )
         .then((response) => response.json())
         .then((data) => {
@@ -151,9 +151,6 @@ const WorldWideFeed = ({ navigation }) => {
       </View>
       <View style={[styles.container, { marginTop: 0 }]}>
         <View style={styles.generalContainer}>
-          <Text style={{ fontSize: 25, fontWeight: "bold" }}>
-            COVID-19 Coronavirus Tracker
-          </Text>
           <Text style={{ fontStyle: "italic", color: "grey" }}>
             Updated: {date.toString()}
           </Text>

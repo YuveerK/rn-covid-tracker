@@ -6,11 +6,9 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import {
   TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+} from "react-native";
+
 import FormatNumber from "../components/Home/FormatNumber";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -120,9 +118,10 @@ const SelectACountry = ({ navigation }) => {
             enableEmptySections={true}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
-              <TouchableWithoutFeedback
+              <TouchableOpacity
                 style={styles.row}
                 onPress={() => test(index)}
+                activeOpacity={0.5}
               >
                 <View style={[styles.rowData, { width: windowWidth / 5 + 30 }]}>
                   <Image
@@ -183,7 +182,7 @@ const SelectACountry = ({ navigation }) => {
                     <Entypo name="chevron-thin-right" size={24} color="black" />
                   </View>
                 </View>
-              </TouchableWithoutFeedback>
+              </TouchableOpacity>
             )}
           />
         )}

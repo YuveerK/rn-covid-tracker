@@ -13,7 +13,7 @@ const SouthAfricaCard = ({}) => {
     const getCountries = async () => {
       try {
         await fetch(
-          "https://disease.sh/v3/covid-19/countries/za?yesterday=true&strict=true"
+          "https://disease.sh/v3/covid-19/countries/za?yesterday=false&strict=true"
         )
           .then((response) => response.json())
           .then((data) => {
@@ -94,7 +94,7 @@ const SouthAfricaCard = ({}) => {
 
       <View style={styles.cardRow}>
         <View>
-          <Text style={[styles.cardHeading1, { color: "grey" }]}>
+          <Text style={[styles.cardHeading1, { color: "black" }]}>
             Last 24 Hrs
           </Text>
         </View>
@@ -105,7 +105,7 @@ const SouthAfricaCard = ({}) => {
 
       <View style={styles.cardRow}>
         <View>
-          <Text style={[styles.cardHeading1, { color: "grey" }]}>Active</Text>
+          <Text style={[styles.cardHeading1, { color: "black" }]}>Active</Text>
         </View>
         <View>
           <FormatNumber number={globalStats.active} color="black" />

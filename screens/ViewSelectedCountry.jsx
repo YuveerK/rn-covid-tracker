@@ -213,7 +213,6 @@ const ViewSelectedCountry = ({ route }) => {
     },
   ];
 
-  console.log(weatherData);
   return (
     <View style={[styles.mainContainer, { padding: 0 }]}>
       <ScrollView>
