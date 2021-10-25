@@ -21,7 +21,7 @@ const TopTenCountryCard = ({ globalStats, countryStats, navigation }) => {
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <View>
             <Text style={styles.cardHeading1}>
-              Top 10 Most Affected Countries
+              Top 20 Most Affected Countries
             </Text>
           </View>
         </View>
@@ -37,22 +37,29 @@ const TopTenCountryCard = ({ globalStats, countryStats, navigation }) => {
           <Text>Loading...</Text>
         </View>
       )}
-      <View style={{ height: 200 }}>
+      <View style={{ height: 210, paddingVertical: 10 }}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {countryStats.slice(0, 20).map((country, index) => (
-            <View
+            <TouchableOpacity
+              activeOpacity={0.8}
               key={index}
               style={{
                 width: 190,
                 height: 170,
                 marginHorizontal: 10,
-                backgroundColor: "#F2F3F4",
+                backgroundColor: "#ffffff",
                 borderRadius: 15,
                 alignItems: "center",
                 padding: 15,
                 position: "relative",
-                elevation: 5,
+                elevation: 3,
+                marginTop: 10,
               }}
+              onPress={() =>
+                navigation.navigate("View Selected Country", {
+                  countryData: countryStats[index],
+                })
+              }
             >
               <Image
                 source={{ uri: `${country.countryInfo.flag}` }}
@@ -131,7 +138,7 @@ const TopTenCountryCard = ({ globalStats, countryStats, navigation }) => {
                   />
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </View>
@@ -217,7 +224,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 3,
-    backgroundColor: "#F2F3F4",
     borderRadius: 10,
   },
 });

@@ -161,7 +161,7 @@ const WorldWideFeed = ({ navigation }) => {
           vaccineStats={globalVaccineData}
         />
 
-        <SouthAfricaCard globalStats={sa} />
+        <SouthAfricaCard globalStats={sa} navigation={navigation} />
 
         <TopTenCountryCard
           globalStats={globalStats}
