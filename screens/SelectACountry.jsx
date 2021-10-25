@@ -8,6 +8,7 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
+  TextInput,
 } from "react-native";
 
 import FormatNumber from "../components/Home/FormatNumber";
@@ -19,6 +20,7 @@ import { ScrollView } from "react-native-gesture-handler";
 const SelectACountry = ({ navigation }) => {
   const [countryList, setCountryList] = useState([]);
   const windowWidth = Dimensions.get("window").width;
+  const [text, onChangeText] = useState("Useless Text");
 
   useEffect(() => {
     const getCountryList = async () => {
@@ -62,6 +64,21 @@ const SelectACountry = ({ navigation }) => {
           >
             Updated: {date.toString()}
           </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: Dimensions.get("screen").width,
+              backgroundColor: "red",
+            }}
+          >
+            <EvilIcons name="search" size={24} color="black" />
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangeText}
+              value={text}
+            />
+          </View>
           <View style={styles.countryContainer}>
             {countryList?.length > 0 ? (
               countryList.map((country, index) => (
@@ -124,13 +141,19 @@ const styles = StyleSheet.create({
   },
   imageCard: {
     width: 150,
-    height: 75,
+    height: 85,
     resizeMode: "cover",
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },
   countryName: {
     textAlign: "center",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });
 export default SelectACountry;
