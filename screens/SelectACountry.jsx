@@ -20,7 +20,7 @@ import { ScrollView } from "react-native-gesture-handler";
 const SelectACountry = ({ navigation }) => {
   const [countryList, setCountryList] = useState([]);
   const windowWidth = Dimensions.get("window").width;
-  const [text, onChangeText] = useState("Useless Text");
+  const [text, onChangeText] = useState("");
 
   useEffect(() => {
     const getCountryList = async () => {
@@ -33,43 +33,46 @@ const SelectACountry = ({ navigation }) => {
     getCountryList();
   }, []);
 
-  const test = (index) => {
-    console.log(countryList[index]);
+  const test = (country) => {
+    console.log(country);
     navigation.navigate("View Selected Country", {
-      countryData: countryList[index],
+      countryData: country,
     });
   };
   const date = new Date();
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
-      <ScrollView>
-        <View
+      <View
+        style={{
+          padding: 10,
+        }}
+      >
+        <Text style={{ fontSize: 25, color: "#5D7CA5" }}>
+          COVID-19 Coronavirus Tracker
+        </Text>
+        <Text style={{ marginVertical: 2, color: "#8BA5D8" }}>
+          Confirmed Cases and Deaths by Country, Territory, or Conveyance
+        </Text>
+        <Text
           style={{
-            padding: 10,
+            marginVertical: 10,
+            color: "#b6b6b6",
+            fontStyle: "italic",
           }}
         >
-          <Text style={{ fontSize: 25, color: "#5D7CA5" }}>
-            COVID-19 Coronavirus Tracker
-          </Text>
-          <Text style={{ marginVertical: 2, color: "#8BA5D8" }}>
-            Confirmed Cases and Deaths by Country, Territory, or Conveyance
-          </Text>
-          <Text
-            style={{
-              marginVertical: 10,
-              color: "#b6b6b6",
-              fontStyle: "italic",
-            }}
-          >
-            Updated: {date.toString()}
-          </Text>
+          Updated: {date.toString()}
+        </Text>
+        <View style={{ paddingBottom: 20 }}>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
-              width: Dimensions.get("screen").width,
-              backgroundColor: "red",
+              width: "99%",
+              borderWidth: 1,
+              borderColor: "lightgrey",
+              borderRadius: 20,
+              paddingHorizontal: 15,
             }}
           >
             <EvilIcons name="search" size={24} color="black" />
@@ -79,35 +82,47 @@ const SelectACountry = ({ navigation }) => {
               value={text}
             />
           </View>
+        </View>
+        <ScrollView>
           <View style={styles.countryContainer}>
             {countryList?.length > 0 ? (
-              countryList.map((country, index) => (
-                <TouchableOpacity
-                  style={styles.card}
-                  key={index}
-                  activeOpacity={0.8}
-                  onPress={() => test(index)}
-                >
-                  <Image
-                    source={{ uri: `${country.countryInfo.flag}` }}
-                    style={styles.imageCard}
-                  />
-                  <View
-                    style={{
-                      width: "100%",
-                      height: 85,
-                      borderBottomLeftRadius: 15,
-                      borderBottomRightRadius: 15,
-                      justifyContent: "space-around",
-                      alignItems: "center",
-                    }}
+              countryList
+                .filter((country, index) => {
+                  if (text === "") {
+                    return country;
+                  } else if (
+                    country.country?.toLowerCase().includes(text?.toLowerCase())
+                  ) {
+                    return country;
+                  }
+                })
+                .map((country, index) => (
+                  <TouchableOpacity
+                    style={styles.card}
+                    key={index}
+                    activeOpacity={0.8}
+                    onPress={() => test(country)}
                   >
-                    <Text style={styles.countryName}>{country.country}</Text>
+                    <Image
+                      source={{ uri: `${country.countryInfo.flag}` }}
+                      style={styles.imageCard}
+                    />
+                    <View
+                      style={{
+                        width: "100%",
+                        height: 85,
+                        borderBottomLeftRadius: 15,
+                        borderBottomRightRadius: 15,
+                        justifyContent: "space-around",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text style={styles.countryName}>{country.country}</Text>
 
-                    <EvilIcons name="external-link" size={24} color="black" />
-                  </View>
-                </TouchableOpacity>
-              ))
+                      <EvilIcons name="external-link" size={24} color="black" />
+                    </View>
+                  </TouchableOpacity>
+                ))
             ) : (
               <View>
                 <ActivityIndicator size="large" color="#00ff00" />
@@ -115,8 +130,8 @@ const SelectACountry = ({ navigation }) => {
               </View>
             )}
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -127,6 +142,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
+    paddingBottom: 20,
   },
   card: {
     width: 150,
@@ -141,7 +157,7 @@ const styles = StyleSheet.create({
   },
   imageCard: {
     width: 150,
-    height: 85,
+    height: 70,
     resizeMode: "cover",
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
@@ -151,8 +167,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    margin: 12,
-    borderWidth: 1,
+    width: "90%",
     padding: 10,
   },
 });
