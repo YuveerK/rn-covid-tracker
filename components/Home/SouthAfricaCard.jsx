@@ -13,7 +13,7 @@ const SouthAfricaCard = ({}) => {
     const getCountries = async () => {
       try {
         await fetch(
-          "https://disease.sh/v3/covid-19/countries/za?yesterday=false&strict=true"
+          "https://disease.sh/v3/covid-19/countries/za?yesterday=true&strict=true"
         )
           .then((response) => response.json())
           .then((data) => {
@@ -67,14 +67,38 @@ const SouthAfricaCard = ({}) => {
         <View style={{ marginVertical: 10 }}>
           <Text style={styles.cardHeading2}>Confirmed</Text>
           <FormatNumber number={globalStats.cases} color="#364A63" />
+          <Text>
+            +
+            <FormatNumber
+              number={globalStats.todayCases}
+              color="#364A63"
+              size={15}
+            />
+          </Text>
         </View>
         <View style={{ marginVertical: 10 }}>
           <Text style={styles.cardHeading2}>Recovered</Text>
           <FormatNumber number={globalStats.recovered} color="#1EE0AC" />
+          <Text>
+            +
+            <FormatNumber
+              number={globalStats.todayRecovered}
+              color="#1EE0AC"
+              size={15}
+            />
+          </Text>
         </View>
         <View style={{ marginVertical: 10 }}>
           <Text style={styles.cardHeading2}>Deaths</Text>
           <FormatNumber number={globalStats.deaths} color="#E85347" />
+          <Text>
+            +
+            <FormatNumber
+              number={globalStats.todayDeaths}
+              color="#E85347"
+              size={15}
+            />
+          </Text>
         </View>
 
         <View style={{ marginVertical: 10 }}>
@@ -91,17 +115,6 @@ const SouthAfricaCard = ({}) => {
         &{" "}
         <Text style={{ color: "#798BFF" }}>(Deaths {deaths.toFixed()}%) </Text>
       </Text>
-
-      <View style={styles.cardRow}>
-        <View>
-          <Text style={[styles.cardHeading1, { color: "black" }]}>
-            Last 24 Hrs
-          </Text>
-        </View>
-        <View>
-          <FormatNumber number={globalStats.todayCases} color="black" />
-        </View>
-      </View>
 
       <View style={styles.cardRow}>
         <View>

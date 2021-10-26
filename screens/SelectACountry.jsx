@@ -24,7 +24,7 @@ const SelectACountry = ({ navigation }) => {
 
   useEffect(() => {
     const getCountryList = async () => {
-      await fetch("https://disease.sh/v3/covid-19/countries")
+      await fetch("https://disease.sh/v3/covid-19/countries?yesterday=true")
         .then((response) => response.json())
         .then((data) => {
           setCountryList(data);
@@ -43,47 +43,47 @@ const SelectACountry = ({ navigation }) => {
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
-      <View
-        style={{
-          padding: 10,
-        }}
-      >
-        <Text style={{ fontSize: 25, color: "#5D7CA5" }}>
-          COVID-19 Coronavirus Tracker
-        </Text>
-        <Text style={{ marginVertical: 2, color: "#8BA5D8" }}>
-          Confirmed Cases and Deaths by Country, Territory, or Conveyance
-        </Text>
-        <Text
+      <ScrollView>
+        <View
           style={{
-            marginVertical: 10,
-            color: "#b6b6b6",
-            fontStyle: "italic",
+            padding: 10,
           }}
         >
-          Updated: {date.toString()}
-        </Text>
-        <View style={{ paddingBottom: 20 }}>
-          <View
+          <Text style={{ fontSize: 25, color: "#5D7CA5" }}>
+            COVID-19 Coronavirus Tracker
+          </Text>
+          <Text style={{ marginVertical: 2, color: "#8BA5D8" }}>
+            Confirmed Cases and Deaths by Country, Territory, or Conveyance
+          </Text>
+          <Text
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              width: "99%",
-              borderWidth: 1,
-              borderColor: "lightgrey",
-              borderRadius: 20,
-              paddingHorizontal: 15,
+              marginVertical: 10,
+              color: "#b6b6b6",
+              fontStyle: "italic",
             }}
           >
-            <EvilIcons name="search" size={24} color="black" />
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeText}
-              value={text}
-            />
+            Updated: {date.toString()}
+          </Text>
+          <View style={{ paddingBottom: 20 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                width: "99%",
+                borderWidth: 1,
+                borderColor: "lightgrey",
+                borderRadius: 20,
+                paddingHorizontal: 15,
+              }}
+            >
+              <EvilIcons name="search" size={24} color="black" />
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeText}
+                value={text}
+              />
+            </View>
           </View>
-        </View>
-        <ScrollView>
           <View style={styles.countryContainer}>
             {countryList?.length > 0 ? (
               countryList
@@ -130,8 +130,8 @@ const SelectACountry = ({ navigation }) => {
               </View>
             )}
           </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </View>
   );
 };
