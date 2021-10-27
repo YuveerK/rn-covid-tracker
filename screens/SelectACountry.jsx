@@ -16,6 +16,7 @@ import { Entypo } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
+import { AntDesign } from "@expo/vector-icons";
 
 const SelectACountry = ({ navigation }) => {
   const [countryList, setCountryList] = useState([]);
@@ -24,7 +25,7 @@ const SelectACountry = ({ navigation }) => {
 
   useEffect(() => {
     const getCountryList = async () => {
-      await fetch("https://disease.sh/v3/covid-19/countries?yesterday=true")
+      await fetch("https://disease.sh/v3/covid-19/countries?yesterday=false")
         .then((response) => response.json())
         .then((data) => {
           setCountryList(data);
@@ -34,7 +35,6 @@ const SelectACountry = ({ navigation }) => {
   }, []);
 
   const test = (country) => {
-    console.log(country);
     navigation.navigate("View Selected Country", {
       countryData: country,
     });
@@ -43,47 +43,48 @@ const SelectACountry = ({ navigation }) => {
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
-      <ScrollView>
-        <View
-          style={{
-            padding: 10,
-          }}
-        >
-          <Text style={{ fontSize: 25, color: "#5D7CA5" }}>
-            COVID-19 Coronavirus Tracker
-          </Text>
-          <Text style={{ marginVertical: 2, color: "#8BA5D8" }}>
-            Confirmed Cases and Deaths by Country, Territory, or Conveyance
-          </Text>
-          <Text
+      <View
+        style={{
+          padding: 10,
+        }}
+      >
+        <View style={{ paddingBottom: 20 }}>
+          <View
             style={{
-              marginVertical: 10,
-              color: "#b6b6b6",
-              fontStyle: "italic",
+              flexDirection: "row",
+              alignItems: "center",
+              width: "99%",
+              borderWidth: 1,
+              borderColor: "lightgrey",
+              borderRadius: 20,
+              paddingHorizontal: 15,
+              position: "relative",
             }}
           >
-            Updated: {date.toString()}
-          </Text>
-          <View style={{ paddingBottom: 20 }}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                width: "99%",
-                borderWidth: 1,
-                borderColor: "lightgrey",
-                borderRadius: 20,
-                paddingHorizontal: 15,
-              }}
-            >
-              <EvilIcons name="search" size={24} color="black" />
-              <TextInput
-                style={styles.input}
-                onChangeText={onChangeText}
-                value={text}
-              />
-            </View>
+            <EvilIcons name="search" size={24} color="black" />
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangeText}
+              value={text}
+            />
+            {text != "" && (
+              <TouchableOpacity
+                style={{
+                  right: 15,
+                }}
+                activeOpacity={0.5}
+              >
+                <AntDesign
+                  name="close"
+                  size={18}
+                  color="black"
+                  onPress={() => onChangeText("")}
+                />
+              </TouchableOpacity>
+            )}
           </View>
+        </View>
+        <ScrollView>
           <View style={styles.countryContainer}>
             {countryList?.length > 0 ? (
               countryList
@@ -130,8 +131,8 @@ const SelectACountry = ({ navigation }) => {
               </View>
             )}
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -157,13 +158,15 @@ const styles = StyleSheet.create({
   },
   imageCard: {
     width: 150,
-    height: 70,
+    height: 80,
     resizeMode: "cover",
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },
   countryName: {
     textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
   },
   input: {
     height: 40,

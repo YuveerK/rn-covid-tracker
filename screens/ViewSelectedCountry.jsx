@@ -23,23 +23,26 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { PieChart, ProgressChart } from "react-native-chart-kit";
+import { useStateIfMounted } from "use-state-if-mounted";
 
 const ViewSelectedCountry = ({ route }) => {
-  const [casesGraph, setCasesGraph] = useState([]);
-  const [deathGraph, setDeathGraph] = useState([]);
-  const [globalVaccineData, setGlobalVaccineData] = useState([]);
-  const [weatherData, setWeatherData] = useState([]);
-  const [weatherDescriptionData, setWeatherDescriptionData] = useState([]);
-  const [vaccineGraph, setVaccineGraph] = useState([]);
-  const [weatherWindData, setWeatherWindData] = useState([]);
-  const [weatherMainDescriptionData, setWeatherMainDescriptionData] = useState(
+  const [casesGraph, setCasesGraph] = useStateIfMounted([]);
+  const [deathGraph, setDeathGraph] = useStateIfMounted([]);
+  const [globalVaccineData, setGlobalVaccineData] = useStateIfMounted([]);
+  const [weatherData, setWeatherData] = useStateIfMounted([]);
+  const [weatherDescriptionData, setWeatherDescriptionData] = useStateIfMounted(
     []
   );
-  const [timeZone, setTimeZone] = useState([]);
+  const [vaccineGraph, setVaccineGraph] = useStateIfMounted([]);
+  const [weatherWindData, setWeatherWindData] = useStateIfMounted([]);
+  const [weatherMainDescriptionData, setWeatherMainDescriptionData] =
+    useStateIfMounted([]);
+  const [timeZone, setTimeZone] = useStateIfMounted([]);
+  const [yesterdayData, setYesterdayData] = useStateIfMounted([]);
 
   const countryData = route.params.countryData;
   const countryInfo = route.params.countryData.countryInfo;
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useStateIfMounted(true);
   const windowWidth = Dimensions.get("window").width;
 
   const LATITUDE_DELTA = 0.3; //Increase or decrease the zoom level dynamically
@@ -139,6 +142,22 @@ const ViewSelectedCountry = ({ route }) => {
     getWeatherData();
   }, [countryInfo]);
 
+  //get yesterdays data if today's hasnt been published
+  useEffect(() => {
+    const getYesterdayData = async () => {
+      try {
+        await fetch(
+          `https://disease.sh/v3/covid-19/countries/${countryInfo.iso3}?yesterday=true&strict=true`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setYesterdayData(data);
+          });
+      } catch (error) {}
+    };
+    getYesterdayData();
+  }, []);
+
   const buildPics = (description) => {
     switch (description) {
       case "clear sky":
@@ -165,6 +184,7 @@ const ViewSelectedCountry = ({ route }) => {
     }
   };
 
+  console.log(yesterdayData);
   let vaccinePercentage = (globalVaccineData / countryData.population) * 100;
   let vaccineText =
     vaccinePercentage > 100 ? "100 >" : vaccinePercentage.toFixed(2);
@@ -381,16 +401,6 @@ const ViewSelectedCountry = ({ route }) => {
                     size={22}
                   />
                 </View>
-
-                <View>
-                  <Text style={styles.heading2}>Total Confirmed Cases</Text>
-
-                  <FormatNumber
-                    number={countryData.cases}
-                    color="black"
-                    size={22}
-                  />
-                </View>
               </View>
 
               <View
@@ -474,7 +484,255 @@ const ViewSelectedCountry = ({ route }) => {
                 </Text>
               </Text>
             </View>
+
             <View style={styles.row}>
+              <View style={{ margin: 20 }}>
+                <Text style={styles.subHeading}>Cases</Text>
+                <View>
+                  <FormatNumber
+                    number={countryData.cases}
+                    color="#ff7300"
+                    size={30}
+                    fontweight="300"
+                  />
+
+                  {countryData.todayCases > 0 ? (
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Text>+</Text>
+                      <FormatNumber
+                        number={countryData.todayCases}
+                        color="#E85347"
+                        size={20}
+                        fontweight="300"
+                      />
+                    </View>
+                  ) : (
+                    <>
+                      <Text
+                        style={{
+                          fontStyle: "italic",
+                          color: "grey",
+                          marginBottom: 5,
+                        }}
+                      >
+                        There is currently no data for {countryData.country}{" "}
+                        regarding the number of new cases for today. The current
+                        number is yesterdays. Once {countryData.country}{" "}
+                        publishes their COVID-19 Data for today, the number
+                        below will automatically be updated.{" "}
+                      </Text>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Text>+</Text>
+                        <FormatNumber
+                          number={yesterdayData.todayCases}
+                          color="#E85347"
+                          size={20}
+                          fontweight="300"
+                        />
+                      </View>
+                    </>
+                  )}
+                </View>
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <ProgressCircle
+                    color="#ff7300"
+                    percent={Number(
+                      (countryData.cases / countryData.population) * 100
+                    ).toFixed(1)}
+                    text={Number(
+                      (countryData.cases / countryData.population) * 100
+                    ).toFixed(1)}
+                    icon={
+                      <AntDesign
+                        name="addusergroup"
+                        size={24}
+                        color="#ff7300"
+                      />
+                    }
+                  />
+                </View>
+              </View>
+
+              <View style={{ margin: 20 }}>
+                <Text style={styles.subHeading}>Recovered</Text>
+                <View>
+                  <FormatNumber
+                    number={countryData.recovered}
+                    color="#1EE0AC"
+                    size={30}
+                    fontweight="300"
+                  />
+                  {countryData.todayRecovered > 0 ? (
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Text>+</Text>
+                      <FormatNumber
+                        number={countryData.todayRecovered}
+                        color="#1EE0AC"
+                        size={20}
+                        fontweight="300"
+                      />
+                    </View>
+                  ) : (
+                    <>
+                      <Text
+                        style={{
+                          fontStyle: "italic",
+                          color: "grey",
+                          marginBottom: 5,
+                        }}
+                      >
+                        There is currently no data for {countryData.country}{" "}
+                        regarding the number of new recoveries for today. The
+                        current number is yesterdays. Once {countryData.country}{" "}
+                        publishes their COVID-19 Data for today, the number
+                        below will automatically be updated.{" "}
+                      </Text>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Text>+</Text>
+                        <FormatNumber
+                          number={yesterdayData.todayRecovered}
+                          color="#1EE0AC"
+                          size={20}
+                          fontweight="300"
+                        />
+                      </View>
+                    </>
+                  )}
+                </View>
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <ProgressCircle
+                    color="#1EE0AC"
+                    percent={Number(
+                      (countryData.recovered / countryData.cases) * 100
+                    ).toFixed(1)}
+                    text={Number(
+                      (countryData.recovered / countryData.cases) * 100
+                    ).toFixed(1)}
+                    icon={
+                      <FontAwesome5
+                        name="praying-hands"
+                        size={18}
+                        color="#1EE0AC"
+                      />
+                    }
+                  />
+                </View>
+              </View>
+
+              <View style={{ margin: 20 }}>
+                <Text style={styles.subHeading}>Deaths</Text>
+                <View>
+                  <FormatNumber
+                    number={countryData.deaths}
+                    color="#E85347"
+                    size={30}
+                    fontweight="300"
+                  />
+                  {countryData.todayDeaths > 0 ? (
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Text>+</Text>
+                      <FormatNumber
+                        number={countryData.todayDeaths}
+                        color="#E85347"
+                        size={20}
+                        fontweight="300"
+                      />
+                    </View>
+                  ) : (
+                    <>
+                      <Text
+                        style={{
+                          fontStyle: "italic",
+                          color: "grey",
+                          marginBottom: 5,
+                        }}
+                      >
+                        There is currently no data for {countryData.country}{" "}
+                        regarding the number of new deaths for today. The
+                        current number is yesterdays. Once {countryData.country}{" "}
+                        publishes their COVID-19 Data for today, the number
+                        below will automatically be updated.{" "}
+                      </Text>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Text>+</Text>
+                        <FormatNumber
+                          number={yesterdayData.todayDeaths}
+                          color="#E85347"
+                          size={20}
+                          fontweight="300"
+                        />
+                      </View>
+                    </>
+                  )}
+                </View>
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <ProgressCircle
+                    percent={Number(
+                      (countryData.deaths / countryData.cases) * 100
+                    ).toFixed(1)}
+                    color="red"
+                    text={Number(
+                      (countryData.deaths / countryData.cases) * 100
+                    ).toFixed(1)}
+                    icon={
+                      <FontAwesome5
+                        name="heartbeat"
+                        size={24}
+                        color="#E85347"
+                      />
+                    }
+                  />
+                </View>
+              </View>
+
+              <View style={{ margin: 20 }}>
+                <Text style={styles.subHeading}>Vaccinated</Text>
+                <View>
+                  <FormatNumber
+                    number={globalVaccineData[0]}
+                    color="#00ff15"
+                    size={30}
+                    fontweight="300"
+                  />
+                </View>
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <ProgressCircle
+                    color="#00ff15"
+                    percent={Number(
+                      (globalVaccineData / countryData.population) * 100
+                    ).toFixed(1)}
+                    text={vaccineText}
+                    icon={
+                      <MaterialCommunityIcons
+                        name="needle"
+                        size={24}
+                        color="#00ff15"
+                      />
+                    }
+                  />
+                </View>
+              </View>
+
               <View style={{ margin: 20 }}>
                 <Text style={styles.subHeading}>Active</Text>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -501,100 +759,6 @@ const ViewSelectedCountry = ({ route }) => {
                         name="radio-btn-active"
                         size={18}
                         color="orange"
-                      />
-                    }
-                  />
-                </View>
-              </View>
-
-              <View style={{ margin: 20 }}>
-                <Text style={styles.subHeading}>Recovered</Text>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <FormatNumber
-                    number={countryData.recovered}
-                    color="#1EE0AC"
-                    size={30}
-                    fontweight="300"
-                  />
-                </View>
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
-                  <ProgressCircle
-                    color="#1EE0AC"
-                    percent={Number(
-                      (countryData.recovered / countryData.cases) * 100
-                    ).toFixed(1)}
-                    text={Number(
-                      (countryData.recovered / countryData.cases) * 100
-                    ).toFixed(1)}
-                    icon={
-                      <FontAwesome5
-                        name="praying-hands"
-                        size={18}
-                        color="#1EE0AC"
-                      />
-                    }
-                  />
-                </View>
-              </View>
-
-              <View style={{ margin: 20 }}>
-                <Text style={styles.subHeading}>New Cases</Text>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <FormatNumber
-                    number={countryData.todayCases}
-                    color="#ff7300"
-                    size={30}
-                    fontweight="300"
-                  />
-                </View>
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
-                  <ProgressCircle
-                    color="#ff7300"
-                    percent={Number(
-                      (countryData.todayCases / countryData.active) * 100
-                    ).toFixed(1)}
-                    text={Number(
-                      (countryData.todayCases / countryData.active) * 100
-                    ).toFixed(1)}
-                    icon={
-                      <AntDesign
-                        name="addusergroup"
-                        size={24}
-                        color="#ff7300"
-                      />
-                    }
-                  />
-                </View>
-              </View>
-
-              <View style={{ margin: 20 }}>
-                <Text style={styles.subHeading}>Vaccinated</Text>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <FormatNumber
-                    number={globalVaccineData[0]}
-                    color="#00ff15"
-                    size={30}
-                    fontweight="300"
-                  />
-                </View>
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
-                  <ProgressCircle
-                    color="#00ff15"
-                    percent={Number(
-                      (globalVaccineData / countryData.population) * 100
-                    ).toFixed(1)}
-                    text={vaccineText}
-                    icon={
-                      <MaterialCommunityIcons
-                        name="needle"
-                        size={24}
-                        color="#00ff15"
                       />
                     }
                   />
@@ -659,38 +823,6 @@ const ViewSelectedCountry = ({ route }) => {
                         name="hand-heart"
                         size={24}
                         color="#816BFF"
-                      />
-                    }
-                  />
-                </View>
-              </View>
-
-              <View style={{ margin: 20 }}>
-                <Text style={styles.subHeading}>Deaths</Text>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <FormatNumber
-                    number={countryData.deaths}
-                    color="#E85347"
-                    size={30}
-                    fontweight="300"
-                  />
-                </View>
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
-                  <ProgressCircle
-                    percent={Number(
-                      (countryData.deaths / countryData.cases) * 100
-                    ).toFixed(1)}
-                    color="red"
-                    text={Number(
-                      (countryData.deaths / countryData.cases) * 100
-                    ).toFixed(1)}
-                    icon={
-                      <FontAwesome5
-                        name="heartbeat"
-                        size={24}
-                        color="#E85347"
                       />
                     }
                   />

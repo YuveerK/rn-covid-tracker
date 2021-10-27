@@ -179,7 +179,7 @@ const TopTenCountryCard = ({ globalStats, countryStats, navigation }) => {
         }}
         onPress={() => {
           /* 1. Navigate to the Details route with params */
-          navigation.navigate("Test", {
+          navigation.navigate("Detailed Stats Table", {
             countryInfo: countryStats,
           });
         }}

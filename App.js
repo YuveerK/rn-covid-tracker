@@ -50,13 +50,13 @@ export default function App() {
           component={ViewSelectedCountry}
         />
         <HomeStack.Screen
-          name="Test"
+          name="Detailed Stats Table"
           component={Test}
           options={{
             headerStyle: {
-              backgroundColor: "black",
+              backgroundColor: "white",
             },
-            headerTintColor: "white",
+            headerTintColor: "black",
           }}
         />
       </HomeStack.Navigator>
@@ -112,7 +112,10 @@ export default function App() {
         />
         <HomeStack.Screen name="FAQs" component={FAQ} />
         <HomeStack.Screen name="How to Get Tested" component={HowToGetTested} />
-        <HomeStack.Screen name="Waiting For Test Results" component={WaitingForTestResults} />
+        <HomeStack.Screen
+          name="Waiting For Test Results"
+          component={WaitingForTestResults}
+        />
         {/* <HomeStack.Screen name="FAQs" component={FAQ} />
         <HomeStack.Screen name="FAQs" component={FAQ} />
         <HomeStack.Screen name="FAQs" component={FAQ} />

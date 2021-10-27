@@ -13,7 +13,7 @@ const SouthAfricaCard = ({}) => {
     const getCountries = async () => {
       try {
         await fetch(
-          "https://disease.sh/v3/covid-19/countries/za?yesterday=true&strict=true"
+          "https://disease.sh/v3/covid-19/countries/za?yesterday=false&strict=true"
         )
           .then((response) => response.json())
           .then((data) => {
@@ -215,7 +215,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    alignItems: "center",
     marginVertical: 10,
   },
 });

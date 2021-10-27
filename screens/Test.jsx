@@ -110,7 +110,7 @@ const Test = ({ route }) => {
                       style={{ width: 50, height: 30 }}
                     />
                   </View>
-                  <Text style={{ textAlign: "center", color: "white" }}>
+                  <Text style={{ textAlign: "center", color: "black" }}>
                     {index + 1}. {item.country}
                   </Text>
                 </View>
