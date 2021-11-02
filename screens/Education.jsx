@@ -161,7 +161,11 @@ const Education = ({ navigation }) => {
               <Entypo name="chevron-thin-right" size={15} color="black" />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.link} activeOpacity={0.5}>
+            <TouchableOpacity
+              style={styles.link}
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate("Admission Request")}
+            >
               <Text style={[styles.subHeading, { maxWidth: "90%" }]}>
                 Admission request
               </Text>

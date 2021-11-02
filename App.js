@@ -26,6 +26,7 @@ import SymptomsDiagnosisReducingRisk from "./screens/SymptomsDiagnosisReducingRi
 import FAQ from "./screens/FAQ";
 import HowToGetTested from "./screens/HowToGetTested";
 import WaitingForTestResults from "./screens/WaitingForTestResults";
+import AdmissionRequest from "./screens/AdmissionRequest";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -116,8 +117,8 @@ export default function App() {
           name="Waiting For Test Results"
           component={WaitingForTestResults}
         />
+        <HomeStack.Screen name="Admission Request" component={AdmissionRequest} />
         {/* <HomeStack.Screen name="FAQs" component={FAQ} />
-        <HomeStack.Screen name="FAQs" component={FAQ} />
         <HomeStack.Screen name="FAQs" component={FAQ} />
         <HomeStack.Screen name="FAQs" component={FAQ} />
         <HomeStack.Screen name="FAQs" component={FAQ} />
