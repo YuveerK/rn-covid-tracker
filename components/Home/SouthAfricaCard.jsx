@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import { useStateIfMounted } from "use-state-if-mounted";
 import FormatNumber from "./FormatNumber";
 
 const SouthAfricaCard = ({}) => {
   const [globalStats, setGlobalStats] = useState([]);
   const [globalStatsCountryInfo, setGlobalStatsCountryInfo] = useState([]);
   const [globalVaccineData, setGlobalVaccineData] = useState([]);
+  const [yesterdayData, setYesterdayData] = useStateIfMounted([]);
+
   let image = "";
 
   //get country stats
@@ -38,6 +41,24 @@ const SouthAfricaCard = ({}) => {
     getGlobalVaccineData();
   }, []);
 
+  //get yesterdays data if today's hasnt been published
+  useEffect(() => {
+    const getYesterdayData = async () => {
+      try {
+        await fetch(
+          `https://disease.sh/v3/covid-19/countries/za?yesterday=true&strict=true`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setYesterdayData(data);
+          });
+      } catch (error) {}
+    };
+    getYesterdayData();
+  }, []);
+
+  console.log(yesterdayData);
+
   let total = globalStats.cases + globalStats.recovered + globalStats.deaths;
   let cases = (globalStats.cases / total) * 100;
   let recovered = (globalStats.recovered / total) * 100;
@@ -67,38 +88,71 @@ const SouthAfricaCard = ({}) => {
         <View style={{ marginVertical: 10 }}>
           <Text style={styles.cardHeading2}>Confirmed</Text>
           <FormatNumber number={globalStats.cases} color="#364A63" />
-          <Text>
-            +
-            <FormatNumber
-              number={globalStats.todayCases}
-              color="#364A63"
-              size={15}
-            />
-          </Text>
+          {Number(globalStats.todayCases) === 0 ? (
+            <Text>
+              +
+              <FormatNumber
+                number={yesterdayData.todayCases}
+                color="#364A63"
+                size={15}
+              />
+            </Text>
+          ) : (
+            <Text>
+              +
+              <FormatNumber
+                number={globalStats.todayCases}
+                color="#364A63"
+                size={15}
+              />
+            </Text>
+          )}
         </View>
         <View style={{ marginVertical: 10 }}>
           <Text style={styles.cardHeading2}>Recovered</Text>
           <FormatNumber number={globalStats.recovered} color="#1EE0AC" />
-          <Text>
-            +
-            <FormatNumber
-              number={globalStats.todayRecovered}
-              color="#1EE0AC"
-              size={15}
-            />
-          </Text>
+          {Number(globalStats.todayRecovered) === 0 ? (
+            <Text>
+              +
+              <FormatNumber
+                number={yesterdayData.todayRecovered}
+                color="#1EE0AC"
+                size={15}
+              />
+            </Text>
+          ) : (
+            <Text>
+              +
+              <FormatNumber
+                number={globalStats.todayRecovered}
+                color="#1EE0AC"
+                size={15}
+              />
+            </Text>
+          )}
         </View>
         <View style={{ marginVertical: 10 }}>
           <Text style={styles.cardHeading2}>Deaths</Text>
           <FormatNumber number={globalStats.deaths} color="#E85347" />
-          <Text>
-            +
-            <FormatNumber
-              number={globalStats.todayDeaths}
-              color="#E85347"
-              size={15}
-            />
-          </Text>
+          {Number(globalStats.todayDeaths) === 0 ? (
+            <Text>
+              +
+              <FormatNumber
+                number={yesterdayData.todayDeaths}
+                color="#E85347"
+                size={15}
+              />
+            </Text>
+          ) : (
+            <Text>
+              +
+              <FormatNumber
+                number={globalStats.todayDeaths}
+                color="#E85347"
+                size={15}
+              />
+            </Text>
+          )}
         </View>
 
         <View style={{ marginVertical: 10 }}>

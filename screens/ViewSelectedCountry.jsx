@@ -510,19 +510,6 @@ const ViewSelectedCountry = ({ route }) => {
                     </View>
                   ) : (
                     <>
-                      <Text
-                        style={{
-                          fontStyle: "italic",
-                          color: "grey",
-                          marginBottom: 5,
-                        }}
-                      >
-                        There is currently no data for {countryData.country}{" "}
-                        regarding the number of new cases for today. The current
-                        number is yesterdays. Once {countryData.country}{" "}
-                        publishes their COVID-19 Data for today, the number
-                        below will automatically be updated.{" "}
-                      </Text>
                       <View
                         style={{ flexDirection: "row", alignItems: "center" }}
                       >
@@ -582,19 +569,6 @@ const ViewSelectedCountry = ({ route }) => {
                     </View>
                   ) : (
                     <>
-                      <Text
-                        style={{
-                          fontStyle: "italic",
-                          color: "grey",
-                          marginBottom: 5,
-                        }}
-                      >
-                        There is currently no data for {countryData.country}{" "}
-                        regarding the number of new recoveries for today. The
-                        current number is yesterdays. Once {countryData.country}{" "}
-                        publishes their COVID-19 Data for today, the number
-                        below will automatically be updated.{" "}
-                      </Text>
                       <View
                         style={{ flexDirection: "row", alignItems: "center" }}
                       >
@@ -654,19 +628,6 @@ const ViewSelectedCountry = ({ route }) => {
                     </View>
                   ) : (
                     <>
-                      <Text
-                        style={{
-                          fontStyle: "italic",
-                          color: "grey",
-                          marginBottom: 5,
-                        }}
-                      >
-                        There is currently no data for {countryData.country}{" "}
-                        regarding the number of new deaths for today. The
-                        current number is yesterdays. Once {countryData.country}{" "}
-                        publishes their COVID-19 Data for today, the number
-                        below will automatically be updated.{" "}
-                      </Text>
                       <View
                         style={{ flexDirection: "row", alignItems: "center" }}
                       >
