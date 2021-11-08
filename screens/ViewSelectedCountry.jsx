@@ -520,6 +520,10 @@ const ViewSelectedCountry = ({ route }) => {
                           size={20}
                           fontweight="300"
                         />
+                        <Text> </Text>
+                        <Text style={{ fontSize: 9, fontStyle: "italic" }}>
+                          (Yesterday)
+                        </Text>
                       </View>
                     </>
                   )}
@@ -579,6 +583,10 @@ const ViewSelectedCountry = ({ route }) => {
                           size={20}
                           fontweight="300"
                         />
+                        <Text> </Text>
+                        <Text style={{ fontSize: 9, fontStyle: "italic" }}>
+                          (Yesterday)
+                        </Text>
                       </View>
                     </>
                   )}
@@ -638,6 +646,10 @@ const ViewSelectedCountry = ({ route }) => {
                           size={20}
                           fontweight="300"
                         />
+                        <Text> </Text>
+                        <Text style={{ fontSize: 9, fontStyle: "italic" }}>
+                          (Yesterday)
+                        </Text>
                       </View>
                     </>
                   )}

@@ -20,6 +20,8 @@ const SouthAfricaCard = ({}) => {
         )
           .then((response) => response.json())
           .then((data) => {
+            console.log(data);
+
             setGlobalStats(data);
             setGlobalStatsCountryInfo(data.countryInfo);
           });
@@ -57,19 +59,16 @@ const SouthAfricaCard = ({}) => {
     getYesterdayData();
   }, []);
 
-  console.log(yesterdayData);
-
   let total = globalStats.cases + globalStats.recovered + globalStats.deaths;
   let cases = (globalStats.cases / total) * 100;
   let recovered = (globalStats.recovered / total) * 100;
   let deaths = (globalStats.deaths / total) * 100;
   image = globalStatsCountryInfo.flag;
-
   return (
     <View style={styles.card}>
-      <View style={styles.cardRow}>
+      <View style={[styles.cardRow, { alignItems: "center" }]}>
         <Text style={styles.cardHeading1}>
-          Coronavirus Cases -{" "}
+          Coronavirus Cases{"\n"}
           <Text style={styles.cardHeading2}>South Africa</Text>
         </Text>
 

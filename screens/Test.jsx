@@ -5,7 +5,6 @@ import FormatNumber from "../components/Home/FormatNumber";
 
 const Test = ({ route }) => {
   const countryInfo = route.params.countryInfo;
-  console.log(countryInfo);
   return (
     <View style={styles.container}>
       <ScrollView horizontal={true}>

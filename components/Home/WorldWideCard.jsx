@@ -1,6 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FormatNumber from "./FormatNumber";
+import { Fontisto } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const WorldWideCard = ({ globalStats, vaccineStats }) => {
   let total = globalStats.cases + globalStats.recovered + globalStats.deaths;
@@ -10,20 +14,25 @@ const WorldWideCard = ({ globalStats, vaccineStats }) => {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.cardHeading1}>
-        Coronavirus Cases - <Text style={styles.cardHeading2}>Worldwide</Text>
-      </Text>
+      <View style={styles.cardRow}>
+        <Text style={styles.cardHeading1}>
+          Coronavirus Cases{"\n"}
+          <Text style={styles.cardHeading2}>Worldwide</Text>
+        </Text>
+        <Fontisto name="earth" size={40} color="#07adb9" />
+      </View>
 
       <Text style={[styles.cardHeadingDescription, { marginTop: 20 }]}>
-        TOTAL CONFIRMED CASES
+        POPULATION
       </Text>
-      <FormatNumber number={globalStats.cases} color="#364A63" size={25} />
+      <FormatNumber number={globalStats.population} color="#364A63" size={25} />
 
-      <View
+      {/* <View
         style={[
           styles.generalContainer,
           {
             flexDirection: "row",
+            marginTop: 15,
           },
         ]}
       >
@@ -52,93 +61,94 @@ const WorldWideCard = ({ globalStats, vaccineStats }) => {
             borderBottomRightRadius: 5,
           }}
         ></View>
-      </View>
+      </View> */}
 
       <View style={styles.cardRow}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <View
-            style={{
-              width: 10,
-              height: 10,
-              backgroundColor: "#816BFF",
-              marginRight: 15,
-              borderRadius: 2,
-            }}
-          ></View>
-          <View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", width: "70%" }}
+        >
+          <AntDesign name="addusergroup" size={24} color="#ff7300" />
+
+          <View style={{ marginLeft: 10 }}>
             <Text style={styles.cardText}>Cases</Text>
           </View>
         </View>
 
-        <View>
-          <FormatNumber number={globalStats.cases} color="#364A63" size={15} />
+        <View style={{ width: "30%" }}>
+          <FormatNumber number={globalStats.cases} color="#ff7300" size={15} />
+          <Text>
+            +{" "}
+            <FormatNumber
+              number={globalStats.todayCases}
+              color="#ff7300"
+              size={12}
+            />
+          </Text>
         </View>
       </View>
 
       <View style={styles.cardRow}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <View
-            style={{
-              width: 10,
-              height: 10,
-              backgroundColor: "#1EE0AC",
-              marginRight: 15,
-              borderRadius: 2,
-            }}
-          ></View>
-          <View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", width: "70%" }}
+        >
+          <FontAwesome5 name="praying-hands" size={18} color="#1EE0AC" />
+          <View style={{ marginLeft: 10 }}>
             <Text style={styles.cardText}>Recoveries</Text>
           </View>
         </View>
 
-        <View>
+        <View style={{ width: "30%" }}>
           <FormatNumber
             number={globalStats.recovered}
-            color="#364A63"
+            color="#1EE0AC"
             size={15}
           />
+          <Text>
+            +{" "}
+            <FormatNumber
+              number={globalStats.todayRecovered}
+              color="#1EE0AC"
+              size={12}
+            />
+          </Text>
         </View>
       </View>
 
       <View style={styles.cardRow}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <View
-            style={{
-              width: 10,
-              height: 10,
-              backgroundColor: "#E85347",
-              marginRight: 15,
-              borderRadius: 2,
-            }}
-          ></View>
-          <View>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", width: "70%" }}
+        >
+          <FontAwesome5 name="heartbeat" size={24} color="#E85347" />
+          <View style={{ marginLeft: 10 }}>
             <Text style={styles.cardText}>Deaths</Text>
           </View>
         </View>
 
-        <View>
-          <FormatNumber number={globalStats.deaths} color="#364A63" size={15} />
+        <View style={{ width: "30%" }}>
+          <FormatNumber number={globalStats.deaths} color="#E85347" size={15} />
+          <Text>
+            +{" "}
+            <FormatNumber
+              number={globalStats.todayDeaths}
+              color="#E85347"
+              size={12}
+            />
+          </Text>
         </View>
       </View>
 
       <View style={styles.cardRow}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <View
-            style={{
-              width: 10,
-              height: 10,
-              backgroundColor: "#00ff15",
-              marginRight: 15,
-              borderRadius: 2,
-            }}
-          ></View>
-          <View>
-            <Text style={styles.cardText}>Vaccine Tests</Text>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", width: "70%" }}
+        >
+          <MaterialCommunityIcons name="needle" size={24} color="#00ff15" />
+          <View style={{ marginLeft: 10 }}>
+            <Text style={styles.cardText}>Vaccines Administered</Text>
           </View>
         </View>
 
-        <View>
-          <FormatNumber number={vaccineStats.total} color="#364A63" size={15} />
+        <View style={{ width: "30%" }}>
+          <FormatNumber number={vaccineStats.total} color="#00ff15" size={15} />
         </View>
       </View>
 
