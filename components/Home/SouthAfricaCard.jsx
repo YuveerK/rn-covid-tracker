@@ -20,8 +20,6 @@ const SouthAfricaCard = ({}) => {
         )
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
-
             setGlobalStats(data);
             setGlobalStatsCountryInfo(data.countryInfo);
           });
@@ -88,13 +86,13 @@ const SouthAfricaCard = ({}) => {
           <Text style={styles.cardHeading2}>Confirmed</Text>
           <FormatNumber number={globalStats.cases} color="#364A63" />
           {Number(globalStats.todayCases) === 0 ? (
-            <Text>
-              +
+            <Text style={{ fontSize: 10, fontStyle: "italic" }}>
               <FormatNumber
                 number={yesterdayData.todayCases}
                 color="#364A63"
                 size={15}
-              />
+              />{" "}
+              today
             </Text>
           ) : (
             <Text>
@@ -111,22 +109,22 @@ const SouthAfricaCard = ({}) => {
           <Text style={styles.cardHeading2}>Recovered</Text>
           <FormatNumber number={globalStats.recovered} color="#1EE0AC" />
           {Number(globalStats.todayRecovered) === 0 ? (
-            <Text>
-              +
+            <Text style={{ fontSize: 10, fontStyle: "italic" }}>
               <FormatNumber
                 number={yesterdayData.todayRecovered}
                 color="#1EE0AC"
                 size={15}
-              />
+              />{" "}
+              today
             </Text>
           ) : (
             <Text>
-              +
               <FormatNumber
                 number={globalStats.todayRecovered}
                 color="#1EE0AC"
                 size={15}
-              />
+              />{" "}
+              today
             </Text>
           )}
         </View>
@@ -134,13 +132,13 @@ const SouthAfricaCard = ({}) => {
           <Text style={styles.cardHeading2}>Deaths</Text>
           <FormatNumber number={globalStats.deaths} color="#E85347" />
           {Number(globalStats.todayDeaths) === 0 ? (
-            <Text>
-              +
+            <Text style={{ fontSize: 10, fontStyle: "italic" }}>
               <FormatNumber
                 number={yesterdayData.todayDeaths}
                 color="#E85347"
                 size={15}
-              />
+              />{" "}
+              today
             </Text>
           ) : (
             <Text>
@@ -155,7 +153,7 @@ const SouthAfricaCard = ({}) => {
         </View>
 
         <View style={{ marginVertical: 10 }}>
-          <Text style={styles.cardHeading2}>Vaccine Tests</Text>
+          <Text style={styles.cardHeading2}>Vaccine Administered</Text>
           <FormatNumber number={globalVaccineData[0]} color="#00ff15" />
         </View>
       </View>

@@ -76,13 +76,13 @@ const WorldWideCard = ({ globalStats, vaccineStats }) => {
 
         <View style={{ width: "30%" }}>
           <FormatNumber number={globalStats.cases} color="#ff7300" size={15} />
-          <Text>
-            +{" "}
+          <Text style={{ fontSize: 10 }}>
             <FormatNumber
               number={globalStats.todayCases}
               color="#ff7300"
               size={12}
-            />
+            />{" "}
+            daily
           </Text>
         </View>
       </View>
@@ -103,13 +103,13 @@ const WorldWideCard = ({ globalStats, vaccineStats }) => {
             color="#1EE0AC"
             size={15}
           />
-          <Text>
-            +{" "}
+          <Text style={{ fontSize: 10 }}>
             <FormatNumber
               number={globalStats.todayRecovered}
               color="#1EE0AC"
               size={12}
-            />
+            />{" "}
+            daily
           </Text>
         </View>
       </View>
@@ -126,13 +126,13 @@ const WorldWideCard = ({ globalStats, vaccineStats }) => {
 
         <View style={{ width: "30%" }}>
           <FormatNumber number={globalStats.deaths} color="#E85347" size={15} />
-          <Text>
-            +{" "}
+          <Text style={{ fontSize: 10 }}>
             <FormatNumber
               number={globalStats.todayDeaths}
               color="#E85347"
               size={12}
-            />
+            />{" "}
+            daily
           </Text>
         </View>
       </View>
@@ -157,7 +157,6 @@ const WorldWideCard = ({ globalStats, vaccineStats }) => {
         <Text style={{ color: "#798BFF" }}>
           (Recovery {recovered.toFixed()}%)
         </Text>{" "}
-        &{" "}
         <Text style={{ color: "#798BFF" }}>(Deaths {deaths.toFixed()}%) </Text>
       </Text>
     </View>

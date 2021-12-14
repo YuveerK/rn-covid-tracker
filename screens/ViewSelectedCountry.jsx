@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import {
   ActivityIndicator,
+  Button,
   Dimensions,
   Image,
   ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import {
@@ -22,8 +25,9 @@ import { Fontisto } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { PieChart, ProgressChart } from "react-native-chart-kit";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { useStateIfMounted } from "use-state-if-mounted";
+import AnimatedChart from "../components/AnimatedChart";
 
 const ViewSelectedCountry = ({ route }) => {
   const [casesGraph, setCasesGraph] = useStateIfMounted([]);
@@ -34,11 +38,17 @@ const ViewSelectedCountry = ({ route }) => {
     []
   );
   const [vaccineGraph, setVaccineGraph] = useStateIfMounted([]);
+  const [historicalData, setHistoricalData] = useStateIfMounted([]);
   const [weatherWindData, setWeatherWindData] = useStateIfMounted([]);
   const [weatherMainDescriptionData, setWeatherMainDescriptionData] =
     useStateIfMounted([]);
   const [timeZone, setTimeZone] = useStateIfMounted([]);
   const [yesterdayData, setYesterdayData] = useStateIfMounted([]);
+  const [text, onChangeText] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
   const countryData = route.params.countryData;
   const countryInfo = route.params.countryData.countryInfo;
@@ -78,6 +88,25 @@ const ViewSelectedCountry = ({ route }) => {
             let deathData = buildDeathsData(data.timeline);
 
             setDeathGraph(deathData);
+          });
+        setIsLoading(false);
+      } catch (error) {
+        setDeathGraph(null);
+        setCasesGraph(null);
+      }
+    };
+
+    getGraphData();
+  }, []);
+
+  useEffect(() => {
+    const getGraphData = async () => {
+      try {
+        const url2 = `https://disease.sh/v3/covid-19/historical/${countryData.countryInfo.iso3}?lastdays=all`;
+        await fetch(url2)
+          .then((response) => response.json())
+          .then((data) => {
+            setHistoricalData(data);
           });
         setIsLoading(false);
       } catch (error) {
@@ -184,7 +213,6 @@ const ViewSelectedCountry = ({ route }) => {
     }
   };
 
-  console.log(yesterdayData);
   let vaccinePercentage = (globalVaccineData / countryData.population) * 100;
   let vaccineText =
     vaccinePercentage > 100 ? "100 >" : vaccinePercentage.toFixed(2);
@@ -195,43 +223,68 @@ const ViewSelectedCountry = ({ route }) => {
 
   let image = buildPics(weatherDescriptionData.description);
 
-  const thedata = [
-    {
-      name: "Seoul",
-      population: 21500000,
-      color: "rgba(131, 167, 234, 1)",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15,
-    },
-    {
-      name: "Toronto",
-      population: 2800000,
-      color: "#F00",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15,
-    },
-    {
-      name: "Beijing",
-      population: 527612,
-      color: "red",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15,
-    },
-    {
-      name: "New York",
-      population: 8538000,
-      color: "#ffffff",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15,
-    },
-    {
-      name: "Moscow",
-      population: 11920000,
-      color: "rgb(0, 0, 255)",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15,
-    },
-  ];
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+
+    let tempDate = new Date(currentDate);
+    let fDate =
+      tempDate.getMonth() +
+      1 +
+      "/" +
+      tempDate.getDate() +
+      "/" +
+      tempDate.getFullYear().toString().substr(-2);
+    onChangeText(fDate.toString());
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const getCases = (searchDate) => {
+    let chartData = [];
+    let lastDataPoint;
+    let updatedChartData = [];
+    for (let date in historicalData.timeline.cases) {
+      if (lastDataPoint > 0) {
+        let newDataPoint = {
+          date: date,
+          cases: historicalData.timeline["cases"][date] - lastDataPoint,
+        };
+        chartData.push(newDataPoint);
+      }
+      lastDataPoint = historicalData.timeline["cases"][date];
+    }
+    const today = new Date();
+    const yesterday = new Date(today);
+
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    today.toDateString();
+    yesterday.toDateString();
+    let fDate =
+      yesterday.getMonth() +
+      1 +
+      "/" +
+      yesterday.getDate() +
+      "/" +
+      yesterday.getFullYear().toString().substr(-2);
+
+    chartData.push({
+      date: fDate.toString(),
+      cases: yesterdayData.todayCases,
+    });
+
+    const space = chartData.filter((x) => x.date?.includes(searchDate));
+    setSearchResults(space);
+  };
 
   return (
     <View style={[styles.mainContainer, { padding: 0 }]}>
@@ -283,12 +336,7 @@ const ViewSelectedCountry = ({ route }) => {
             )}
 
             {Object.keys(timeZone).length > 0 && timeZone.time && (
-              <Text
-                style={[
-                  styles.subHeading,
-                  { fontSize: 15, textAlign: "center" },
-                ]}
-              >
+              <Text style={[styles.heading2, { color: "grey", marginTop: 20 }]}>
                 Time in {countryData.country}:{" "}
                 <Text style={{ fontWeight: "bold" }}>{timeZone.time} </Text>
               </Text>
@@ -301,11 +349,11 @@ const ViewSelectedCountry = ({ route }) => {
                 alignItems: "center",
                 justifyContent: "space-around",
                 flexWrap: "wrap",
-                marginTop: 20,
+                marginTop: 10,
               }}
             >
               {Object.keys(weatherWindData).length > 0 && (
-                <Text style={[styles.subHeading, { fontWeight: "bold" }]}>
+                <Text style={[styles.heading2, { color: "grey" }]}>
                   Wind: {weatherWindData.deg}° at {weatherWindData.speed} kts{" "}
                 </Text>
               )}
@@ -374,6 +422,60 @@ const ViewSelectedCountry = ({ route }) => {
                 </View>
               )}
             </View>
+          </View>
+        </View>
+        <View style={styles.mainContainer}>
+          <View style={styles.container}>
+            <Text style={styles.heading2}>Search for a Date</Text>
+            <View style={styles.searchContainer}>
+              <TextInput
+                style={{ color: "black" }}
+                onChangeText={onChangeText}
+                value={text}
+                placeholder={"YYYY-MM-MM"}
+                placeholderTextColor="lightgrey"
+              />
+              <TouchableOpacity onPress={showDatepicker}>
+                <AntDesign name="calendar" size={30} color="#0b2941" />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => getCases(text)}
+              >
+                <Text style={{ color: "white" }}>Search</Text>
+              </TouchableOpacity>
+            </View>
+
+            {searchResults?.length > 0 && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FormatNumber
+                  number={searchResults[0].cases}
+                  color="#000000"
+                  size={20}
+                  fontweight="300"
+                />
+                <Text style={{ fontSize: 20, marginLeft: 5 }}>Cases</Text>
+              </View>
+            )}
+
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              />
+            )}
           </View>
         </View>
         <View style={styles.mainContainer}>
@@ -854,6 +956,32 @@ const ViewSelectedCountry = ({ route }) => {
 export default ViewSelectedCountry;
 
 const styles = StyleSheet.create({
+  button: {
+    width: "60%",
+    height: 30,
+    margin: "auto",
+    backgroundColor: "#364A63",
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 3,
+    borderRadius: 3,
+  },
+  buttonContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+  },
+  searchContainer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 10,
+    marginBottom: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "lightgrey",
+  },
   weatherContainer: {
     width: "100%",
     justifyContent: "center",
